@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EQAO Essay Builder ✏️</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --intro:       #7C3AED;
+  --intro-light: #EDE9FE;
+  --b1:          #2563EB;
+  --b1-light:    #DBEAFE;
+  --b2:          #059669;
+  --b2-light:    #D1FAE5;
+  --b3:          #D97706;
+  --b3-light:    #FEF3C7;
+  --conc:        #DC2626;
+  --conc-light:  #FEE2E2;
+  --bg:          #F0EEFF;
+  --card:        #FFFFFF;
+  --text:        #1F2937;
+  --muted:       #6B7280;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  background-image: radial-gradient(circle at 20% 20%, rgba(124,58,237,0.08) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(37,99,235,0.07) 0%, transparent 50%);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 16px 60px;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 36px 20px 24px;
+}
+.hero h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: var(--intro);
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+.hero p {
+  color: var(--muted);
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.hero .subtag {
+  display: inline-block;
+  margin-top: 12px;
+  background: white;
+  border: 2px solid var(--intro);
+  color: var(--intro);
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 14px;
+  border-radius: 999px;
+}
+
+/* WRAPPER */
+.wrap { max-width: 780px; margin: 0 auto; }
+
+/* TOPIC */
+.topic-box {
+  background: white;
+  border-radius: 18px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(124,58,237,0.1);
+  border-top: 5px solid var(--intro);
+}
+.topic-box label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--intro);
+  margin-bottom: 10px;
+}
+.topic-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.97rem;
+  font-weight: 600;
+  transition: border-color 0.2s;
+  color: var(--text);
+}
+.topic-input:focus { outline: none; border-color: var(--intro); }
+.topic-input::placeholder { color: #C4B5FD; font-weight: 400; }
+
+/* PROGRESS */
+.progress-wrap { margin-bottom: 24px; }
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--muted);
+  margin-bottom: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.progress-track {
+  height: 14px;
+  background: #E5E7EB;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--intro), var(--b1), var(--b2), var(--b3), var(--conc));
+  border-radius: 999px;
+  transition: width 0.5s cubic-bezier(.4,0,.2,1);
+}
+
+/* CARDS */
+.cards-stack { display: flex; flex-direction: column; gap: 18px; }
+
+.card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 3px 18px rgba(0,0,0,0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeUp 0.45s ease both;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(0,0,0,0.11); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.12s; }
+.card:nth-child(3) { animation-delay: 0.19s; }
+.card:nth-child(4) { animation-delay: 0.26s; }
+
+/* Card left accent */
+.card-intro     { border-left: 6px solid var(--intro); }
+.card-b1        { border-left: 6px solid var(--b1); }
+.card-b2        { border-left: 6px solid var(--b2); }
+.card-b3        { border-left: 6px solid var(--b3); }
+.card-conc      { border-left: 6px solid var(--conc); }
+
+/* CARD HEADER */
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+.card-head:active { opacity: 0.9; }
+
+.badge {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  color: white;
+  white-space: nowrap;
+}
+.badge-intro { background: var(--intro); }
+.badge-b1    { background: var(--b1); }
+.badge-b2    { background: var(--b2); }
+.badge-b3    { background: var(--b3); }
+.badge-conc  { background: var(--conc); }
+
+.card-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  flex: 1;
+}
+.ct-intro { color: var(--intro); }
+.ct-b1    { color: var(--b1); }
+.ct-b2    { color: var(--b2); }
+.ct-b3    { color: var(--b3); }
+.ct-conc  { color: var(--conc); }
+
+.opt-tag {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--b3-light);
+  color: var(--b3);
+  letter-spacing: 0.3px;
+}
+
+.tip-btn {
+  background: none;
+  border: 2px solid currentColor;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.tip-btn:hover { opacity: 0.75; }
+
+/* CARD BODY */
+.card-body { padding: 0 20px 20px; }
+
+/* TIP BOX */
+.tip-box {
+  display: none;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-left: 4px solid;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  background: #FAFAFA;
+}
+.tip-box.open { display: block; animation: fadeUp 0.25s ease; }
+.tip-label {
+  font-weight: 800;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin-bottom: 7px;
+}
+
+/* CONNECTORS */
+.conn-section { margin-bottom: 14px; }
+.conn-label {
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
+
+.chip {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.15s;
+  background: #F3F4F6;
+  color: var(--text);
+  user-select: none;
+}
+.chip:hover { transform: scale(1.04); }
+.chip.on { color: white; border-color: transparent; }
+
+.chip-sm {
+  font-size: 0.77rem;
+  padding: 4px 11px;
+  opacity: 0.9;
+}
+
+/* TEXTAREA */
+.ta-wrap { position: relative; }
+textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 13px 16px 30px;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  resize: vertical;
+  transition: border-color 0.2s;
+  color: var(--text);
+}
+textarea:focus { outline: none; }
+textarea::placeholder { color: #D1D5DB; }
+
+#ta-intro:focus     { border-color: var(--intro); }
+#ta-body1:focus     { border-color: var(--b1); }
+#ta-body2:focus     { border-color: var(--b2); }
+#ta-body3:focus     { border-color: var(--b3); }
+#ta-conclusion:focus{ border-color: var(--conc); }
+
+.word-counter {
+  position: absolute;
+  bottom: 9px;
+  right: 12px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #B5BCCA;
+  pointer-events: none;
+}
+
+/* BODY 3 TOGGLE */
+.body3-toggle-wrap {
+  margin: 4px 0;
+}
+.toggle-add-btn {
+  width: 100%;
+  background: none;
+  border: 2.5px dashed var(--b3);
+  border-radius: 14px;
+  padding: 12px 24px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--b3);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.toggle-add-btn:hover { background: var(--b3-light); }
+
+/* PREVIEW */
+.preview-wrap { margin-top: 32px; }
+.preview-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.preview-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  color: var(--text);
+}
+.copy-btn {
+  padding: 10px 20px;
+  background: var(--text);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.copy-btn:hover { opacity: 0.85; transform: scale(1.02); }
+.copy-btn:active { transform: scale(0.98); }
+
+.preview-card {
+  background: white;
+  border-radius: 18px;
+  padding: 28px 28px 32px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.preview-topic-row {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  padding-bottom: 14px;
+  border-bottom: 2px solid #F3F4F6;
+  margin-bottom: 20px;
+}
+
+.prev-para {
+  padding-left: 14px;
+  border-left: 4px solid;
+  margin-bottom: 18px;
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+.prev-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+.prev-empty { color: #D1D5DB; font-style: italic; font-size: 0.88rem; }
+
+.cl-intro { color: var(--intro); }
+.cl-b1    { color: var(--b1); }
+.cl-b2    { color: var(--b2); }
+.cl-b3    { color: var(--b3); }
+.cl-conc  { color: var(--conc); }
+
+/* DIVIDER */
+.section-gap { height: 18px; }
+
+/* HIDDEN */
+.hidden { display: none; }
+
+/* RESPONSIVE */
+@media(max-width: 520px) {
+  .card-head { flex-wrap: wrap; }
+  .card-title { font-size: 1rem; }
+  .preview-card { padding: 20px 18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>✏️ EQAO Essay Builder</h1>
+  <p>Organize seus argumentos e escreva com confiança, Lara! 💪</p>
+  <span class="subtag">OSSLT · Série de Parágrafos · Opinião</span>
+</div>
+
+<div class="wrap">
+
+  <!-- TOPIC -->
+  <div class="topic-box">
+    <label>📋 Pergunta / Prompt da Prova</label>
+    <input type="text" class="topic-input" id="topic-input"
+      placeholder="Ex: Should cellphones be banned from Ontario classrooms?"
+      oninput="syncPreview()">
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-meta">
+      <span>Progresso da redação</span>
+      <span id="prog-text">0 / 4 parágrafos</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-bar"></div>
+    </div>
+  </div>
+
+  <!-- ═══ CARDS ═══ -->
+  <div class="cards-stack">
+
+    <!-- ① INTRODUCTION -->
+    <div class="card card-intro">
+      <div class="card-head" style="background:var(--intro-light)" onclick="toggleTip('tip-intro')">
+        <span class="badge badge-intro">Parágrafo 1</span>
+        <span class="card-title ct-intro">Introduction</span>
+        <button class="tip-btn ct-intro" onclick="event.stopPropagation();toggleTip('tip-intro')">💡 Dica</button>
+      </div>
+      <div class="card-body">
+        <div class="tip-box cl-intro" id="tip-intro" style="border-color:var(--intro);background:var(--intro-light)">
+          <div class="tip-label cl-intro">🎯 O que fazer aqui:</div>
+          Apresente o <strong>tema</strong> da pergunta e declare sua <strong>opinião claramente</strong> — isso se chama <em>Thesis Statement</em>. Mencione brevemente os argumentos que você vai usar. Escolha um lado e <strong>não mude de ideia</strong> até o fim! Comece com uma frase de impacto.
+        </div>
+
+        <div class="conn-section">
+          <div class="conn-label">💬 Frases de abertura sugeridas:</div>
+          <div class="chips">
+            <span class="chip" data-group="g-intro" data-target="ta-intro" data-text="In today's world," onclick="pickChip(this)">In today's world,</span>
+            <span class="chip" data-group="g-intro" data-target="ta-intro" data-text="Many people believe that" onclick="pickChip(this)">Many people believe that</span>
+            <span class="chip" data-group="g-intro" data-target="ta-intro" data-text="It is widely known that" onclick="pickChip(this)">It is widely known that</span>
+          </div>
+        </div>
+
+        <div class="ta-wrap">
+          <textarea id="ta-intro" placeholder="Escreva sua introdução aqui. Apresente o tema e declare sua opinião..."
+            oninput="countWords('ta-intro','wc-intro');syncPreview();syncProgress()"></textarea>
+          <span class="word-counter" id="wc-intro">0 palavras</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② BODY 1 -->
+    <div class="card card-b1">
+      <div class="card-head" style="background:var(--b1-light)" onclick="toggleTip('tip-b1')">
+        <span class="badge badge-b1">Parágrafo 2</span>
+        <span class="card-title ct-b1">Body Paragraph 1</span>
+        <button class="tip-btn ct-b1" onclick="event.stopPropagation();toggleTip('tip-b1')">💡 Dica</button>
+      </div>
+      <div class="card-body">
+        <div class="tip-box" id="tip-b1" style="border-color:var(--b1);background:var(--b1-light)">
+          <div class="tip-label cl-b1">🥇 O que fazer aqui:</div>
+          Apresente seu <strong>PRIMEIRO e mais forte argumento</strong>. Abra com um dos conectores azuis abaixo. Depois, dentro do parágrafo, use um conector de <em>exemplo</em> para dar evidência concreta. Seja específico — evite ideias vagas!
+        </div>
+
+        <div class="conn-section">
+          <div class="conn-label">🔵 Conector de abertura — escolha 1:</div>
+          <div class="chips">
+            <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="First of all," onclick="pickChip(this)" style="background:var(--b1-light)">First of all,</span>
+            <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="To begin with," onclick="pickChip(this)" style="background:var(--b1-light)">To begin with,</span>
+            <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="First and foremost," onclick="pickChip(this)" style="background:var(--b1-light)">First and foremost,</span>
+            <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="The primary reason is" onclick="pickChip(this)" style="background:var(--b1-light)">The primary reason is</span>
+          </div>
+          <div class="conn-label" style="margin-top:10px">📌 Para exemplos (clique onde quiser no texto):</div>
+          <div class="chips">
+            <span class="chip chip-sm" data-target="ta-body1" data-text="For instance," onclick="insertAt(this)" style="background:var(--b1-light)">For instance,</span>
+            <span class="chip chip-sm" data-target="ta-body1" data-text="Specifically," onclick="insertAt(this)" style="background:var(--b1-light)">Specifically,</span>
+            <span class="chip chip-sm" data-target="ta-body1" data-text="To illustrate," onclick="insertAt(this)" style="background:var(--b1-light)">To illustrate,</span>
+            <span class="chip chip-sm" data-target="ta-body1" data-text="A clear example of this is" onclick="insertAt(this)" style="background:var(--b1-light)">A clear example of this is</span>
+          </div>
+        </div>
+
+        <div class="ta-wrap">
+          <textarea id="ta-body1" placeholder="Escreva seu primeiro argumento aqui..."
+            oninput="countWords('ta-body1','wc-b1');syncPreview();syncProgress()"></textarea>
+          <span class="word-counter" id="wc-b1">0 palavras</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ BODY 2 -->
+    <div class="card card-b2">
+      <div class="card-head" style="background:var(--b2-light)" onclick="toggleTip('tip-b2')">
+        <span class="badge badge-b2">Parágrafo 3</span>
+        <span class="card-title ct-b2">Body Paragraph 2</span>
+        <button class="tip-btn ct-b2" onclick="event.stopPropagation();toggleTip('tip-b2')">💡 Dica</button>
+      </div>
+      <div class="card-body">
+        <div class="tip-box" id="tip-b2" style="border-color:var(--b2);background:var(--b2-light)">
+          <div class="tip-label cl-b2">🥈 O que fazer aqui:</div>
+          Apresente seu <strong>SEGUNDO argumento</strong> — diferente do primeiro! Você está <em>adicionando</em> informação, não repetindo. Inclua um exemplo específico. Lembre-se: quanto mais concreto o exemplo, maior a nota!
+        </div>
+
+        <div class="conn-section">
+          <div class="conn-label">🟢 Conector de abertura — escolha 1:</div>
+          <div class="chips">
+            <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="Furthermore," onclick="pickChip(this)" style="background:var(--b2-light)">Furthermore,</span>
+            <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="In addition," onclick="pickChip(this)" style="background:var(--b2-light)">In addition,</span>
+            <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="Moreover," onclick="pickChip(this)" style="background:var(--b2-light)">Moreover,</span>
+            <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="Secondly," onclick="pickChip(this)" style="background:var(--b2-light)">Secondly,</span>
+          </div>
+          <div class="conn-label" style="margin-top:10px">📌 Para exemplos:</div>
+          <div class="chips">
+            <span class="chip chip-sm" data-target="ta-body2" data-text="For instance," onclick="insertAt(this)" style="background:var(--b2-light)">For instance,</span>
+            <span class="chip chip-sm" data-target="ta-body2" data-text="Specifically," onclick="insertAt(this)" style="background:var(--b2-light)">Specifically,</span>
+            <span class="chip chip-sm" data-target="ta-body2" data-text="To illustrate," onclick="insertAt(this)" style="background:var(--b2-light)">To illustrate,</span>
+            <span class="chip chip-sm" data-target="ta-body2" data-text="A clear example of this is" onclick="insertAt(this)" style="background:var(--b2-light)">A clear example of this is</span>
+          </div>
+        </div>
+
+        <div class="ta-wrap">
+          <textarea id="ta-body2" placeholder="Escreva seu segundo argumento aqui..."
+            oninput="countWords('ta-body2','wc-b2');syncPreview();syncProgress()"></textarea>
+          <span class="word-counter" id="wc-b2">0 palavras</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end cards-stack (first 3) -->
+
+  <!-- BODY 3 TOGGLE -->
+  <div class="section-gap"></div>
+  <div class="body3-toggle-wrap">
+    <button class="toggle-add-btn" id="b3-btn" onclick="toggleBody3()">
+      ✦ Adicionar Body Paragraph 3 (Opcional) — mostra maturidade e impressiona os corretores! 🌟
+    </button>
+  </div>
+
+  <!-- ④ BODY 3 (hidden) -->
+  <div class="hidden" id="b3-wrap">
+    <div class="section-gap"></div>
+    <div class="cards-stack">
+      <div class="card card-b3">
+        <div class="card-head" style="background:var(--b3-light)" onclick="toggleTip('tip-b3')">
+          <span class="badge badge-b3">Parágrafo 4</span>
+          <span class="card-title ct-b3">Body Paragraph 3</span>
+          <span class="opt-tag">OPCIONAL ⭐</span>
+          <button class="tip-btn ct-b3" onclick="event.stopPropagation();toggleTip('tip-b3')">💡 Dica</button>
+        </div>
+        <div class="card-body">
+          <div class="tip-box" id="tip-b3" style="border-color:var(--b3);background:var(--b3-light)">
+            <div class="tip-label cl-b3">🌟 O que fazer aqui:</div>
+            Este parágrafo é <strong>opcional mas impressiona!</strong> Você pode: apresentar um 3º argumento, reforçar os anteriores, ou reconhecer o <em>"outro lado"</em> (contra-argumento) e ainda assim defender sua posição. Reconhecer o outro lado demonstra maturidade intelectual — exatamente o que o OSSLT quer ver no Nível 4!
+          </div>
+
+          <div class="conn-section">
+            <div class="conn-label">🟠 Conector de abertura — escolha 1:</div>
+            <div class="chips">
+              <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="On the other hand," onclick="pickChip(this)" style="background:var(--b3-light)">On the other hand,</span>
+              <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="However," onclick="pickChip(this)" style="background:var(--b3-light)">However,</span>
+              <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="Despite this," onclick="pickChip(this)" style="background:var(--b3-light)">Despite this,</span>
+              <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="In the same way," onclick="pickChip(this)" style="background:var(--b3-light)">In the same way,</span>
+            </div>
+            <div class="conn-label" style="margin-top:10px">📌 Para exemplos:</div>
+            <div class="chips">
+              <span class="chip chip-sm" data-target="ta-body3" data-text="For instance," onclick="insertAt(this)" style="background:var(--b3-light)">For instance,</span>
+              <span class="chip chip-sm" data-target="ta-body3" data-text="Specifically," onclick="insertAt(this)" style="background:var(--b3-light)">Specifically,</span>
+              <span class="chip chip-sm" data-target="ta-body3" data-text="To illustrate," onclick="insertAt(this)" style="background:var(--b3-light)">To illustrate,</span>
+            </div>
+          </div>
+
+          <div class="ta-wrap">
+            <textarea id="ta-body3" placeholder="Terceiro argumento, reforço ou contra-argumento + exemplo..."
+              oninput="countWords('ta-body3','wc-b3');syncPreview();syncProgress()"></textarea>
+            <span class="word-counter" id="wc-b3">0 palavras</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ CONCLUSION -->
+  <div class="section-gap"></div>
+  <div class="cards-stack">
+    <div class="card card-conc">
+      <div class="card-head" style="background:var(--conc-light)" onclick="toggleTip('tip-conc')">
+        <span class="badge badge-conc" id="conc-badge">Parágrafo 4</span>
+        <span class="card-title ct-conc">Conclusion</span>
+        <button class="tip-btn ct-conc" onclick="event.stopPropagation();toggleTip('tip-conc')">💡 Dica</button>
+      </div>
+      <div class="card-body">
+        <div class="tip-box" id="tip-conc" style="border-color:var(--conc);background:var(--conc-light)">
+          <div class="tip-label cl-conc">🏁 O que fazer aqui:</div>
+          <strong>NÃO</strong> adicione informações novas! Resuma os pontos principais e reafirme sua opinião de uma forma <em>diferente</em> da introdução. Use tom formal: <em>do not</em> (nunca <em>don't</em>), sem gírias nem abreviações. Termine com uma frase forte e conclusiva.
+        </div>
+
+        <div class="conn-section">
+          <div class="conn-label">🔴 Conector de abertura — escolha 1:</div>
+          <div class="chips">
+            <span class="chip" data-group="g-conc" data-target="ta-conclusion" data-text="In conclusion," onclick="pickChip(this)" style="background:var(--conc-light)">In conclusion,</span>
+            <span class="chip" data-group="g-conc" data-target="ta-conclusion" data-text="To sum up," onclick="pickChip(this)" style="background:var(--conc-light)">To sum up,</span>
+            <span class="chip" data-group="g-conc" data-target="ta-conclusion" data-text="Ultimately," onclick="pickChip(this)" style="background:var(--conc-light)">Ultimately,</span>
+            <span class="chip" data-group="g-conc" data-target="ta-conclusion" data-text="Taking everything into account," onclick="pickChip(this)" style="background:var(--conc-light)">Taking everything into account,</span>
+            <span class="chip" data-group="g-conc" data-target="ta-conclusion" data-text="For these reasons, it is clear that" onclick="pickChip(this)" style="background:var(--conc-light)">For these reasons, it is clear that</span>
+          </div>
+        </div>
+
+        <div class="ta-wrap">
+          <textarea id="ta-conclusion" placeholder="Escreva sua conclusão aqui. Resuma + reafirme sua opinião de forma nova..."
+            oninput="countWords('ta-conclusion','wc-conc');syncPreview();syncProgress()"></textarea>
+          <span class="word-counter" id="wc-conc">0 palavras</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-wrap">
+    <div class="preview-topbar">
+      <div class="preview-title">📄 Meu Texto Completo</div>
+      <button class="copy-btn" onclick="copyAll()">📋 Copiar Texto</button>
+    </div>
+    <div class="preview-card">
+      <div class="preview-topic-row" id="prev-topic">📋 Tema: —</div>
+
+      <div class="prev-para" id="prev-intro" style="border-color:var(--intro)">
+        <div class="prev-label cl-intro">Introduction</div>
+        <span class="prev-empty">Introdução ainda vazia…</span>
+      </div>
+
+      <div class="prev-para" id="prev-b1" style="border-color:var(--b1)">
+        <div class="prev-label cl-b1">Body Paragraph 1</div>
+        <span class="prev-empty">Primeiro argumento ainda vazio…</span>
+      </div>
+
+      <div class="prev-para" id="prev-b2" style="border-color:var(--b2)">
+        <div class="prev-label cl-b2">Body Paragraph 2</div>
+        <span class="prev-empty">Segundo argumento ainda vazio…</span>
+      </div>
+
+      <div class="prev-para hidden" id="prev-b3" style="border-color:var(--b3)">
+        <div class="prev-label cl-b3">Body Paragraph 3 ⭐</div>
+        <span class="prev-empty">Terceiro argumento ainda vazio…</span>
+      </div>
+
+      <div class="prev-para" id="prev-conc" style="border-color:var(--conc)">
+        <div class="prev-label cl-conc">Conclusion</div>
+        <span class="prev-empty">Conclusão ainda vazia…</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end wrap -->
+
+<script>
+/* ─── STATE ─── */
+let b3On = false;
+let activeChipConnector = {}; // groupId -> connectorText
+
+/* ─── TIP TOGGLE ─── */
+function toggleTip(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+/* ─── PICK CHIP (main opener connector) ─── */
+function pickChip(el) {
+  const group  = el.dataset.group;
+  const taId   = el.dataset.target;
+  const text   = el.dataset.text;
+  const color  = getSectionColor(taId);
+
+  // Deactivate siblings
+  document.querySelectorAll(`[data-group="${group}"]`).forEach(c => {
+    c.classList.remove('on');
+    c.style.background = c.dataset.origBg || '#F3F4F6';
+    c.style.color = '';
+  });
+
+  // Remember original bg first time
+  if (!el.dataset.origBg) el.dataset.origBg = el.style.background || '#F3F4F6';
+
+  el.classList.add('on');
+  el.style.background = color;
+  el.style.color = 'white';
+
+  const ta = document.getElementById(taId);
+  const prev = activeChipConnector[group] ? activeChipConnector[group] + ' ' : '';
+
+  if (prev && ta.value.startsWith(prev)) {
+    ta.value = text + ' ' + ta.value.slice(prev.length);
+  } else if (ta.value.trim() === '') {
+    ta.value = text + ' ';
+  } else {
+    ta.value = text + ' ' + ta.value;
+  }
+
+  activeChipConnector[group] = text;
+
+  ta.focus();
+  const pos = text.length + 1;
+  ta.setSelectionRange(pos, pos);
+
+  const wcId = taId.replace('ta-', 'wc-').replace('body', 'b').replace('conclusion','conc').replace('intro','intro');
+  countWordsById(taId, wcId);
+  syncPreview();
+  syncProgress();
+}
+
+/* ─── INSERT AT CURSOR (example connectors) ─── */
+function insertAt(el) {
+  const taId = el.dataset.target;
+  const text = el.dataset.text;
+  const ta   = document.getElementById(taId);
+  const s    = ta.selectionStart, e = ta.selectionEnd;
+  ta.value = ta.value.slice(0,s) + text + ' ' + ta.value.slice(e);
+  ta.focus();
+  const pos = s + text.length + 1;
+  ta.setSelectionRange(pos, pos);
+
+  const wcId = taId.replace('ta-', 'wc-').replace('body','b').replace('conclusion','conc');
+  countWordsById(taId, wcId);
+  syncPreview();
+}
+
+/* ─── WORD COUNT ─── */
+function countWords(taId, wcId) { countWordsById(taId, wcId); }
+function countWordsById(taId, wcId) {
+  const ta  = document.getElementById(taId);
+  const wc  = document.getElementById(wcId);
+  if (!ta || !wc) return;
+  const n = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
+  wc.textContent = n + (n === 1 ? ' palavra' : ' palavras');
+}
+
+/* ─── BODY 3 TOGGLE ─── */
+function toggleBody3() {
+  b3On = !b3On;
+  document.getElementById('b3-wrap').classList.toggle('hidden', !b3On);
+  document.getElementById('prev-b3').classList.toggle('hidden', !b3On);
+  const btn = document.getElementById('b3-btn');
+  if (b3On) {
+    btn.textContent = '✕ Remover Body Paragraph 3';
+    btn.style.borderStyle = 'solid';
+    document.getElementById('conc-badge').textContent = 'Parágrafo 5';
+  } else {
+    btn.innerHTML = '✦ Adicionar Body Paragraph 3 (Opcional) — mostra maturidade e impressiona os corretores! 🌟';
+    btn.style.borderStyle = 'dashed';
+    document.getElementById('conc-badge').textContent = 'Parágrafo 4';
+  }
+  syncProgress();
+}
+
+/* ─── PROGRESS ─── */
+function syncProgress() {
+  const ids = ['ta-intro','ta-body1','ta-body2'];
+  if (b3On) ids.push('ta-body3');
+  ids.push('ta-conclusion');
+
+  const filled = ids.filter(id => {
+    const el = document.getElementById(id);
+    return el && el.value.trim().length > 8;
+  }).length;
+
+  const total = ids.length;
+  const pct = (filled / total) * 100;
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = `${filled} / ${total} parágrafos`;
+}
+
+/* ─── PREVIEW SYNC ─── */
+function syncPreview() {
+  const topic = document.getElementById('topic-input').value.trim();
+  document.getElementById('prev-topic').textContent = '📋 Tema: ' + (topic || '—');
+
+  const map = [
+    { ta:'ta-intro',    prev:'prev-intro', label:'Introduction',        empty:'Introdução ainda vazia…',           color:'cl-intro' },
+    { ta:'ta-body1',   prev:'prev-b1',    label:'Body Paragraph 1',    empty:'Primeiro argumento ainda vazio…',    color:'cl-b1' },
+    { ta:'ta-body2',   prev:'prev-b2',    label:'Body Paragraph 2',    empty:'Segundo argumento ainda vazio…',     color:'cl-b2' },
+    { ta:'ta-body3',   prev:'prev-b3',    label:'Body Paragraph 3 ⭐', empty:'Terceiro argumento ainda vazio…',    color:'cl-b3' },
+    { ta:'ta-conclusion', prev:'prev-conc', label:'Conclusion',         empty:'Conclusão ainda vazia…',            color:'cl-conc' },
+  ];
+
+  map.forEach(({ ta, prev, label, empty, color }) => {
+    const taEl   = document.getElementById(ta);
+    const prevEl = document.getElementById(prev);
+    if (!taEl || !prevEl) return;
+    const txt = taEl.value.trim();
+    if (txt) {
+      prevEl.innerHTML = `<div class="prev-label ${color}">${label}</div>${escHtml(txt)}`;
+    } else {
+      prevEl.innerHTML = `<div class="prev-label ${color}">${label}</div><span class="prev-empty">${empty}</span>`;
+    }
+  });
+}
+
+/* ─── COPY ─── */
+function copyAll() {
+  const topic = document.getElementById('topic-input').value.trim();
+  const ids = ['ta-intro','ta-body1','ta-body2'];
+  if (b3On) ids.push('ta-body3');
+  ids.push('ta-conclusion');
+
+  let out = '';
+  if (topic) out += 'Topic: ' + topic + '\n\n';
+  ids.forEach(id => {
+    const v = document.getElementById(id)?.value.trim();
+    if (v) out += v + '\n\n';
+  });
+
+  if (!out.trim()) {
+    alert('Nenhum texto ainda! Escreva seus parágrafos primeiro 😊');
+    return;
+  }
+
+  navigator.clipboard.writeText(out.trim()).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✅ Copiado!';
+    setTimeout(() => { btn.textContent = '📋 Copiar Texto'; }, 2200);
+  }).catch(() => {
+    alert('Não foi possível copiar. Tente selecionar o texto manualmente.');
+  });
+}
+
+/* ─── HELPERS ─── */
+function getSectionColor(taId) {
+  const map = {
+    'ta-intro':      '#7C3AED',
+    'ta-body1':      '#2563EB',
+    'ta-body2':      '#059669',
+    'ta-body3':      '#D97706',
+    'ta-conclusion': '#DC2626',
+  };
+  return map[taId] || '#333';
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/\n/g,'<br>');
+}
+
+/* Fix wc IDs on the fly for countWords shortcut calls */
+/* The word count IDs are: wc-intro, wc-b1, wc-b2, wc-b3, wc-conc */
+/* But the textarea oninput calls use those IDs directly, so no fix needed */
+</script>
+</body>
+</html>
