@@ -865,6 +865,412 @@ function escHtml(str) {
 /* Fix wc IDs on the fly for countWords shortcut calls */
 /* The word count IDs are: wc-intro, wc-b1, wc-b2, wc-b3, wc-conc */
 /* But the textarea oninput calls use those IDs directly, so no fix needed */
+
+/* ─── DRAWER ─── */
+function openDrawer() {
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('show');
+  document.body.style.overflow = '';
+  closeAllTopics();
+}
+function toggleTopic(id) {
+  const el = document.getElementById(id);
+  const isOpen = el.classList.contains('topen');
+  closeAllTopics();
+  if (!isOpen) el.classList.add('topen');
+}
+function closeAllTopics() {
+  document.querySelectorAll('.topic-content').forEach(e => e.classList.remove('topen'));
+}
 </script>
+
+<!-- ═══ FLOATING BUTTON ═══ -->
+<button class="fab" onclick="openDrawer()" title="Guia de Estudo">
+  📚
+  <span class="fab-label">Guia</span>
+</button>
+
+<!-- ═══ OVERLAY ═══ -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+
+<!-- ═══ DRAWER ═══ -->
+<div class="drawer" id="drawer">
+
+  <div class="drawer-header">
+    <div class="drawer-title">📚 Guia de Estudo</div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+
+  <div class="drawer-subtitle">Clique em qualquer tópico para saber mais 👇</div>
+
+  <div class="drawer-list">
+
+    <!-- 1 -->
+    <div class="drawer-item">
+      <button class="topic-btn" onclick="toggleTopic('t1')">
+        <span class="topic-icon">🎯</span>
+        <span class="topic-name">O que é o OSSLT?</span>
+        <span class="topic-arrow">›</span>
+      </button>
+      <div class="topic-content" id="t1">
+        <p>O <strong>OSSLT</strong> (Ontario Secondary School Literacy Test) é obrigatório para todos os alunos do Grade 10 em Ontário.</p>
+        <p>O foco <strong>não é criatividade literária</strong> — é avaliar se você consegue <strong>comunicar ideias com clareza e organização</strong>.</p>
+        <p>A prova tem duas partes principais: <em>Short Writing Tasks</em> (respostas curtas) e o <em>Long Writing</em> — a dissertação de opinião que você está praticando aqui! ✏️</p>
+        <div class="topic-tip">💡 O teste é feito no computador — pratique digitar rápido para sobrar tempo de revisar!</div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="drawer-item">
+      <button class="topic-btn" onclick="toggleTopic('t2')">
+        <span class="topic-icon">📊</span>
+        <span class="topic-name">Como serei avaliada?</span>
+        <span class="topic-arrow">›</span>
+      </button>
+      <div class="topic-content" id="t2">
+        <p>Os corretores usam <strong>dois critérios</strong>:</p>
+        <div class="crit-box crit-a">
+          <div class="crit-title">1. Topic Development</div>
+          <div class="crit-body">Suas ideias fazem sentido? Você usou exemplos específicos? A organização é lógica? <strong>Não repita a mesma frase várias vezes!</strong></div>
+        </div>
+        <div class="crit-box crit-b">
+          <div class="crit-title">2. Use of Conventions</div>
+          <div class="crit-body">Gramática, pontuação e ortografia. Erros leves são tolerados — desde que <strong>não impeçam a compreensão</strong> do texto.</div>
+        </div>
+        <div class="topic-tip">💡 Usar conectores corretamente já garante Nível 3 ou 4 — as notas mais altas!</div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="drawer-item">
+      <button class="topic-btn" onclick="toggleTopic('t3')">
+        <span class="topic-icon">📝</span>
+        <span class="topic-name">Técnica R.A.S.E.</span>
+        <span class="topic-arrow">›</span>
+      </button>
+      <div class="topic-content" id="t3">
+        <p>Para as <strong>respostas curtas</strong> (Short Writing Tasks), use a fórmula <strong>R.A.S.E.</strong> em um único parágrafo:</p>
+        <div class="rase-grid">
+          <div class="rase-item r"><span class="rase-letter">R</span><div><strong>Restate</strong><br><small>Reafirme a pergunta com suas palavras</small></div></div>
+          <div class="rase-item a"><span class="rase-letter">A</span><div><strong>Answer</strong><br><small>Dê sua resposta direta e clara</small></div></div>
+          <div class="rase-item s"><span class="rase-letter">S</span><div><strong>Support</strong><br><small>Use um exemplo do texto ou da vida real</small></div></div>
+          <div class="rase-item e"><span class="rase-letter">E</span><div><strong>Explain</strong><br><small>Explique como o exemplo prova sua resposta</small></div></div>
+        </div>
+        <div class="topic-tip">💡 A resposta curta é 1 parágrafo de 6 a 10 linhas — não escreva mais que isso!</div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="drawer-item">
+      <button class="topic-btn" onclick="toggleTopic('t4')">
+        <span class="topic-icon">🎩</span>
+        <span class="topic-name">Tom Formal — Regras</span>
+        <span class="topic-arrow">›</span>
+      </button>
+      <div class="topic-content" id="t4">
+        <div class="rules-list">
+          <div class="rule bad">❌ <strong>don't / can't / I'm</strong> → use <strong>do not / cannot / I am</strong></div>
+          <div class="rule bad">❌ Gírias: <em>"it's cool", "gonna", "kinda"</em></div>
+          <div class="rule bad">❌ Abreviações: <em>"idk", "lol", "omg"</em></div>
+          <div class="rule bad">❌ Mudar de opinião no meio do texto</div>
+          <div class="rule good">✅ Tom acadêmico e direto</div>
+          <div class="rule good">✅ Escolha um lado e defenda <strong>até o fim</strong></div>
+          <div class="rule good">✅ Exemplos concretos e específicos</div>
+        </div>
+        <div class="topic-tip">💡 A opinião não importa — o corretor não vai te penalizar se discordar de você. Só quer ver o argumento!</div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="drawer-item">
+      <button class="topic-btn" onclick="toggleTopic('t5')">
+        <span class="topic-icon">⏱️</span>
+        <span class="topic-name">Estratégia na Prova</span>
+        <span class="topic-arrow">›</span>
+      </button>
+      <div class="topic-content" id="t5">
+        <div class="strat-steps">
+          <div class="strat-step"><span class="step-num">1</span><div><strong>Planeje primeiro (5 min)</strong><br><small>Antes de escrever, anote seus 2-3 argumentos em rascunho</small></div></div>
+          <div class="strat-step"><span class="step-num">2</span><div><strong>Escreva com foco</strong><br><small>Um argumento por parágrafo, sempre com exemplo</small></div></div>
+          <div class="strat-step"><span class="step-num">3</span><div><strong>Revise ao final</strong><br><small>Verifique maiúsculas, pontuação e contrações (don't → do not)</small></div></div>
+        </div>
+        <div class="topic-tip">💡 Faça o simulado oficial do EQAO pelo menos uma vez — você se acostuma com a interface digital!</div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="drawer-item">
+      <button class="topic-btn" onclick="toggleTopic('t6')">
+        <span class="topic-icon">💡</span>
+        <span class="topic-name">Temas para Praticar</span>
+        <span class="topic-arrow">›</span>
+      </button>
+      <div class="topic-content" id="t6">
+        <p style="font-size:0.83rem;color:#6B7280;margin-bottom:10px">Copie um desses temas no campo "Pergunta da Prova" e escreva sua redação! 👆</p>
+        <div class="prompt-list">
+          <div class="prompt-item" onclick="usePrompt(this)">
+            📱 Should cellphones be banned from Ontario classrooms?
+            <span class="use-btn">Usar ›</span>
+          </div>
+          <div class="prompt-item" onclick="usePrompt(this)">
+            💼 Is it better for students to have a part-time job or focus only on school?
+            <span class="use-btn">Usar ›</span>
+          </div>
+          <div class="prompt-item" onclick="usePrompt(this)">
+            😴 Should high schools start later in the morning to allow students more sleep?
+            <span class="use-btn">Usar ›</span>
+          </div>
+          <div class="prompt-item" onclick="usePrompt(this)">
+            🎓 Should students have a free period in their school schedule?
+            <span class="use-btn">Usar ›</span>
+          </div>
+        </div>
+        <div class="topic-tip">💡 Clique em "Usar ›" para copiar o tema direto para o campo da prova!</div>
+      </div>
+    </div>
+
+  </div><!-- end drawer-list -->
+</div><!-- end drawer -->
+
+<style>
+/* ═══ FAB ═══ */
+.fab {
+  position: fixed;
+  bottom: 28px;
+  right: 20px;
+  z-index: 900;
+  background: linear-gradient(135deg, #7C3AED, #2563EB);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 20px 14px 16px;
+  font-size: 1.1rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 6px 24px rgba(124,58,237,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.fab:hover { transform: scale(1.06); box-shadow: 0 8px 32px rgba(124,58,237,0.5); }
+.fab-label { font-size: 0.88rem; letter-spacing: 0.3px; }
+
+/* ═══ OVERLAY ═══ */
+.drawer-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.drawer-overlay.show { display: block; opacity: 1; }
+
+/* ═══ DRAWER ═══ */
+.drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(400px, 92vw);
+  background: white;
+  z-index: 1100;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 40px rgba(0,0,0,0.15);
+  border-radius: 20px 0 0 20px;
+}
+.drawer.open { transform: translateX(0); }
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 20px 14px;
+  border-bottom: 2px solid #F3F4F6;
+  flex-shrink: 0;
+}
+.drawer-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.35rem;
+  color: #7C3AED;
+}
+.drawer-close {
+  background: #F3F4F6;
+  border: none;
+  border-radius: 10px;
+  width: 34px; height: 34px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #6B7280;
+  transition: background 0.15s;
+}
+.drawer-close:hover { background: #E5E7EB; }
+
+.drawer-subtitle {
+  padding: 10px 20px 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #9CA3AF;
+  flex-shrink: 0;
+}
+
+.drawer-list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 6px 14px 24px;
+}
+.drawer-list::-webkit-scrollbar { width: 4px; }
+.drawer-list::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 4px; }
+
+/* ═══ TOPIC ITEMS ═══ */
+.drawer-item { margin-bottom: 6px; }
+
+.topic-btn {
+  width: 100%;
+  background: #F9FAFB;
+  border: 2px solid #F3F4F6;
+  border-radius: 14px;
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: #1F2937;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+.topic-btn:hover { background: #EDE9FE; border-color: #C4B5FD; }
+
+.topic-icon { font-size: 1.1rem; flex-shrink: 0; }
+.topic-name { flex: 1; }
+.topic-arrow {
+  font-size: 1.3rem;
+  color: #9CA3AF;
+  transition: transform 0.25s;
+  line-height: 1;
+}
+
+.topic-content {
+  display: none;
+  padding: 14px 16px 16px;
+  background: #FAFAFA;
+  border: 2px solid #F3F4F6;
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: #374151;
+  animation: fadeUp 0.2s ease;
+}
+.topic-content p { margin-bottom: 10px; }
+.topic-content.topen { display: block; }
+
+/* rotate arrow when open */
+.drawer-item:has(.topen) .topic-arrow { transform: rotate(90deg); color: #7C3AED; }
+.drawer-item:has(.topen) .topic-btn { background: #EDE9FE; border-color: #C4B5FD; border-bottom-color: transparent; border-radius: 14px 14px 0 0; }
+
+.topic-tip {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #FFFBEB;
+  border-left: 3px solid #F59E0B;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.81rem;
+  font-weight: 700;
+  color: #92400E;
+}
+
+/* CRIT BOXES */
+.crit-box { border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+.crit-a { background: #EDE9FE; }
+.crit-b { background: #DBEAFE; }
+.crit-title { font-weight: 800; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.crit-body { font-size: 0.83rem; line-height: 1.5; }
+
+/* RASE */
+.rase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 10px 0; }
+.rase-item { border-radius: 10px; padding: 10px; display: flex; align-items: flex-start; gap: 8px; }
+.rase-item.r { background: #FEE2E2; }
+.rase-item.a { background: #DBEAFE; }
+.rase-item.s { background: #D1FAE5; }
+.rase-item.e { background: #FEF3C7; }
+.rase-letter { font-family: 'Fredoka One', cursive; font-size: 1.4rem; line-height: 1; }
+.rase-item.r .rase-letter { color: #DC2626; }
+.rase-item.a .rase-letter { color: #2563EB; }
+.rase-item.s .rase-letter { color: #059669; }
+.rase-item.e .rase-letter { color: #D97706; }
+.rase-item small { font-size: 0.77rem; color: #6B7280; }
+
+/* RULES */
+.rules-list { display: flex; flex-direction: column; gap: 7px; }
+.rule { padding: 8px 12px; border-radius: 9px; font-size: 0.83rem; }
+.rule.bad { background: #FEE2E2; color: #7F1D1D; }
+.rule.good { background: #D1FAE5; color: #064E3B; }
+
+/* STEPS */
+.strat-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 2px; }
+.strat-step { display: flex; align-items: flex-start; gap: 10px; }
+.step-num {
+  background: linear-gradient(135deg,#7C3AED,#2563EB);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.strat-step small { font-size: 0.8rem; color: #6B7280; }
+
+/* PROMPTS */
+.prompt-list { display: flex; flex-direction: column; gap: 7px; }
+.prompt-item {
+  padding: 10px 12px;
+  background: white;
+  border: 2px solid #E5E7EB;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #374151;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.prompt-item:hover { border-color: #7C3AED; background: #F5F3FF; }
+.use-btn {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #7C3AED;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+</style>
+
+<script>
+function usePrompt(el) {
+  const text = el.textContent.replace('Usar ›','').trim().replace(/^[^\w]+/,'');
+  document.getElementById('topic-input').value = text;
+  syncPreview();
+  closeDrawer();
+  document.getElementById('topic-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+
 </body>
 </html>
