@@ -1,88 +1,115 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EQAO Essay Builder ✏️</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --intro:       #7C3AED;
+  --intro:       #6D28D9;
   --intro-light: #EDE9FE;
-  --b1:          #2563EB;
+  --b1:          #1D4ED8;
   --b1-light:    #DBEAFE;
-  --b2:          #059669;
+  --b2:          #047857;
   --b2-light:    #D1FAE5;
-  --b3:          #D97706;
+  --b3:          #B45309;
   --b3-light:    #FEF3C7;
-  --conc:        #DC2626;
+  --conc:        #B91C1C;
   --conc-light:  #FEE2E2;
-  --bg:          #F0EEFF;
+  --bg:          #F4F3EF;
   --card:        #FFFFFF;
-  --text:        #1F2937;
-  --muted:       #6B7280;
+  --text:        #18181B;
+  --muted:       #71717A;
+  --border:      #E4E4E7;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Nunito', sans-serif;
-  background: var(--bg);
-  background-image: radial-gradient(circle at 20% 20%, rgba(124,58,237,0.08) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 80%, rgba(37,99,235,0.07) 0%, transparent 50%);
+  font-family: 'Figtree', sans-serif;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, #C4C2BB 1px, transparent 1px);
+  background-size: 24px 24px;
   color: var(--text);
   min-height: 100vh;
-  padding: 0 16px 60px;
+  padding: 0 16px 80px;
 }
 
-/* HERO */
+/* ══ LANG SWITCHER ══ */
+.lang-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 14px 0 0;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.lang-btn {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 5px 14px;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.15s;
+  letter-spacing: 0.3px;
+}
+.lang-btn:hover { border-color: var(--intro); color: var(--intro); }
+.lang-btn.active { background: var(--intro); border-color: var(--intro); color: white; }
+
+/* ══ HERO ══ */
 .hero {
   text-align: center;
-  padding: 36px 20px 24px;
+  padding: 20px 20px 28px;
 }
 .hero h1 {
-  font-family: 'Fredoka One', cursive;
-  font-size: clamp(1.8rem, 5vw, 2.8rem);
-  color: var(--intro);
-  letter-spacing: 1px;
-  line-height: 1.1;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.9rem, 5vw, 2.9rem);
+  color: var(--text);
+  letter-spacing: -1px;
+  line-height: 1.05;
 }
-.hero p {
+.hero h1 span { color: var(--intro); }
+.hero-sub {
   color: var(--muted);
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 1rem;
   font-weight: 600;
 }
-.hero .subtag {
+.hero-tag {
   display: inline-block;
-  margin-top: 12px;
-  background: white;
-  border: 2px solid var(--intro);
-  color: var(--intro);
-  font-weight: 800;
-  font-size: 0.75rem;
+  margin-top: 14px;
+  background: var(--intro);
+  color: white;
+  font-weight: 700;
+  font-size: 0.73rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 4px 14px;
+  letter-spacing: 1.2px;
+  padding: 5px 16px;
   border-radius: 999px;
 }
 
-/* WRAPPER */
+/* ══ WRAP ══ */
 .wrap { max-width: 780px; margin: 0 auto; }
 
-/* TOPIC */
+/* ══ TOPIC ══ */
 .topic-box {
-  background: white;
-  border-radius: 18px;
+  background: var(--card);
+  border-radius: 20px;
   padding: 20px 24px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 20px rgba(124,58,237,0.1);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px var(--border);
   border-top: 5px solid var(--intro);
 }
 .topic-box label {
   display: block;
   font-weight: 800;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   color: var(--intro);
@@ -91,32 +118,33 @@ body {
 .topic-input {
   width: 100%;
   padding: 12px 16px;
-  border: 2px solid #E5E7EB;
+  border: 2px solid var(--border);
   border-radius: 12px;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Figtree', sans-serif;
   font-size: 0.97rem;
   font-weight: 600;
   transition: border-color 0.2s;
   color: var(--text);
+  background: #FAFAFA;
 }
-.topic-input:focus { outline: none; border-color: var(--intro); }
-.topic-input::placeholder { color: #C4B5FD; font-weight: 400; }
+.topic-input:focus { outline: none; border-color: var(--intro); background: white; }
+.topic-input::placeholder { color: #A1A1AA; font-weight: 400; }
 
-/* PROGRESS */
+/* ══ PROGRESS ══ */
 .progress-wrap { margin-bottom: 24px; }
 .progress-meta {
   display: flex;
   justify-content: space-between;
-  font-size: 0.82rem;
-  font-weight: 800;
+  font-size: 0.8rem;
+  font-weight: 700;
   color: var(--muted);
   margin-bottom: 7px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 .progress-track {
-  height: 14px;
-  background: #E5E7EB;
+  height: 10px;
+  background: var(--border);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -128,53 +156,53 @@ body {
   transition: width 0.5s cubic-bezier(.4,0,.2,1);
 }
 
-/* CARDS */
-.cards-stack { display: flex; flex-direction: column; gap: 18px; }
+/* ══ CARDS ══ */
+.cards-stack { display: flex; flex-direction: column; gap: 16px; }
 
 .card {
-  background: white;
-  border-radius: 18px;
+  background: var(--card);
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 3px 18px rgba(0,0,0,0.07);
-  transition: transform 0.2s, box-shadow 0.2s;
-  animation: fadeUp 0.45s ease both;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px var(--border);
+  animation: fadeUp 0.4s ease both;
 }
-.card:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(0,0,0,0.11); }
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.card:nth-child(1) { animation-delay: 0.05s; }
-.card:nth-child(2) { animation-delay: 0.12s; }
-.card:nth-child(3) { animation-delay: 0.19s; }
-.card:nth-child(4) { animation-delay: 0.26s; }
+.card:nth-child(1) { animation-delay: 0.04s; }
+.card:nth-child(2) { animation-delay: 0.10s; }
+.card:nth-child(3) { animation-delay: 0.16s; }
+.card:nth-child(4) { animation-delay: 0.22s; }
 
-/* Card left accent */
-.card-intro     { border-left: 6px solid var(--intro); }
-.card-b1        { border-left: 6px solid var(--b1); }
-.card-b2        { border-left: 6px solid var(--b2); }
-.card-b3        { border-left: 6px solid var(--b3); }
-.card-conc      { border-left: 6px solid var(--conc); }
+.card-intro  { border-top: 5px solid var(--intro); }
+.card-b1     { border-top: 5px solid var(--b1); }
+.card-b2     { border-top: 5px solid var(--b2); }
+.card-b3     { border-top: 5px solid var(--b3); }
+.card-conc   { border-top: 5px solid var(--conc); }
 
-/* CARD HEADER */
+/* Card header */
 .card-head {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 16px 20px;
+  padding: 15px 20px 14px;
   cursor: pointer;
   user-select: none;
+  border-bottom: 1px solid var(--border);
 }
-.card-head:active { opacity: 0.9; }
+.card-head:hover { background: #FAFAFA; }
 
 .badge {
-  font-family: 'Fredoka One', cursive;
-  font-size: 0.75rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
   letter-spacing: 0.5px;
   padding: 4px 12px;
   border-radius: 999px;
   color: white;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .badge-intro { background: var(--intro); }
 .badge-b1    { background: var(--b1); }
@@ -183,8 +211,9 @@ body {
 .badge-conc  { background: var(--conc); }
 
 .card-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.15rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
   flex: 1;
 }
 .ct-intro { color: var(--intro); }
@@ -194,56 +223,56 @@ body {
 .ct-conc  { color: var(--conc); }
 
 .opt-tag {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 800;
   padding: 3px 9px;
   border-radius: 999px;
   background: var(--b3-light);
   color: var(--b3);
   letter-spacing: 0.3px;
+  flex-shrink: 0;
 }
-
 .tip-btn {
   background: none;
   border: 2px solid currentColor;
   border-radius: 8px;
   padding: 4px 10px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.15s, color 0.15s;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
 }
-.tip-btn:hover { opacity: 0.75; }
+.tip-btn:hover { opacity: 0.65; }
 
-/* CARD BODY */
-.card-body { padding: 0 20px 20px; }
+/* Card body */
+.card-body { padding: 16px 20px 20px; }
 
-/* TIP BOX */
+/* Tip box */
 .tip-box {
   display: none;
   border-radius: 12px;
   padding: 14px 16px;
   margin-bottom: 16px;
   border-left: 4px solid;
-  font-size: 0.88rem;
-  line-height: 1.55;
-  background: #FAFAFA;
+  font-size: 0.87rem;
+  line-height: 1.6;
 }
-.tip-box.open { display: block; animation: fadeUp 0.25s ease; }
+.tip-box.open { display: block; animation: fadeUp 0.22s ease; }
 .tip-label {
   font-weight: 800;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.7px;
   margin-bottom: 7px;
 }
 
-/* CONNECTORS */
+/* Connectors */
 .conn-section { margin-bottom: 14px; }
 .conn-label {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -255,80 +284,75 @@ body {
 .chip {
   padding: 6px 14px;
   border-radius: 999px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.84rem;
+  font-family: 'Figtree', sans-serif;
+  font-size: 0.83rem;
   font-weight: 700;
   cursor: pointer;
   border: 2px solid transparent;
   transition: all 0.15s;
-  background: #F3F4F6;
+  background: #F4F4F5;
   color: var(--text);
   user-select: none;
 }
 .chip:hover { transform: scale(1.04); }
 .chip.on { color: white; border-color: transparent; }
+.chip-sm { font-size: 0.76rem; padding: 4px 11px; }
 
-.chip-sm {
-  font-size: 0.77rem;
-  padding: 4px 11px;
-  opacity: 0.9;
-}
-
-/* TEXTAREA */
+/* Textarea */
 .ta-wrap { position: relative; }
 textarea {
   width: 100%;
-  min-height: 120px;
+  min-height: 118px;
   padding: 13px 16px 30px;
-  border: 2px solid #E5E7EB;
+  border: 2px solid var(--border);
   border-radius: 12px;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Figtree', sans-serif;
   font-size: 0.94rem;
-  line-height: 1.6;
+  line-height: 1.65;
   resize: vertical;
   transition: border-color 0.2s;
   color: var(--text);
+  background: #FAFAFA;
 }
-textarea:focus { outline: none; }
-textarea::placeholder { color: #D1D5DB; }
+textarea:focus { outline: none; background: white; }
+textarea::placeholder { color: #A1A1AA; }
 
-#ta-intro:focus     { border-color: var(--intro); }
-#ta-body1:focus     { border-color: var(--b1); }
-#ta-body2:focus     { border-color: var(--b2); }
-#ta-body3:focus     { border-color: var(--b3); }
-#ta-conclusion:focus{ border-color: var(--conc); }
+#ta-intro:focus      { border-color: var(--intro); }
+#ta-body1:focus      { border-color: var(--b1); }
+#ta-body2:focus      { border-color: var(--b2); }
+#ta-body3:focus      { border-color: var(--b3); }
+#ta-conclusion:focus { border-color: var(--conc); }
 
 .word-counter {
   position: absolute;
   bottom: 9px;
   right: 12px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  color: #B5BCCA;
+  font-size: 0.71rem;
+  font-weight: 700;
+  color: #A1A1AA;
   pointer-events: none;
 }
 
-/* BODY 3 TOGGLE */
-.body3-toggle-wrap {
-  margin: 4px 0;
-}
+/* Body 3 toggle */
+.section-gap { height: 16px; }
+.body3-toggle-wrap { margin: 4px 0; }
 .toggle-add-btn {
   width: 100%;
   background: none;
   border: 2.5px dashed var(--b3);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 12px 24px;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  font-size: 0.9rem;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
   color: var(--b3);
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s;
 }
 .toggle-add-btn:hover { background: var(--b3-light); }
 
-/* PREVIEW */
-.preview-wrap { margin-top: 32px; }
+/* Preview */
+.preview-wrap { margin-top: 30px; }
 .preview-topbar {
   display: flex;
   justify-content: space-between;
@@ -336,8 +360,9 @@ textarea::placeholder { color: #D1D5DB; }
   margin-bottom: 14px;
 }
 .preview-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.5rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
   color: var(--text);
 }
 .copy-btn {
@@ -346,51 +371,48 @@ textarea::placeholder { color: #D1D5DB; }
   color: white;
   border: none;
   border-radius: 12px;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  font-size: 0.88rem;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 700;
+  font-size: 0.86rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
   transition: opacity 0.2s, transform 0.15s;
 }
-.copy-btn:hover { opacity: 0.85; transform: scale(1.02); }
-.copy-btn:active { transform: scale(0.98); }
+.copy-btn:hover { opacity: 0.82; transform: scale(1.02); }
 
 .preview-card {
-  background: white;
-  border-radius: 18px;
-  padding: 28px 28px 32px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  background: var(--card);
+  border-radius: 20px;
+  padding: 26px 28px 30px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px var(--border);
 }
-
 .preview-topic-row {
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: 0.76rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--muted);
   padding-bottom: 14px;
-  border-bottom: 2px solid #F3F4F6;
+  border-bottom: 2px solid var(--border);
   margin-bottom: 20px;
 }
-
 .prev-para {
   padding-left: 14px;
   border-left: 4px solid;
   margin-bottom: 18px;
-  font-size: 0.93rem;
+  font-size: 0.92rem;
   line-height: 1.7;
 }
 .prev-label {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 5px;
 }
-.prev-empty { color: #D1D5DB; font-style: italic; font-size: 0.88rem; }
+.prev-empty { color: #D4D4D8; font-style: italic; font-size: 0.87rem; }
 
 .cl-intro { color: var(--intro); }
 .cl-b1    { color: var(--b1); }
@@ -398,33 +420,244 @@ textarea::placeholder { color: #D1D5DB; }
 .cl-b3    { color: var(--b3); }
 .cl-conc  { color: var(--conc); }
 
-/* DIVIDER */
-.section-gap { height: 18px; }
+/* FAB */
+.fab {
+  position: fixed;
+  bottom: 26px;
+  right: 20px;
+  z-index: 900;
+  background: var(--text);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 13px 20px 13px 15px;
+  font-size: 1rem;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.fab:hover { transform: scale(1.05); box-shadow: 0 8px 28px rgba(0,0,0,0.28); }
+.fab-label { font-size: 0.85rem; }
 
-/* HIDDEN */
+/* Overlay */
+.drawer-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.drawer-overlay.show { display: block; opacity: 1; }
+
+/* Drawer */
+.drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(400px, 92vw);
+  background: white;
+  z-index: 1100;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -6px 0 32px rgba(0,0,0,0.12);
+  border-radius: 20px 0 0 20px;
+}
+.drawer.open { transform: translateX(0); }
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 20px 14px;
+  border-bottom: 2px solid var(--border);
+  flex-shrink: 0;
+}
+.drawer-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--intro);
+}
+.drawer-close {
+  background: var(--border);
+  border: none;
+  border-radius: 10px;
+  width: 34px; height: 34px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  transition: background 0.15s;
+}
+.drawer-close:hover { background: #D4D4D8; }
+.drawer-subtitle {
+  padding: 10px 20px 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #A1A1AA;
+  flex-shrink: 0;
+}
+.drawer-list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 6px 14px 24px;
+}
+.drawer-list::-webkit-scrollbar { width: 4px; }
+.drawer-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* Drawer topics */
+.drawer-item { margin-bottom: 6px; }
+.topic-btn {
+  width: 100%;
+  background: #F4F4F5;
+  border: 2px solid #F4F4F5;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text);
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+.topic-btn:hover { background: var(--intro-light); border-color: #C4B5FD; }
+.topic-icon { font-size: 1.05rem; flex-shrink: 0; }
+.topic-name { flex: 1; }
+.topic-arrow { font-size: 1.25rem; color: #A1A1AA; transition: transform 0.22s; line-height: 1; }
+
+.topic-content {
+  display: none;
+  padding: 14px 16px 16px;
+  background: #FAFAFA;
+  border: 2px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #3F3F46;
+  animation: fadeUp 0.2s ease;
+}
+.topic-content p { margin-bottom: 10px; }
+.topic-content.topen { display: block; }
+.drawer-item:has(.topen) .topic-arrow { transform: rotate(90deg); color: var(--intro); }
+.drawer-item:has(.topen) .topic-btn { background: var(--intro-light); border-color: #C4B5FD; border-bottom-color: transparent; border-radius: 14px 14px 0 0; }
+
+.topic-tip {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #FFFBEB;
+  border-left: 3px solid #F59E0B;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #92400E;
+}
+
+/* Crit boxes */
+.crit-box { border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+.crit-a { background: var(--intro-light); }
+.crit-b { background: var(--b1-light); }
+.crit-title { font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.crit-body { font-size: 0.82rem; line-height: 1.5; }
+
+/* RASE */
+.rase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 10px 0; }
+.rase-item { border-radius: 10px; padding: 10px; display: flex; align-items: flex-start; gap: 8px; }
+.rase-item.r { background: var(--conc-light); }
+.rase-item.a { background: var(--b1-light); }
+.rase-item.s { background: var(--b2-light); }
+.rase-item.e { background: var(--b3-light); }
+.rase-letter { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; line-height: 1; flex-shrink: 0; }
+.rase-item.r .rase-letter { color: var(--conc); }
+.rase-item.a .rase-letter { color: var(--b1); }
+.rase-item.s .rase-letter { color: var(--b2); }
+.rase-item.e .rase-letter { color: var(--b3); }
+.rase-item small { font-size: 0.76rem; color: var(--muted); }
+
+/* Rules */
+.rules-list { display: flex; flex-direction: column; gap: 7px; }
+.rule { padding: 8px 12px; border-radius: 9px; font-size: 0.82rem; }
+.rule.bad  { background: var(--conc-light); color: #7F1D1D; }
+.rule.good { background: var(--b2-light); color: #064E3B; }
+
+/* Steps */
+.strat-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 2px; }
+.strat-step { display: flex; align-items: flex-start; gap: 10px; }
+.step-num {
+  background: var(--text);
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.strat-step small { font-size: 0.79rem; color: var(--muted); }
+
+/* Prompts */
+.prompt-list { display: flex; flex-direction: column; gap: 7px; }
+.prompt-item {
+  padding: 10px 12px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: #3F3F46;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.prompt-item:hover { border-color: var(--intro); background: var(--intro-light); }
+.use-btn { font-size: 0.76rem; font-weight: 800; color: var(--intro); white-space: nowrap; flex-shrink: 0; }
+
 .hidden { display: none; }
 
-/* RESPONSIVE */
 @media(max-width: 520px) {
   .card-head { flex-wrap: wrap; }
-  .card-title { font-size: 1rem; }
-  .preview-card { padding: 20px 18px; }
+  .card-title { font-size: 0.95rem; }
+  .preview-card { padding: 18px 16px; }
 }
 </style>
 </head>
 <body>
 
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">🇬🇧 EN</button>
+  <button class="lang-btn" onclick="setLang('fr')">🇫🇷 FR</button>
+  <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
+</div>
+
+<!-- HERO -->
 <div class="hero">
-  <h1>✏️ EQAO Essay Builder</h1>
-  <p>Organize seus argumentos e escreva com confiança, Lara! 💪</p>
-  <span class="subtag">OSSLT · Série de Parágrafos · Opinião</span>
+  <h1>✏️ EQAO <span>Essay Builder</span></h1>
+  <p class="hero-sub" id="hero-sub">Organize your arguments and write with confidence!</p>
+  <span class="hero-tag" id="hero-tag">OSSLT · Series of Paragraphs · Opinion</span>
 </div>
 
 <div class="wrap">
 
   <!-- TOPIC -->
   <div class="topic-box">
-    <label>📋 Pergunta / Prompt da Prova</label>
+    <label id="topic-label">📋 Essay Question / Prompt</label>
     <input type="text" class="topic-input" id="topic-input"
       placeholder="Ex: Should cellphones be banned from Ontario classrooms?"
       oninput="syncPreview()">
@@ -433,69 +666,66 @@ textarea::placeholder { color: #D1D5DB; }
   <!-- PROGRESS -->
   <div class="progress-wrap">
     <div class="progress-meta">
-      <span>Progresso da redação</span>
-      <span id="prog-text">0 / 4 parágrafos</span>
+      <span id="prog-label">Writing Progress</span>
+      <span id="prog-text">0 / 4 paragraphs</span>
     </div>
     <div class="progress-track">
       <div class="progress-fill" id="prog-bar"></div>
     </div>
   </div>
 
-  <!-- ═══ CARDS ═══ -->
+  <!-- CARDS -->
   <div class="cards-stack">
 
-    <!-- ① INTRODUCTION -->
+    <!-- ① INTRO -->
     <div class="card card-intro">
-      <div class="card-head" style="background:var(--intro-light)" onclick="toggleTip('tip-intro')">
-        <span class="badge badge-intro">Parágrafo 1</span>
-        <span class="card-title ct-intro">Introduction</span>
-        <button class="tip-btn ct-intro" onclick="event.stopPropagation();toggleTip('tip-intro')">💡 Dica</button>
+      <div class="card-head" onclick="toggleTip('tip-intro')">
+        <span class="badge badge-intro" id="b-p1">Paragraph 1</span>
+        <span class="card-title ct-intro" id="t-intro">Introduction</span>
+        <button class="tip-btn ct-intro" id="tipbtn-intro" onclick="event.stopPropagation();toggleTip('tip-intro')">💡 Tip</button>
       </div>
       <div class="card-body">
         <div class="tip-box cl-intro" id="tip-intro" style="border-color:var(--intro);background:var(--intro-light)">
-          <div class="tip-label cl-intro">🎯 O que fazer aqui:</div>
-          Apresente o <strong>tema</strong> da pergunta e declare sua <strong>opinião claramente</strong> — isso se chama <em>Thesis Statement</em>. Mencione brevemente os argumentos que você vai usar. Escolha um lado e <strong>não mude de ideia</strong> até o fim! Comece com uma frase de impacto.
+          <div class="tip-label cl-intro" id="tiplabel-intro">🎯 What to do here:</div>
+          <span id="tipcontent-intro">Present the <strong>topic</strong> of the question and state your <strong>opinion clearly</strong> — this is called the <em>Thesis Statement</em>. Briefly mention the arguments you will use. Choose a side and <strong>do not change your mind</strong> until the end! Start with an impactful sentence.</span>
         </div>
-
         <div class="conn-section">
-          <div class="conn-label">💬 Frases de abertura sugeridas:</div>
+          <div class="conn-label" id="conn-intro-label">💬 Suggested opening phrases:</div>
           <div class="chips">
             <span class="chip" data-group="g-intro" data-target="ta-intro" data-text="In today's world," onclick="pickChip(this)">In today's world,</span>
             <span class="chip" data-group="g-intro" data-target="ta-intro" data-text="Many people believe that" onclick="pickChip(this)">Many people believe that</span>
             <span class="chip" data-group="g-intro" data-target="ta-intro" data-text="It is widely known that" onclick="pickChip(this)">It is widely known that</span>
           </div>
         </div>
-
         <div class="ta-wrap">
-          <textarea id="ta-intro" placeholder="Escreva sua introdução aqui. Apresente o tema e declare sua opinião..."
-            oninput="countWords('ta-intro','wc-intro');syncPreview();syncProgress()"></textarea>
-          <span class="word-counter" id="wc-intro">0 palavras</span>
+          <textarea id="ta-intro" placeholder="Write your introduction here. Present the topic and state your opinion..."
+            oninput="syncAll('ta-intro','wc-intro')"></textarea>
+          <span class="word-counter" id="wc-intro">0 words</span>
         </div>
       </div>
     </div>
 
     <!-- ② BODY 1 -->
     <div class="card card-b1">
-      <div class="card-head" style="background:var(--b1-light)" onclick="toggleTip('tip-b1')">
-        <span class="badge badge-b1">Parágrafo 2</span>
-        <span class="card-title ct-b1">Body Paragraph 1</span>
-        <button class="tip-btn ct-b1" onclick="event.stopPropagation();toggleTip('tip-b1')">💡 Dica</button>
+      <div class="card-head" onclick="toggleTip('tip-b1')">
+        <span class="badge badge-b1" id="b-p2">Paragraph 2</span>
+        <span class="card-title ct-b1" id="t-b1">Body Paragraph 1</span>
+        <button class="tip-btn ct-b1" id="tipbtn-b1" onclick="event.stopPropagation();toggleTip('tip-b1')">💡 Tip</button>
       </div>
       <div class="card-body">
         <div class="tip-box" id="tip-b1" style="border-color:var(--b1);background:var(--b1-light)">
-          <div class="tip-label cl-b1">🥇 O que fazer aqui:</div>
-          Apresente seu <strong>PRIMEIRO e mais forte argumento</strong>. Abra com um dos conectores azuis abaixo. Depois, dentro do parágrafo, use um conector de <em>exemplo</em> para dar evidência concreta. Seja específico — evite ideias vagas!
+          <div class="tip-label cl-b1" id="tiplabel-b1">🥇 What to do here:</div>
+          <span id="tipcontent-b1">Present your <strong>FIRST and strongest argument</strong>. Open with one of the blue connectors below. Then, within the paragraph, use an <em>example</em> connector to give concrete evidence. Be specific — avoid vague ideas!</span>
         </div>
-
         <div class="conn-section">
-          <div class="conn-label">🔵 Conector de abertura — escolha 1:</div>
+          <div class="conn-label" id="conn-b1-open">🔵 Opening connector — choose 1:</div>
           <div class="chips">
             <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="First of all," onclick="pickChip(this)" style="background:var(--b1-light)">First of all,</span>
             <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="To begin with," onclick="pickChip(this)" style="background:var(--b1-light)">To begin with,</span>
             <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="First and foremost," onclick="pickChip(this)" style="background:var(--b1-light)">First and foremost,</span>
             <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="The primary reason is" onclick="pickChip(this)" style="background:var(--b1-light)">The primary reason is</span>
           </div>
-          <div class="conn-label" style="margin-top:10px">📌 Para exemplos (clique onde quiser no texto):</div>
+          <div class="conn-label" style="margin-top:10px" id="conn-b1-ex">📌 For examples (click anywhere in text):</div>
           <div class="chips">
             <span class="chip chip-sm" data-target="ta-body1" data-text="For instance," onclick="insertAt(this)" style="background:var(--b1-light)">For instance,</span>
             <span class="chip chip-sm" data-target="ta-body1" data-text="Specifically," onclick="insertAt(this)" style="background:var(--b1-light)">Specifically,</span>
@@ -503,37 +733,35 @@ textarea::placeholder { color: #D1D5DB; }
             <span class="chip chip-sm" data-target="ta-body1" data-text="A clear example of this is" onclick="insertAt(this)" style="background:var(--b1-light)">A clear example of this is</span>
           </div>
         </div>
-
         <div class="ta-wrap">
-          <textarea id="ta-body1" placeholder="Escreva seu primeiro argumento aqui..."
-            oninput="countWords('ta-body1','wc-b1');syncPreview();syncProgress()"></textarea>
-          <span class="word-counter" id="wc-b1">0 palavras</span>
+          <textarea id="ta-body1" placeholder="Write your first argument here..."
+            oninput="syncAll('ta-body1','wc-b1')"></textarea>
+          <span class="word-counter" id="wc-b1">0 words</span>
         </div>
       </div>
     </div>
 
     <!-- ③ BODY 2 -->
     <div class="card card-b2">
-      <div class="card-head" style="background:var(--b2-light)" onclick="toggleTip('tip-b2')">
-        <span class="badge badge-b2">Parágrafo 3</span>
-        <span class="card-title ct-b2">Body Paragraph 2</span>
-        <button class="tip-btn ct-b2" onclick="event.stopPropagation();toggleTip('tip-b2')">💡 Dica</button>
+      <div class="card-head" onclick="toggleTip('tip-b2')">
+        <span class="badge badge-b2" id="b-p3">Paragraph 3</span>
+        <span class="card-title ct-b2" id="t-b2">Body Paragraph 2</span>
+        <button class="tip-btn ct-b2" id="tipbtn-b2" onclick="event.stopPropagation();toggleTip('tip-b2')">💡 Tip</button>
       </div>
       <div class="card-body">
         <div class="tip-box" id="tip-b2" style="border-color:var(--b2);background:var(--b2-light)">
-          <div class="tip-label cl-b2">🥈 O que fazer aqui:</div>
-          Apresente seu <strong>SEGUNDO argumento</strong> — diferente do primeiro! Você está <em>adicionando</em> informação, não repetindo. Inclua um exemplo específico. Lembre-se: quanto mais concreto o exemplo, maior a nota!
+          <div class="tip-label cl-b2" id="tiplabel-b2">🥈 What to do here:</div>
+          <span id="tipcontent-b2">Present your <strong>SECOND argument</strong> — different from the first! You are <em>adding</em> information, not repeating. Include a specific example. Remember: the more concrete the example, the higher the score!</span>
         </div>
-
         <div class="conn-section">
-          <div class="conn-label">🟢 Conector de abertura — escolha 1:</div>
+          <div class="conn-label" id="conn-b2-open">🟢 Opening connector — choose 1:</div>
           <div class="chips">
             <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="Furthermore," onclick="pickChip(this)" style="background:var(--b2-light)">Furthermore,</span>
             <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="In addition," onclick="pickChip(this)" style="background:var(--b2-light)">In addition,</span>
             <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="Moreover," onclick="pickChip(this)" style="background:var(--b2-light)">Moreover,</span>
             <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="Secondly," onclick="pickChip(this)" style="background:var(--b2-light)">Secondly,</span>
           </div>
-          <div class="conn-label" style="margin-top:10px">📌 Para exemplos:</div>
+          <div class="conn-label" style="margin-top:10px" id="conn-b2-ex">📌 For examples:</div>
           <div class="chips">
             <span class="chip chip-sm" data-target="ta-body2" data-text="For instance," onclick="insertAt(this)" style="background:var(--b2-light)">For instance,</span>
             <span class="chip chip-sm" data-target="ta-body2" data-text="Specifically," onclick="insertAt(this)" style="background:var(--b2-light)">Specifically,</span>
@@ -541,22 +769,21 @@ textarea::placeholder { color: #D1D5DB; }
             <span class="chip chip-sm" data-target="ta-body2" data-text="A clear example of this is" onclick="insertAt(this)" style="background:var(--b2-light)">A clear example of this is</span>
           </div>
         </div>
-
         <div class="ta-wrap">
-          <textarea id="ta-body2" placeholder="Escreva seu segundo argumento aqui..."
-            oninput="countWords('ta-body2','wc-b2');syncPreview();syncProgress()"></textarea>
-          <span class="word-counter" id="wc-b2">0 palavras</span>
+          <textarea id="ta-body2" placeholder="Write your second argument here..."
+            oninput="syncAll('ta-body2','wc-b2')"></textarea>
+          <span class="word-counter" id="wc-b2">0 words</span>
         </div>
       </div>
     </div>
 
-  </div><!-- end cards-stack (first 3) -->
+  </div><!-- end first stack -->
 
   <!-- BODY 3 TOGGLE -->
   <div class="section-gap"></div>
   <div class="body3-toggle-wrap">
     <button class="toggle-add-btn" id="b3-btn" onclick="toggleBody3()">
-      ✦ Adicionar Body Paragraph 3 (Opcional) — mostra maturidade e impressiona os corretores! 🌟
+      <span id="b3-btn-text">✦ Add Body Paragraph 3 (Optional) — shows maturity and impresses evaluators! 🌟</span>
     </button>
   </div>
 
@@ -565,38 +792,36 @@ textarea::placeholder { color: #D1D5DB; }
     <div class="section-gap"></div>
     <div class="cards-stack">
       <div class="card card-b3">
-        <div class="card-head" style="background:var(--b3-light)" onclick="toggleTip('tip-b3')">
-          <span class="badge badge-b3">Parágrafo 4</span>
-          <span class="card-title ct-b3">Body Paragraph 3</span>
-          <span class="opt-tag">OPCIONAL ⭐</span>
-          <button class="tip-btn ct-b3" onclick="event.stopPropagation();toggleTip('tip-b3')">💡 Dica</button>
+        <div class="card-head" onclick="toggleTip('tip-b3')">
+          <span class="badge badge-b3" id="b-p4">Paragraph 4</span>
+          <span class="card-title ct-b3" id="t-b3">Body Paragraph 3</span>
+          <span class="opt-tag" id="opt-tag">OPTIONAL ⭐</span>
+          <button class="tip-btn ct-b3" id="tipbtn-b3" onclick="event.stopPropagation();toggleTip('tip-b3')">💡 Tip</button>
         </div>
         <div class="card-body">
           <div class="tip-box" id="tip-b3" style="border-color:var(--b3);background:var(--b3-light)">
-            <div class="tip-label cl-b3">🌟 O que fazer aqui:</div>
-            Este parágrafo é <strong>opcional mas impressiona!</strong> Você pode: apresentar um 3º argumento, reforçar os anteriores, ou reconhecer o <em>"outro lado"</em> (contra-argumento) e ainda assim defender sua posição. Reconhecer o outro lado demonstra maturidade intelectual — exatamente o que o OSSLT quer ver no Nível 4!
+            <div class="tip-label cl-b3" id="tiplabel-b3">🌟 What to do here:</div>
+            <span id="tipcontent-b3">This paragraph is <strong>optional but impressive!</strong> You can: present a 3rd argument, reinforce the previous ones, or acknowledge the <em>"other side"</em> (counter-argument) and still defend your position. Acknowledging the other side shows intellectual maturity — exactly what OSSLT wants to see for Level 4!</span>
           </div>
-
           <div class="conn-section">
-            <div class="conn-label">🟠 Conector de abertura — escolha 1:</div>
+            <div class="conn-label" id="conn-b3-open">🟠 Opening connector — choose 1:</div>
             <div class="chips">
               <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="On the other hand," onclick="pickChip(this)" style="background:var(--b3-light)">On the other hand,</span>
               <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="However," onclick="pickChip(this)" style="background:var(--b3-light)">However,</span>
               <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="Despite this," onclick="pickChip(this)" style="background:var(--b3-light)">Despite this,</span>
               <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="In the same way," onclick="pickChip(this)" style="background:var(--b3-light)">In the same way,</span>
             </div>
-            <div class="conn-label" style="margin-top:10px">📌 Para exemplos:</div>
+            <div class="conn-label" style="margin-top:10px" id="conn-b3-ex">📌 For examples:</div>
             <div class="chips">
               <span class="chip chip-sm" data-target="ta-body3" data-text="For instance," onclick="insertAt(this)" style="background:var(--b3-light)">For instance,</span>
               <span class="chip chip-sm" data-target="ta-body3" data-text="Specifically," onclick="insertAt(this)" style="background:var(--b3-light)">Specifically,</span>
               <span class="chip chip-sm" data-target="ta-body3" data-text="To illustrate," onclick="insertAt(this)" style="background:var(--b3-light)">To illustrate,</span>
             </div>
           </div>
-
           <div class="ta-wrap">
-            <textarea id="ta-body3" placeholder="Terceiro argumento, reforço ou contra-argumento + exemplo..."
-              oninput="countWords('ta-body3','wc-b3');syncPreview();syncProgress()"></textarea>
-            <span class="word-counter" id="wc-b3">0 palavras</span>
+            <textarea id="ta-body3" placeholder="Third argument, reinforcement or counter-argument + example..."
+              oninput="syncAll('ta-body3','wc-b3')"></textarea>
+            <span class="word-counter" id="wc-b3">0 words</span>
           </div>
         </div>
       </div>
@@ -607,19 +832,18 @@ textarea::placeholder { color: #D1D5DB; }
   <div class="section-gap"></div>
   <div class="cards-stack">
     <div class="card card-conc">
-      <div class="card-head" style="background:var(--conc-light)" onclick="toggleTip('tip-conc')">
-        <span class="badge badge-conc" id="conc-badge">Parágrafo 4</span>
-        <span class="card-title ct-conc">Conclusion</span>
-        <button class="tip-btn ct-conc" onclick="event.stopPropagation();toggleTip('tip-conc')">💡 Dica</button>
+      <div class="card-head" onclick="toggleTip('tip-conc')">
+        <span class="badge badge-conc" id="conc-badge">Paragraph 4</span>
+        <span class="card-title ct-conc" id="t-conc">Conclusion</span>
+        <button class="tip-btn ct-conc" id="tipbtn-conc" onclick="event.stopPropagation();toggleTip('tip-conc')">💡 Tip</button>
       </div>
       <div class="card-body">
         <div class="tip-box" id="tip-conc" style="border-color:var(--conc);background:var(--conc-light)">
-          <div class="tip-label cl-conc">🏁 O que fazer aqui:</div>
-          <strong>NÃO</strong> adicione informações novas! Resuma os pontos principais e reafirme sua opinião de uma forma <em>diferente</em> da introdução. Use tom formal: <em>do not</em> (nunca <em>don't</em>), sem gírias nem abreviações. Termine com uma frase forte e conclusiva.
+          <div class="tip-label cl-conc" id="tiplabel-conc">🏁 What to do here:</div>
+          <span id="tipcontent-conc"><strong>DO NOT</strong> add new information! Summarize the main points and restate your opinion in a <em>different way</em> from the introduction. Use formal tone: <em>do not</em> (never <em>don't</em>), no slang or abbreviations. End with a strong, conclusive sentence.</span>
         </div>
-
         <div class="conn-section">
-          <div class="conn-label">🔴 Conector de abertura — escolha 1:</div>
+          <div class="conn-label" id="conn-conc-open">🔴 Opening connector — choose 1:</div>
           <div class="chips">
             <span class="chip" data-group="g-conc" data-target="ta-conclusion" data-text="In conclusion," onclick="pickChip(this)" style="background:var(--conc-light)">In conclusion,</span>
             <span class="chip" data-group="g-conc" data-target="ta-conclusion" data-text="To sum up," onclick="pickChip(this)" style="background:var(--conc-light)">To sum up,</span>
@@ -628,11 +852,10 @@ textarea::placeholder { color: #D1D5DB; }
             <span class="chip" data-group="g-conc" data-target="ta-conclusion" data-text="For these reasons, it is clear that" onclick="pickChip(this)" style="background:var(--conc-light)">For these reasons, it is clear that</span>
           </div>
         </div>
-
         <div class="ta-wrap">
-          <textarea id="ta-conclusion" placeholder="Escreva sua conclusão aqui. Resuma + reafirme sua opinião de forma nova..."
-            oninput="countWords('ta-conclusion','wc-conc');syncPreview();syncProgress()"></textarea>
-          <span class="word-counter" id="wc-conc">0 palavras</span>
+          <textarea id="ta-conclusion" placeholder="Write your conclusion here. Summarize + restate your opinion in a new way..."
+            oninput="syncAll('ta-conclusion','wc-conc')"></textarea>
+          <span class="word-counter" id="wc-conc">0 words</span>
         </div>
       </div>
     </div>
@@ -641,75 +864,479 @@ textarea::placeholder { color: #D1D5DB; }
   <!-- PREVIEW -->
   <div class="preview-wrap">
     <div class="preview-topbar">
-      <div class="preview-title">📄 Meu Texto Completo</div>
-      <button class="copy-btn" onclick="copyAll()">📋 Copiar Texto</button>
+      <div class="preview-title" id="preview-title">📄 My Complete Essay</div>
+      <button class="copy-btn" id="copy-btn" onclick="copyAll()">📋 Copy Text</button>
     </div>
     <div class="preview-card">
-      <div class="preview-topic-row" id="prev-topic">📋 Tema: —</div>
-
+      <div class="preview-topic-row" id="prev-topic">📋 Topic: —</div>
       <div class="prev-para" id="prev-intro" style="border-color:var(--intro)">
-        <div class="prev-label cl-intro">Introduction</div>
-        <span class="prev-empty">Introdução ainda vazia…</span>
+        <div class="prev-label cl-intro" id="prev-label-intro">Introduction</div>
+        <span class="prev-empty" id="prev-empty-intro">Introduction still empty…</span>
       </div>
-
       <div class="prev-para" id="prev-b1" style="border-color:var(--b1)">
-        <div class="prev-label cl-b1">Body Paragraph 1</div>
-        <span class="prev-empty">Primeiro argumento ainda vazio…</span>
+        <div class="prev-label cl-b1" id="prev-label-b1">Body Paragraph 1</div>
+        <span class="prev-empty" id="prev-empty-b1">First argument still empty…</span>
       </div>
-
       <div class="prev-para" id="prev-b2" style="border-color:var(--b2)">
-        <div class="prev-label cl-b2">Body Paragraph 2</div>
-        <span class="prev-empty">Segundo argumento ainda vazio…</span>
+        <div class="prev-label cl-b2" id="prev-label-b2">Body Paragraph 2</div>
+        <span class="prev-empty" id="prev-empty-b2">Second argument still empty…</span>
       </div>
-
       <div class="prev-para hidden" id="prev-b3" style="border-color:var(--b3)">
-        <div class="prev-label cl-b3">Body Paragraph 3 ⭐</div>
-        <span class="prev-empty">Terceiro argumento ainda vazio…</span>
+        <div class="prev-label cl-b3" id="prev-label-b3">Body Paragraph 3 ⭐</div>
+        <span class="prev-empty" id="prev-empty-b3">Third argument still empty…</span>
       </div>
-
       <div class="prev-para" id="prev-conc" style="border-color:var(--conc)">
-        <div class="prev-label cl-conc">Conclusion</div>
-        <span class="prev-empty">Conclusão ainda vazia…</span>
+        <div class="prev-label cl-conc" id="prev-label-conc">Conclusion</div>
+        <span class="prev-empty" id="prev-empty-conc">Conclusion still empty…</span>
       </div>
     </div>
   </div>
 
 </div><!-- end wrap -->
 
-<script>
-/* ─── STATE ─── */
-let b3On = false;
-let activeChipConnector = {}; // groupId -> connectorText
+<!-- FAB -->
+<button class="fab" onclick="openDrawer()">
+  📚 <span class="fab-label" id="fab-label">Guide</span>
+</button>
 
-/* ─── TIP TOGGLE ─── */
-function toggleTip(id) {
-  document.getElementById(id).classList.toggle('open');
+<!-- OVERLAY -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="drawer-title" id="drawer-title">📚 Study Guide</div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-subtitle" id="drawer-sub">Click any topic to learn more 👇</div>
+  <div class="drawer-list" id="drawer-list">
+    <!-- Built by JS -->
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   LANGUAGE DATA
+══════════════════════════════════════════════ */
+const LANGS = {
+  en: {
+    heroSub: 'Organize your arguments and write with confidence!',
+    heroTag: 'OSSLT · Series of Paragraphs · Opinion',
+    topicLabel: '📋 Essay Question / Prompt',
+    topicPlaceholder: 'Ex: Should cellphones be banned from Ontario classrooms?',
+    progressLabel: 'Writing Progress',
+    progressText: (f,t) => `${f} / ${t} paragraphs`,
+    words: n => n === 1 ? '1 word' : `${n} words`,
+    tipBtn: '💡 Tip',
+    p1badge:'Paragraph 1', p2badge:'Paragraph 2', p3badge:'Paragraph 3', p4badge:'Paragraph 4',
+    concBadge: b3 => `Paragraph ${b3?5:4}`,
+    t_intro:'Introduction', t_b1:'Body Paragraph 1', t_b2:'Body Paragraph 2',
+    t_b3:'Body Paragraph 3', t_conc:'Conclusion',
+    optTag:'OPTIONAL ⭐',
+    tiplabel_intro:'🎯 What to do here:', tiplabel_b1:'🥇 What to do here:',
+    tiplabel_b2:'🥈 What to do here:', tiplabel_b3:'🌟 What to do here:', tiplabel_conc:'🏁 What to do here:',
+    tip_intro:`Present the <strong>topic</strong> of the question and state your <strong>opinion clearly</strong> — this is called the <em>Thesis Statement</em>. Briefly mention the arguments you will use. Choose a side and <strong>do not change your mind</strong> until the end! Start with an impactful sentence.`,
+    tip_b1:`Present your <strong>FIRST and strongest argument</strong>. Open with one of the blue connectors below. Then, within the paragraph, use an <em>example</em> connector to give concrete evidence. Be specific — avoid vague ideas!`,
+    tip_b2:`Present your <strong>SECOND argument</strong> — different from the first! You are <em>adding</em> information, not repeating. Include a specific example. Remember: the more concrete the example, the higher the score!`,
+    tip_b3:`This paragraph is <strong>optional but impressive!</strong> You can: present a 3rd argument, reinforce the previous ones, or acknowledge the <em>"other side"</em> (counter-argument) and still defend your position. Acknowledging the other side shows intellectual maturity — exactly what OSSLT wants to see for Level 4!`,
+    tip_conc:`<strong>DO NOT</strong> add new information! Summarize the main points and restate your opinion in a <em>different way</em> from the introduction. Use formal tone: <em>do not</em> (never <em>don't</em>), no slang or abbreviations. End with a strong, conclusive sentence.`,
+    conn_intro:'💬 Suggested opening phrases:',
+    conn_b1_open:'🔵 Opening connector — choose 1:', conn_b1_ex:'📌 For examples (click anywhere in text):',
+    conn_b2_open:'🟢 Opening connector — choose 1:', conn_b2_ex:'📌 For examples:',
+    conn_b3_open:'🟠 Opening connector — choose 1:', conn_b3_ex:'📌 For examples:',
+    conn_conc_open:'🔴 Opening connector — choose 1:',
+    ta_intro:'Write your introduction here. Present the topic and state your opinion...',
+    ta_b1:'Write your first argument here...',
+    ta_b2:'Write your second argument here...',
+    ta_b3:'Third argument, reinforcement or counter-argument + example...',
+    ta_conc:'Write your conclusion here. Summarize + restate your opinion in a new way...',
+    addB3:'✦ Add Body Paragraph 3 (Optional) — shows maturity and impresses evaluators! 🌟',
+    removeB3:'✕ Remove Body Paragraph 3',
+    previewTitle:'📄 My Complete Essay', copyBtn:'📋 Copy Text',
+    copied:'✅ Copied!', copyEmpty:'No text yet! Write your paragraphs first 😊',
+    copyFail:'Could not copy. Try selecting the text manually.',
+    topicPrefix:'📋 Topic:', topicNone:'—',
+    label_intro:'Introduction', label_b1:'Body Paragraph 1', label_b2:'Body Paragraph 2',
+    label_b3:'Body Paragraph 3 ⭐', label_conc:'Conclusion',
+    empty_intro:'Introduction still empty…', empty_b1:'First argument still empty…',
+    empty_b2:'Second argument still empty…', empty_b3:'Third argument still empty…',
+    empty_conc:'Conclusion still empty…',
+    fabLabel:'Guide', drawerTitle:'📚 Study Guide', drawerSub:'Click any topic to learn more 👇',
+    topics: [
+      { icon:'🎯', name:'What is the OSSLT?', content:`
+        <p>The <strong>OSSLT</strong> (Ontario Secondary School Literacy Test) is mandatory for all Grade 10 students in Ontario.</p>
+        <p>The focus is <strong>not literary creativity</strong> — it evaluates whether you can <strong>communicate ideas with clarity and organization</strong>.</p>
+        <p>The test has two main parts: <em>Short Writing Tasks</em> (short answers) and the <em>Long Writing</em> — the opinion essay you are practicing here! ✏️</p>
+        <div class="topic-tip">💡 The test is done on a computer — practice typing fast so you have time to review!</div>` },
+      { icon:'📊', name:'How will I be evaluated?', content:`
+        <p>Evaluators use <strong>two criteria</strong>:</p>
+        <div class="crit-box crit-a"><div class="crit-title">1. Topic Development</div><div class="crit-body">Do your ideas make sense? Did you use specific examples? Is the organization logical? <strong>Do not repeat the same sentence multiple times!</strong></div></div>
+        <div class="crit-box crit-b"><div class="crit-title">2. Use of Conventions</div><div class="crit-body">Grammar, punctuation and spelling. Minor errors are tolerated — as long as they <strong>do not prevent understanding</strong> of the text.</div></div>
+        <div class="topic-tip">💡 Using connectors correctly already guarantees Level 3 or 4 — the highest scores!</div>` },
+      { icon:'📝', name:'R.A.S.E. Technique', content:`
+        <p>For <strong>short answers</strong> (Short Writing Tasks), use the <strong>R.A.S.E.</strong> formula in a single paragraph:</p>
+        <div class="rase-grid">
+          <div class="rase-item r"><span class="rase-letter">R</span><div><strong>Restate</strong><br><small>Restate the question in your own words</small></div></div>
+          <div class="rase-item a"><span class="rase-letter">A</span><div><strong>Answer</strong><br><small>Give your direct and clear answer</small></div></div>
+          <div class="rase-item s"><span class="rase-letter">S</span><div><strong>Support</strong><br><small>Use an example from the text or real life</small></div></div>
+          <div class="rase-item e"><span class="rase-letter">E</span><div><strong>Explain</strong><br><small>Explain how the example proves your answer</small></div></div>
+        </div>
+        <div class="topic-tip">💡 The short answer is 1 paragraph of 6 to 10 lines — do not write more than that!</div>` },
+      { icon:'🎩', name:'Formal Tone — Rules', content:`
+        <div class="rules-list">
+          <div class="rule bad">❌ <strong>don't / can't / I'm</strong> → use <strong>do not / cannot / I am</strong></div>
+          <div class="rule bad">❌ Slang: <em>"it's cool", "gonna", "kinda"</em></div>
+          <div class="rule bad">❌ Abbreviations: <em>"idk", "lol", "omg"</em></div>
+          <div class="rule bad">❌ Changing your opinion mid-essay</div>
+          <div class="rule good">✅ Academic and direct tone</div>
+          <div class="rule good">✅ Choose a side and defend it <strong>to the end</strong></div>
+          <div class="rule good">✅ Concrete and specific examples</div>
+        </div>
+        <div class="topic-tip">💡 Your opinion does not matter — the evaluator will not penalize you if they disagree with you. They only want to see the argument!</div>` },
+      { icon:'⏱️', name:'Exam Strategy', content:`
+        <div class="strat-steps">
+          <div class="strat-step"><span class="step-num">1</span><div><strong>Plan first (5 min)</strong><br><small>Before writing, note your 2–3 arguments in a draft</small></div></div>
+          <div class="strat-step"><span class="step-num">2</span><div><strong>Write with focus</strong><br><small>One argument per paragraph, always with an example</small></div></div>
+          <div class="strat-step"><span class="step-num">3</span><div><strong>Review at the end</strong><br><small>Check capitals, punctuation and contractions (don't → do not)</small></div></div>
+        </div>
+        <div class="topic-tip">💡 Take the official EQAO practice test at least once — you will get used to the digital interface!</div>` },
+      { icon:'💡', name:'Topics to Practice', content:`
+        <p style="font-size:0.82rem;color:#71717A;margin-bottom:10px">Copy one of these topics into the "Essay Question" field and write your essay! 👆</p>
+        <div class="prompt-list">
+          <div class="prompt-item" onclick="usePrompt(this)">📱 Should cellphones be banned from Ontario classrooms?<span class="use-btn">Use ›</span></div>
+          <div class="prompt-item" onclick="usePrompt(this)">💼 Is it better for students to have a part-time job or focus only on school?<span class="use-btn">Use ›</span></div>
+          <div class="prompt-item" onclick="usePrompt(this)">😴 Should high schools start later in the morning to allow students more sleep?<span class="use-btn">Use ›</span></div>
+          <div class="prompt-item" onclick="usePrompt(this)">🎓 Should students have a free period in their school schedule?<span class="use-btn">Use ›</span></div>
+        </div>
+        <div class="topic-tip">💡 Click "Use ›" to copy the topic directly to the exam field!</div>` },
+    ]
+  },
+  fr: {
+    heroSub: 'Organisez vos arguments et écrivez avec confiance!',
+    heroTag: 'OSSLT · Série de paragraphes · Opinion',
+    topicLabel: '📋 Question / Sujet du test',
+    topicPlaceholder: 'Ex: Should cellphones be banned from Ontario classrooms?',
+    progressLabel: 'Progression de la rédaction',
+    progressText: (f,t) => `${f} / ${t} paragraphes`,
+    words: n => n === 1 ? '1 mot' : `${n} mots`,
+    tipBtn: '💡 Conseil',
+    p1badge:'Paragraphe 1', p2badge:'Paragraphe 2', p3badge:'Paragraphe 3', p4badge:'Paragraphe 4',
+    concBadge: b3 => `Paragraphe ${b3?5:4}`,
+    t_intro:'Introduction', t_b1:'Développement 1', t_b2:'Développement 2',
+    t_b3:'Développement 3', t_conc:'Conclusion',
+    optTag:'OPTIONNEL ⭐',
+    tiplabel_intro:'🎯 Que faire ici:', tiplabel_b1:'🥇 Que faire ici:',
+    tiplabel_b2:'🥈 Que faire ici:', tiplabel_b3:'🌟 Que faire ici:', tiplabel_conc:'🏁 Que faire ici:',
+    tip_intro:`Présentez le <strong>sujet</strong> de la question et déclarez clairement votre <strong>opinion</strong> — c'est ce qu'on appelle la <em>Thesis Statement</em>. Mentionnez brièvement les arguments que vous utiliserez. Choisissez un côté et <strong>ne changez pas d'avis</strong> jusqu'à la fin! Commencez par une phrase percutante.`,
+    tip_b1:`Présentez votre <strong>PREMIER et plus fort argument</strong>. Commencez avec l'un des connecteurs bleus ci-dessous. Ensuite, à l'intérieur du paragraphe, utilisez un connecteur d'<em>exemple</em> pour donner une preuve concrète. Soyez précis — évitez les idées vagues!`,
+    tip_b2:`Présentez votre <strong>DEUXIÈME argument</strong> — différent du premier! Vous <em>ajoutez</em> de l'information, vous ne répétez pas. Incluez un exemple spécifique. Rappel: plus l'exemple est concret, plus la note est élevée!`,
+    tip_b3:`Ce paragraphe est <strong>optionnel mais impressionnant!</strong> Vous pouvez: présenter un 3e argument, renforcer les précédents, ou reconnaître l'<em>"autre côté"</em> (contre-argument) tout en défendant votre position. Reconnaître l'autre côté démontre une maturité intellectuelle — exactement ce que l'OSSLT veut voir pour le Niveau 4!`,
+    tip_conc:`<strong>N'ajoutez PAS</strong> de nouvelles informations! Résumez les points principaux et réaffirmez votre opinion d'une <em>façon différente</em> de l'introduction. Utilisez un ton formel: <em>do not</em> (jamais <em>don't</em>), sans argot ni abréviations. Terminez par une phrase forte et conclusive.`,
+    conn_intro:'💬 Phrases d\'ouverture suggérées:',
+    conn_b1_open:'🔵 Connecteur d\'ouverture — choisissez-en 1:', conn_b1_ex:'📌 Pour les exemples (cliquez n\'importe où):',
+    conn_b2_open:'🟢 Connecteur d\'ouverture — choisissez-en 1:', conn_b2_ex:'📌 Pour les exemples:',
+    conn_b3_open:'🟠 Connecteur d\'ouverture — choisissez-en 1:', conn_b3_ex:'📌 Pour les exemples:',
+    conn_conc_open:'🔴 Connecteur d\'ouverture — choisissez-en 1:',
+    ta_intro:'Rédigez votre introduction ici. Présentez le sujet et déclarez votre opinion...',
+    ta_b1:'Rédigez votre premier argument ici...',
+    ta_b2:'Rédigez votre deuxième argument ici...',
+    ta_b3:'Troisième argument, renforcement ou contre-argument + exemple...',
+    ta_conc:'Rédigez votre conclusion ici. Résumez + réaffirmez votre opinion de façon nouvelle...',
+    addB3:'✦ Ajouter un paragraphe de développement 3 (Optionnel) — montre votre maturité et impressionne les correcteurs! 🌟',
+    removeB3:'✕ Supprimer le paragraphe de développement 3',
+    previewTitle:'📄 Mon texte complet', copyBtn:'📋 Copier le texte',
+    copied:'✅ Copié!', copyEmpty:'Aucun texte pour l\'instant! Rédigez vos paragraphes d\'abord 😊',
+    copyFail:'Impossible de copier. Essayez de sélectionner le texte manuellement.',
+    topicPrefix:'📋 Sujet:', topicNone:'—',
+    label_intro:'Introduction', label_b1:'Développement 1', label_b2:'Développement 2',
+    label_b3:'Développement 3 ⭐', label_conc:'Conclusion',
+    empty_intro:'Introduction encore vide…', empty_b1:'Premier argument encore vide…',
+    empty_b2:'Deuxième argument encore vide…', empty_b3:'Troisième argument encore vide…',
+    empty_conc:'Conclusion encore vide…',
+    fabLabel:'Guide', drawerTitle:'📚 Guide d\'étude', drawerSub:'Cliquez sur un sujet pour en savoir plus 👇',
+    topics: [
+      { icon:'🎯', name:'Qu\'est-ce que l\'OSSLT?', content:`
+        <p>L'<strong>OSSLT</strong> (Ontario Secondary School Literacy Test) est obligatoire pour tous les élèves de 10e année en Ontario.</p>
+        <p>L'objectif <strong>n'est pas la créativité littéraire</strong> — il s'agit d'évaluer si vous pouvez <strong>communiquer des idées avec clarté et organisation</strong>.</p>
+        <p>Le test comporte deux parties: les <em>Short Writing Tasks</em> (réponses courtes) et le <em>Long Writing</em> — la dissertation d'opinion que vous pratiquez ici! ✏️</p>
+        <div class="topic-tip">💡 Le test se fait sur ordinateur — entraînez-vous à taper vite pour avoir le temps de réviser!</div>` },
+      { icon:'📊', name:'Comment serai-je évalué(e)?', content:`
+        <p>Les correcteurs utilisent <strong>deux critères</strong>:</p>
+        <div class="crit-box crit-a"><div class="crit-title">1. Topic Development</div><div class="crit-body">Vos idées ont-elles du sens? Avez-vous utilisé des exemples spécifiques? L'organisation est-elle logique? <strong>Ne répétez pas la même phrase plusieurs fois!</strong></div></div>
+        <div class="crit-box crit-b"><div class="crit-title">2. Use of Conventions</div><div class="crit-body">Grammaire, ponctuation et orthographe. Les erreurs légères sont tolérées — tant qu'elles <strong>n'empêchent pas la compréhension</strong> du texte.</div></div>
+        <div class="topic-tip">💡 Utiliser correctement les connecteurs garantit déjà un Niveau 3 ou 4 — les meilleures notes!</div>` },
+      { icon:'📝', name:'Technique R.A.S.E.', content:`
+        <p>Pour les <strong>réponses courtes</strong> (Short Writing Tasks), utilisez la formule <strong>R.A.S.E.</strong> en un seul paragraphe:</p>
+        <div class="rase-grid">
+          <div class="rase-item r"><span class="rase-letter">R</span><div><strong>Restate</strong><br><small>Reformulez la question dans vos propres mots</small></div></div>
+          <div class="rase-item a"><span class="rase-letter">A</span><div><strong>Answer</strong><br><small>Donnez votre réponse directe et claire</small></div></div>
+          <div class="rase-item s"><span class="rase-letter">S</span><div><strong>Support</strong><br><small>Utilisez un exemple du texte ou de la vie réelle</small></div></div>
+          <div class="rase-item e"><span class="rase-letter">E</span><div><strong>Explain</strong><br><small>Expliquez comment l'exemple prouve votre réponse</small></div></div>
+        </div>
+        <div class="topic-tip">💡 La réponse courte est 1 paragraphe de 6 à 10 lignes — n'écrivez pas plus que cela!</div>` },
+      { icon:'🎩', name:'Ton formel — Règles', content:`
+        <div class="rules-list">
+          <div class="rule bad">❌ <strong>don't / can't / I'm</strong> → utilisez <strong>do not / cannot / I am</strong></div>
+          <div class="rule bad">❌ Argot: <em>"it's cool", "gonna", "kinda"</em></div>
+          <div class="rule bad">❌ Abréviations: <em>"idk", "lol", "omg"</em></div>
+          <div class="rule bad">❌ Changer d'opinion en cours de rédaction</div>
+          <div class="rule good">✅ Ton académique et direct</div>
+          <div class="rule good">✅ Choisissez un côté et défendez-le <strong>jusqu'à la fin</strong></div>
+          <div class="rule good">✅ Exemples concrets et spécifiques</div>
+        </div>
+        <div class="topic-tip">💡 Votre opinion n'a pas d'importance — le correcteur ne vous pénalisera pas s'il n'est pas d'accord avec vous. Il veut seulement voir l'argumentation!</div>` },
+      { icon:'⏱️', name:'Stratégie à l\'examen', content:`
+        <div class="strat-steps">
+          <div class="strat-step"><span class="step-num">1</span><div><strong>Planifiez d'abord (5 min)</strong><br><small>Avant d'écrire, notez vos 2–3 arguments en brouillon</small></div></div>
+          <div class="strat-step"><span class="step-num">2</span><div><strong>Écrivez avec concentration</strong><br><small>Un argument par paragraphe, toujours avec un exemple</small></div></div>
+          <div class="strat-step"><span class="step-num">3</span><div><strong>Révisez à la fin</strong><br><small>Vérifiez les majuscules, la ponctuation et les contractions (don't → do not)</small></div></div>
+        </div>
+        <div class="topic-tip">💡 Faites le test de pratique officiel de l'EQAO au moins une fois — vous vous habituerez à l'interface numérique!</div>` },
+      { icon:'💡', name:'Sujets à pratiquer', content:`
+        <p style="font-size:0.82rem;color:#71717A;margin-bottom:10px">Copiez l'un de ces sujets dans le champ "Question du test" ci-dessus! 👆</p>
+        <div class="prompt-list">
+          <div class="prompt-item" onclick="usePrompt(this)">📱 Should cellphones be banned from Ontario classrooms?<span class="use-btn">Utiliser ›</span></div>
+          <div class="prompt-item" onclick="usePrompt(this)">💼 Is it better for students to have a part-time job or focus only on school?<span class="use-btn">Utiliser ›</span></div>
+          <div class="prompt-item" onclick="usePrompt(this)">😴 Should high schools start later in the morning to allow students more sleep?<span class="use-btn">Utiliser ›</span></div>
+          <div class="prompt-item" onclick="usePrompt(this)">🎓 Should students have a free period in their school schedule?<span class="use-btn">Utiliser ›</span></div>
+        </div>
+        <div class="topic-tip">💡 Cliquez sur "Utiliser ›" pour copier le sujet directement dans le champ du test!</div>` },
+    ]
+  },
+  es: {
+    heroSub: '¡Organiza tus argumentos y escribe con confianza!',
+    heroTag: 'OSSLT · Serie de párrafos · Opinión',
+    topicLabel: '📋 Pregunta / Tema del examen',
+    topicPlaceholder: 'Ej: Should cellphones be banned from Ontario classrooms?',
+    progressLabel: 'Progreso de la redacción',
+    progressText: (f,t) => `${f} / ${t} párrafos`,
+    words: n => n === 1 ? '1 palabra' : `${n} palabras`,
+    tipBtn: '💡 Consejo',
+    p1badge:'Párrafo 1', p2badge:'Párrafo 2', p3badge:'Párrafo 3', p4badge:'Párrafo 4',
+    concBadge: b3 => `Párrafo ${b3?5:4}`,
+    t_intro:'Introducción', t_b1:'Desarrollo 1', t_b2:'Desarrollo 2',
+    t_b3:'Desarrollo 3', t_conc:'Conclusión',
+    optTag:'OPCIONAL ⭐',
+    tiplabel_intro:'🎯 Qué hacer aquí:', tiplabel_b1:'🥇 Qué hacer aquí:',
+    tiplabel_b2:'🥈 Qué hacer aquí:', tiplabel_b3:'🌟 Qué hacer aquí:', tiplabel_conc:'🏁 Qué hacer aquí:',
+    tip_intro:`Presenta el <strong>tema</strong> de la pregunta y declara tu <strong>opinión claramente</strong> — esto se llama la <em>Thesis Statement</em>. Menciona brevemente los argumentos que usarás. Elige un lado y <strong>no cambies de opinión</strong> hasta el final. ¡Comienza con una frase impactante!`,
+    tip_b1:`Presenta tu <strong>PRIMER y más fuerte argumento</strong>. Comienza con uno de los conectores azules de abajo. Luego, dentro del párrafo, usa un conector de <em>ejemplo</em> para dar evidencia concreta. ¡Sé específico — evita las ideas vagas!`,
+    tip_b2:`Presenta tu <strong>SEGUNDO argumento</strong> — ¡diferente al primero! Estás <em>añadiendo</em> información, no repitiendo. Incluye un ejemplo específico. Recuerda: ¡cuanto más concreto el ejemplo, mayor la calificación!`,
+    tip_b3:`¡Este párrafo es <strong>opcional pero impresionante!</strong> Puedes: presentar un 3er argumento, reforzar los anteriores, o reconocer el <em>"otro lado"</em> (contraargumento) y aun así defender tu posición. Reconocer el otro lado demuestra madurez intelectual — ¡exactamente lo que el OSSLT quiere ver para el Nivel 4!`,
+    tip_conc:`<strong>¡NO</strong> agregues información nueva! Resume los puntos principales y reafirma tu opinión de una <em>forma diferente</em> a la introducción. Usa tono formal: <em>do not</em> (nunca <em>don't</em>), sin jerga ni abreviaciones. ¡Termina con una frase fuerte y concluyente!`,
+    conn_intro:'💬 Frases de apertura sugeridas:',
+    conn_b1_open:'🔵 Conector de apertura — elige 1:', conn_b1_ex:'📌 Para ejemplos (haz clic en cualquier parte):',
+    conn_b2_open:'🟢 Conector de apertura — elige 1:', conn_b2_ex:'📌 Para ejemplos:',
+    conn_b3_open:'🟠 Conector de apertura — elige 1:', conn_b3_ex:'📌 Para ejemplos:',
+    conn_conc_open:'🔴 Conector de apertura — elige 1:',
+    ta_intro:'Escribe tu introducción aquí. Presenta el tema y declara tu opinión...',
+    ta_b1:'Escribe tu primer argumento aquí...',
+    ta_b2:'Escribe tu segundo argumento aquí...',
+    ta_b3:'Tercer argumento, refuerzo o contraargumento + ejemplo...',
+    ta_conc:'Escribe tu conclusión aquí. Resume + reafirma tu opinión de forma nueva...',
+    addB3:'✦ Agregar párrafo de desarrollo 3 (Opcional) — ¡muestra madurez e impresiona a los evaluadores! 🌟',
+    removeB3:'✕ Eliminar párrafo de desarrollo 3',
+    previewTitle:'📄 Mi texto completo', copyBtn:'📋 Copiar texto',
+    copied:'✅ ¡Copiado!', copyEmpty:'¡Ningún texto aún! Escribe tus párrafos primero 😊',
+    copyFail:'No se pudo copiar. Intenta seleccionar el texto manualmente.',
+    topicPrefix:'📋 Tema:', topicNone:'—',
+    label_intro:'Introducción', label_b1:'Desarrollo 1', label_b2:'Desarrollo 2',
+    label_b3:'Desarrollo 3 ⭐', label_conc:'Conclusión',
+    empty_intro:'Introducción aún vacía…', empty_b1:'Primer argumento aún vacío…',
+    empty_b2:'Segundo argumento aún vacío…', empty_b3:'Tercer argumento aún vacío…',
+    empty_conc:'Conclusión aún vacía…',
+    fabLabel:'Guía', drawerTitle:'📚 Guía de estudio', drawerSub:'Haz clic en cualquier tema para saber más 👇',
+    topics: [
+      { icon:'🎯', name:'¿Qué es el OSSLT?', content:`
+        <p>El <strong>OSSLT</strong> (Ontario Secondary School Literacy Test) es obligatorio para todos los estudiantes de Grado 10 en Ontario.</p>
+        <p>El enfoque <strong>no es la creatividad literaria</strong> — evalúa si puedes <strong>comunicar ideas con claridad y organización</strong>.</p>
+        <p>El examen tiene dos partes principales: las <em>Short Writing Tasks</em> (respuestas cortas) y el <em>Long Writing</em> — ¡la redacción de opinión que estás practicando aquí! ✏️</p>
+        <div class="topic-tip">💡 El examen se hace en computadora — ¡practica escribir rápido para que te sobre tiempo de revisar!</div>` },
+      { icon:'📊', name:'¿Cómo seré evaluado(a)?', content:`
+        <p>Los evaluadores usan <strong>dos criterios</strong>:</p>
+        <div class="crit-box crit-a"><div class="crit-title">1. Topic Development</div><div class="crit-body">¿Tus ideas tienen sentido? ¿Usaste ejemplos específicos? ¿La organización es lógica? <strong>¡No repitas la misma frase varias veces!</strong></div></div>
+        <div class="crit-box crit-b"><div class="crit-title">2. Use of Conventions</div><div class="crit-body">Gramática, puntuación y ortografía. Los errores leves son tolerados — siempre que <strong>no impidan la comprensión</strong> del texto.</div></div>
+        <div class="topic-tip">💡 ¡Usar los conectores correctamente ya garantiza un Nivel 3 o 4 — las calificaciones más altas!</div>` },
+      { icon:'📝', name:'Técnica R.A.S.E.', content:`
+        <p>Para las <strong>respuestas cortas</strong> (Short Writing Tasks), usa la fórmula <strong>R.A.S.E.</strong> en un solo párrafo:</p>
+        <div class="rase-grid">
+          <div class="rase-item r"><span class="rase-letter">R</span><div><strong>Restate</strong><br><small>Reformula la pregunta en tus propias palabras</small></div></div>
+          <div class="rase-item a"><span class="rase-letter">A</span><div><strong>Answer</strong><br><small>Da tu respuesta directa y clara</small></div></div>
+          <div class="rase-item s"><span class="rase-letter">S</span><div><strong>Support</strong><br><small>Usa un ejemplo del texto o de la vida real</small></div></div>
+          <div class="rase-item e"><span class="rase-letter">E</span><div><strong>Explain</strong><br><small>Explica cómo el ejemplo prueba tu respuesta</small></div></div>
+        </div>
+        <div class="topic-tip">💡 ¡La respuesta corta es 1 párrafo de 6 a 10 líneas — no escribas más que eso!</div>` },
+      { icon:'🎩', name:'Tono formal — Reglas', content:`
+        <div class="rules-list">
+          <div class="rule bad">❌ <strong>don't / can't / I'm</strong> → usa <strong>do not / cannot / I am</strong></div>
+          <div class="rule bad">❌ Jerga: <em>"it's cool", "gonna", "kinda"</em></div>
+          <div class="rule bad">❌ Abreviaciones: <em>"idk", "lol", "omg"</em></div>
+          <div class="rule bad">❌ Cambiar de opinión a mitad de la redacción</div>
+          <div class="rule good">✅ Tono académico y directo</div>
+          <div class="rule good">✅ Elige un lado y defiéndelo <strong>hasta el final</strong></div>
+          <div class="rule good">✅ Ejemplos concretos y específicos</div>
+        </div>
+        <div class="topic-tip">💡 ¡Tu opinión no importa — el evaluador no te penalizará si no está de acuerdo contigo. Solo quiere ver el argumento!</div>` },
+      { icon:'⏱️', name:'Estrategia en el examen', content:`
+        <div class="strat-steps">
+          <div class="strat-step"><span class="step-num">1</span><div><strong>Planifica primero (5 min)</strong><br><small>Antes de escribir, anota tus 2–3 argumentos en borrador</small></div></div>
+          <div class="strat-step"><span class="step-num">2</span><div><strong>Escribe con enfoque</strong><br><small>Un argumento por párrafo, siempre con un ejemplo</small></div></div>
+          <div class="strat-step"><span class="step-num">3</span><div><strong>Revisa al final</strong><br><small>Verifica mayúsculas, puntuación y contracciones (don't → do not)</small></div></div>
+        </div>
+        <div class="topic-tip">💡 ¡Haz el simulacro oficial del EQAO al menos una vez — te acostumbrarás a la interfaz digital!</div>` },
+      { icon:'💡', name:'Temas para practicar', content:`
+        <p style="font-size:0.82rem;color:#71717A;margin-bottom:10px">¡Copia uno de estos temas en el campo "Pregunta del examen" y escribe tu redacción! 👆</p>
+        <div class="prompt-list">
+          <div class="prompt-item" onclick="usePrompt(this)">📱 Should cellphones be banned from Ontario classrooms?<span class="use-btn">Usar ›</span></div>
+          <div class="prompt-item" onclick="usePrompt(this)">💼 Is it better for students to have a part-time job or focus only on school?<span class="use-btn">Usar ›</span></div>
+          <div class="prompt-item" onclick="usePrompt(this)">😴 Should high schools start later in the morning to allow students more sleep?<span class="use-btn">Usar ›</span></div>
+          <div class="prompt-item" onclick="usePrompt(this)">🎓 Should students have a free period in their school schedule?<span class="use-btn">Usar ›</span></div>
+        </div>
+        <div class="topic-tip">💡 ¡Haz clic en "Usar ›" para copiar el tema directamente al campo del examen!</div>` },
+    ]
+  }
+};
+
+/* ══════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════ */
+let currentLang = localStorage.getItem('eqao-lang') || 'en';
+let b3On = false;
+let activeChipConnector = {};
+
+/* ══════════════════════════════════════════════
+   LANG SYSTEM
+══════════════════════════════════════════════ */
+function L() { return LANGS[currentLang]; }
+
+function setLang(code) {
+  currentLang = code;
+  localStorage.setItem('eqao-lang', code);
+  document.documentElement.lang = code;
+  // Update buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(code));
+  });
+  applyLang();
 }
 
-/* ─── PICK CHIP (main opener connector) ─── */
-function pickChip(el) {
-  const group  = el.dataset.group;
-  const taId   = el.dataset.target;
-  const text   = el.dataset.text;
-  const color  = getSectionColor(taId);
+function applyLang() {
+  const l = L();
+  // Hero
+  setText('hero-sub', l.heroSub);
+  setText('hero-tag', l.heroTag);
+  // Topic
+  setHTML('topic-label', l.topicLabel);
+  setAttr('topic-input', 'placeholder', l.topicPlaceholder);
+  // Progress
+  setText('prog-label', l.progressLabel);
+  syncProgress();
+  // Cards - badges & titles
+  setText('b-p1', l.p1badge); setText('t-intro', l.t_intro);
+  setText('b-p2', l.p2badge); setText('t-b1', l.t_b1);
+  setText('b-p3', l.p3badge); setText('t-b2', l.t_b2);
+  setText('b-p4', l.p4badge); setText('t-b3', l.t_b3);
+  setText('t-conc', l.t_conc);
+  setText('conc-badge', l.concBadge(b3On));
+  setText('opt-tag', l.optTag);
+  // Tip buttons
+  ['intro','b1','b2','b3','conc'].forEach(k => {
+    const el = document.getElementById(`tipbtn-${k}`);
+    if (el) el.textContent = l.tipBtn;
+  });
+  // Tip labels & content
+  setHTML('tiplabel-intro', l.tiplabel_intro); setHTML('tipcontent-intro', l.tip_intro);
+  setHTML('tiplabel-b1',   l.tiplabel_b1);   setHTML('tipcontent-b1',   l.tip_b1);
+  setHTML('tiplabel-b2',   l.tiplabel_b2);   setHTML('tipcontent-b2',   l.tip_b2);
+  setHTML('tiplabel-b3',   l.tiplabel_b3);   setHTML('tipcontent-b3',   l.tip_b3);
+  setHTML('tiplabel-conc', l.tiplabel_conc); setHTML('tipcontent-conc', l.tip_conc);
+  // Connector labels
+  setText('conn-intro-label', l.conn_intro);
+  setText('conn-b1-open', l.conn_b1_open); setText('conn-b1-ex', l.conn_b1_ex);
+  setText('conn-b2-open', l.conn_b2_open); setText('conn-b2-ex', l.conn_b2_ex);
+  setText('conn-b3-open', l.conn_b3_open); setText('conn-b3-ex', l.conn_b3_ex);
+  setText('conn-conc-open', l.conn_conc_open);
+  // Placeholders
+  setAttr('ta-intro',      'placeholder', l.ta_intro);
+  setAttr('ta-body1',      'placeholder', l.ta_b1);
+  setAttr('ta-body2',      'placeholder', l.ta_b2);
+  setAttr('ta-body3',      'placeholder', l.ta_b3);
+  setAttr('ta-conclusion', 'placeholder', l.ta_conc);
+  // Word counters - re-render
+  ['ta-intro','ta-body1','ta-body2','ta-body3','ta-conclusion'].forEach(id => {
+    const wcId = id.replace('ta-','wc-').replace('body','b').replace('conclusion','conc').replace('intro','intro');
+    updateWordCount(id, wcId);
+  });
+  // Body 3 button
+  setText('b3-btn-text', b3On ? l.removeB3 : l.addB3);
+  // Preview
+  setText('preview-title', l.previewTitle);
+  setText('copy-btn', l.copyBtn);
+  // Preview labels
+  setText('prev-label-intro', l.label_intro); setText('prev-empty-intro', l.empty_intro);
+  setText('prev-label-b1',   l.label_b1);    setText('prev-empty-b1',   l.empty_b1);
+  setText('prev-label-b2',   l.label_b2);    setText('prev-empty-b2',   l.empty_b2);
+  setText('prev-label-b3',   l.label_b3);    setText('prev-empty-b3',   l.empty_b3);
+  setText('prev-label-conc', l.label_conc);  setText('prev-empty-conc', l.empty_conc);
+  // Drawer
+  setText('fab-label', l.fabLabel);
+  setText('drawer-title', l.drawerTitle);
+  setText('drawer-sub', l.drawerSub);
+  buildDrawer();
+  // Sync preview texts
+  syncPreview();
+}
 
-  // Deactivate siblings
+function setText(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
+function setHTML(id, val) { const el = document.getElementById(id); if (el) el.innerHTML = val; }
+function setAttr(id, attr, val) { const el = document.getElementById(id); if (el) el.setAttribute(attr, val); }
+
+/* ══════════════════════════════════════════════
+   DRAWER BUILD
+══════════════════════════════════════════════ */
+function buildDrawer() {
+  const list = document.getElementById('drawer-list');
+  const topics = L().topics;
+  list.innerHTML = topics.map((t, i) => `
+    <div class="drawer-item">
+      <button class="topic-btn" onclick="toggleTopic('dt${i}')">
+        <span class="topic-icon">${t.icon}</span>
+        <span class="topic-name">${t.name}</span>
+        <span class="topic-arrow">›</span>
+      </button>
+      <div class="topic-content" id="dt${i}">${t.content}</div>
+    </div>`).join('');
+}
+
+function toggleTopic(id) {
+  const el = document.getElementById(id);
+  const was = el.classList.contains('topen');
+  document.querySelectorAll('.topic-content').forEach(e => e.classList.remove('topen'));
+  if (!was) el.classList.add('topen');
+}
+
+/* ══════════════════════════════════════════════
+   TIP TOGGLE
+══════════════════════════════════════════════ */
+function toggleTip(id) { document.getElementById(id).classList.toggle('open'); }
+
+/* ══════════════════════════════════════════════
+   CHIP INTERACTIONS
+══════════════════════════════════════════════ */
+function pickChip(el) {
+  const group = el.dataset.group, taId = el.dataset.target, text = el.dataset.text;
+  const color = getSectionColor(taId);
   document.querySelectorAll(`[data-group="${group}"]`).forEach(c => {
     c.classList.remove('on');
-    c.style.background = c.dataset.origBg || '#F3F4F6';
+    c.style.background = c.dataset.origBg || '#F4F4F5';
     c.style.color = '';
   });
-
-  // Remember original bg first time
-  if (!el.dataset.origBg) el.dataset.origBg = el.style.background || '#F3F4F6';
-
+  if (!el.dataset.origBg) el.dataset.origBg = el.style.background || '#F4F4F5';
   el.classList.add('on');
   el.style.background = color;
   el.style.color = 'white';
-
   const ta = document.getElementById(taId);
   const prev = activeChipConnector[group] ? activeChipConnector[group] + ' ' : '';
-
   if (prev && ta.value.startsWith(prev)) {
     ta.value = text + ' ' + ta.value.slice(prev.length);
   } else if (ta.value.trim() === '') {
@@ -717,156 +1344,122 @@ function pickChip(el) {
   } else {
     ta.value = text + ' ' + ta.value;
   }
-
   activeChipConnector[group] = text;
-
   ta.focus();
-  const pos = text.length + 1;
-  ta.setSelectionRange(pos, pos);
+  ta.setSelectionRange(text.length + 1, text.length + 1);
+  const wcId = taId.replace('ta-','wc-').replace('body','b').replace('conclusion','conc');
+  updateWordCount(taId, wcId);
+  syncPreview(); syncProgress();
+}
 
-  const wcId = taId.replace('ta-', 'wc-').replace('body', 'b').replace('conclusion','conc').replace('intro','intro');
-  countWordsById(taId, wcId);
+function insertAt(el) {
+  const taId = el.dataset.target, text = el.dataset.text;
+  const ta = document.getElementById(taId);
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  ta.value = ta.value.slice(0,s) + text + ' ' + ta.value.slice(e);
+  ta.focus();
+  ta.setSelectionRange(s + text.length + 1, s + text.length + 1);
+  const wcId = taId.replace('ta-','wc-').replace('body','b').replace('conclusion','conc');
+  updateWordCount(taId, wcId);
+  syncPreview();
+}
+
+/* ══════════════════════════════════════════════
+   WORD COUNT
+══════════════════════════════════════════════ */
+function updateWordCount(taId, wcId) {
+  const ta = document.getElementById(taId), wc = document.getElementById(wcId);
+  if (!ta || !wc) return;
+  const n = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
+  wc.textContent = L().words(n);
+}
+
+function syncAll(taId, wcId) {
+  updateWordCount(taId, wcId);
   syncPreview();
   syncProgress();
 }
 
-/* ─── INSERT AT CURSOR (example connectors) ─── */
-function insertAt(el) {
-  const taId = el.dataset.target;
-  const text = el.dataset.text;
-  const ta   = document.getElementById(taId);
-  const s    = ta.selectionStart, e = ta.selectionEnd;
-  ta.value = ta.value.slice(0,s) + text + ' ' + ta.value.slice(e);
-  ta.focus();
-  const pos = s + text.length + 1;
-  ta.setSelectionRange(pos, pos);
-
-  const wcId = taId.replace('ta-', 'wc-').replace('body','b').replace('conclusion','conc');
-  countWordsById(taId, wcId);
-  syncPreview();
-}
-
-/* ─── WORD COUNT ─── */
-function countWords(taId, wcId) { countWordsById(taId, wcId); }
-function countWordsById(taId, wcId) {
-  const ta  = document.getElementById(taId);
-  const wc  = document.getElementById(wcId);
-  if (!ta || !wc) return;
-  const n = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
-  wc.textContent = n + (n === 1 ? ' palavra' : ' palavras');
-}
-
-/* ─── BODY 3 TOGGLE ─── */
+/* ══════════════════════════════════════════════
+   BODY 3
+══════════════════════════════════════════════ */
 function toggleBody3() {
   b3On = !b3On;
   document.getElementById('b3-wrap').classList.toggle('hidden', !b3On);
   document.getElementById('prev-b3').classList.toggle('hidden', !b3On);
-  const btn = document.getElementById('b3-btn');
-  if (b3On) {
-    btn.textContent = '✕ Remover Body Paragraph 3';
-    btn.style.borderStyle = 'solid';
-    document.getElementById('conc-badge').textContent = 'Parágrafo 5';
-  } else {
-    btn.innerHTML = '✦ Adicionar Body Paragraph 3 (Opcional) — mostra maturidade e impressiona os corretores! 🌟';
-    btn.style.borderStyle = 'dashed';
-    document.getElementById('conc-badge').textContent = 'Parágrafo 4';
-  }
+  setText('b3-btn-text', b3On ? L().removeB3 : L().addB3);
+  document.getElementById('b3-btn').style.borderStyle = b3On ? 'solid' : 'dashed';
+  setText('conc-badge', L().concBadge(b3On));
   syncProgress();
 }
 
-/* ─── PROGRESS ─── */
+/* ══════════════════════════════════════════════
+   PROGRESS
+══════════════════════════════════════════════ */
 function syncProgress() {
   const ids = ['ta-intro','ta-body1','ta-body2'];
   if (b3On) ids.push('ta-body3');
   ids.push('ta-conclusion');
-
   const filled = ids.filter(id => {
     const el = document.getElementById(id);
     return el && el.value.trim().length > 8;
   }).length;
-
-  const total = ids.length;
-  const pct = (filled / total) * 100;
-  document.getElementById('prog-bar').style.width = pct + '%';
-  document.getElementById('prog-text').textContent = `${filled} / ${total} parágrafos`;
+  document.getElementById('prog-bar').style.width = (filled / ids.length * 100) + '%';
+  document.getElementById('prog-text').textContent = L().progressText(filled, ids.length);
 }
 
-/* ─── PREVIEW SYNC ─── */
+/* ══════════════════════════════════════════════
+   PREVIEW SYNC
+══════════════════════════════════════════════ */
 function syncPreview() {
+  const l = L();
   const topic = document.getElementById('topic-input').value.trim();
-  document.getElementById('prev-topic').textContent = '📋 Tema: ' + (topic || '—');
-
+  document.getElementById('prev-topic').textContent = l.topicPrefix + ' ' + (topic || l.topicNone);
   const map = [
-    { ta:'ta-intro',    prev:'prev-intro', label:'Introduction',        empty:'Introdução ainda vazia…',           color:'cl-intro' },
-    { ta:'ta-body1',   prev:'prev-b1',    label:'Body Paragraph 1',    empty:'Primeiro argumento ainda vazio…',    color:'cl-b1' },
-    { ta:'ta-body2',   prev:'prev-b2',    label:'Body Paragraph 2',    empty:'Segundo argumento ainda vazio…',     color:'cl-b2' },
-    { ta:'ta-body3',   prev:'prev-b3',    label:'Body Paragraph 3 ⭐', empty:'Terceiro argumento ainda vazio…',    color:'cl-b3' },
-    { ta:'ta-conclusion', prev:'prev-conc', label:'Conclusion',         empty:'Conclusão ainda vazia…',            color:'cl-conc' },
+    { ta:'ta-intro',      prev:'prev-intro', label:l.label_intro, empty:l.empty_intro, cl:'cl-intro' },
+    { ta:'ta-body1',      prev:'prev-b1',    label:l.label_b1,    empty:l.empty_b1,    cl:'cl-b1' },
+    { ta:'ta-body2',      prev:'prev-b2',    label:l.label_b2,    empty:l.empty_b2,    cl:'cl-b2' },
+    { ta:'ta-body3',      prev:'prev-b3',    label:l.label_b3,    empty:l.empty_b3,    cl:'cl-b3' },
+    { ta:'ta-conclusion', prev:'prev-conc',  label:l.label_conc,  empty:l.empty_conc,  cl:'cl-conc' },
   ];
-
-  map.forEach(({ ta, prev, label, empty, color }) => {
-    const taEl   = document.getElementById(ta);
-    const prevEl = document.getElementById(prev);
+  map.forEach(({ ta, prev, label, empty, cl }) => {
+    const taEl = document.getElementById(ta), prevEl = document.getElementById(prev);
     if (!taEl || !prevEl) return;
     const txt = taEl.value.trim();
     if (txt) {
-      prevEl.innerHTML = `<div class="prev-label ${color}">${label}</div>${escHtml(txt)}`;
+      prevEl.innerHTML = `<div class="prev-label ${cl}">${label}</div>${escHtml(txt)}`;
     } else {
-      prevEl.innerHTML = `<div class="prev-label ${color}">${label}</div><span class="prev-empty">${empty}</span>`;
+      prevEl.innerHTML = `<div class="prev-label ${cl}">${label}</div><span class="prev-empty">${empty}</span>`;
     }
   });
 }
 
-/* ─── COPY ─── */
+/* ══════════════════════════════════════════════
+   COPY
+══════════════════════════════════════════════ */
 function copyAll() {
+  const l = L();
   const topic = document.getElementById('topic-input').value.trim();
   const ids = ['ta-intro','ta-body1','ta-body2'];
   if (b3On) ids.push('ta-body3');
   ids.push('ta-conclusion');
-
   let out = '';
   if (topic) out += 'Topic: ' + topic + '\n\n';
   ids.forEach(id => {
     const v = document.getElementById(id)?.value.trim();
     if (v) out += v + '\n\n';
   });
-
-  if (!out.trim()) {
-    alert('Nenhum texto ainda! Escreva seus parágrafos primeiro 😊');
-    return;
-  }
-
+  if (!out.trim()) { alert(l.copyEmpty); return; }
   navigator.clipboard.writeText(out.trim()).then(() => {
-    const btn = document.querySelector('.copy-btn');
-    btn.textContent = '✅ Copiado!';
-    setTimeout(() => { btn.textContent = '📋 Copiar Texto'; }, 2200);
-  }).catch(() => {
-    alert('Não foi possível copiar. Tente selecionar o texto manualmente.');
-  });
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = l.copied;
+    setTimeout(() => btn.textContent = l.copyBtn, 2200);
+  }).catch(() => alert(l.copyFail));
 }
 
-/* ─── HELPERS ─── */
-function getSectionColor(taId) {
-  const map = {
-    'ta-intro':      '#7C3AED',
-    'ta-body1':      '#2563EB',
-    'ta-body2':      '#059669',
-    'ta-body3':      '#D97706',
-    'ta-conclusion': '#DC2626',
-  };
-  return map[taId] || '#333';
-}
-
-function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-            .replace(/\n/g,'<br>');
-}
-
-/* Fix wc IDs on the fly for countWords shortcut calls */
-/* The word count IDs are: wc-intro, wc-b1, wc-b2, wc-b3, wc-conc */
-/* But the textarea oninput calls use those IDs directly, so no fix needed */
-
-/* ─── DRAWER ─── */
+/* ══════════════════════════════════════════════
+   DRAWER
+══════════════════════════════════════════════ */
 function openDrawer() {
   document.getElementById('drawer').classList.add('open');
   document.getElementById('drawer-overlay').classList.add('show');
@@ -876,401 +1469,36 @@ function closeDrawer() {
   document.getElementById('drawer').classList.remove('open');
   document.getElementById('drawer-overlay').classList.remove('show');
   document.body.style.overflow = '';
-  closeAllTopics();
-}
-function toggleTopic(id) {
-  const el = document.getElementById(id);
-  const isOpen = el.classList.contains('topen');
-  closeAllTopics();
-  if (!isOpen) el.classList.add('topen');
-}
-function closeAllTopics() {
-  document.querySelectorAll('.topic-content').forEach(e => e.classList.remove('topen'));
-}
-</script>
-
-<!-- ═══ FLOATING BUTTON ═══ -->
-<button class="fab" onclick="openDrawer()" title="Guia de Estudo">
-  📚
-  <span class="fab-label">Guia</span>
-</button>
-
-<!-- ═══ OVERLAY ═══ -->
-<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
-
-<!-- ═══ DRAWER ═══ -->
-<div class="drawer" id="drawer">
-
-  <div class="drawer-header">
-    <div class="drawer-title">📚 Guia de Estudo</div>
-    <button class="drawer-close" onclick="closeDrawer()">✕</button>
-  </div>
-
-  <div class="drawer-subtitle">Clique em qualquer tópico para saber mais 👇</div>
-
-  <div class="drawer-list">
-
-    <!-- 1 -->
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t1')">
-        <span class="topic-icon">🎯</span>
-        <span class="topic-name">O que é o OSSLT?</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t1">
-        <p>O <strong>OSSLT</strong> (Ontario Secondary School Literacy Test) é obrigatório para todos os alunos do Grade 10 em Ontário.</p>
-        <p>O foco <strong>não é criatividade literária</strong> — é avaliar se você consegue <strong>comunicar ideias com clareza e organização</strong>.</p>
-        <p>A prova tem duas partes principais: <em>Short Writing Tasks</em> (respostas curtas) e o <em>Long Writing</em> — a dissertação de opinião que você está praticando aqui! ✏️</p>
-        <div class="topic-tip">💡 O teste é feito no computador — pratique digitar rápido para sobrar tempo de revisar!</div>
-      </div>
-    </div>
-
-    <!-- 2 -->
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t2')">
-        <span class="topic-icon">📊</span>
-        <span class="topic-name">Como serei avaliada?</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t2">
-        <p>Os corretores usam <strong>dois critérios</strong>:</p>
-        <div class="crit-box crit-a">
-          <div class="crit-title">1. Topic Development</div>
-          <div class="crit-body">Suas ideias fazem sentido? Você usou exemplos específicos? A organização é lógica? <strong>Não repita a mesma frase várias vezes!</strong></div>
-        </div>
-        <div class="crit-box crit-b">
-          <div class="crit-title">2. Use of Conventions</div>
-          <div class="crit-body">Gramática, pontuação e ortografia. Erros leves são tolerados — desde que <strong>não impeçam a compreensão</strong> do texto.</div>
-        </div>
-        <div class="topic-tip">💡 Usar conectores corretamente já garante Nível 3 ou 4 — as notas mais altas!</div>
-      </div>
-    </div>
-
-    <!-- 3 -->
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t3')">
-        <span class="topic-icon">📝</span>
-        <span class="topic-name">Técnica R.A.S.E.</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t3">
-        <p>Para as <strong>respostas curtas</strong> (Short Writing Tasks), use a fórmula <strong>R.A.S.E.</strong> em um único parágrafo:</p>
-        <div class="rase-grid">
-          <div class="rase-item r"><span class="rase-letter">R</span><div><strong>Restate</strong><br><small>Reafirme a pergunta com suas palavras</small></div></div>
-          <div class="rase-item a"><span class="rase-letter">A</span><div><strong>Answer</strong><br><small>Dê sua resposta direta e clara</small></div></div>
-          <div class="rase-item s"><span class="rase-letter">S</span><div><strong>Support</strong><br><small>Use um exemplo do texto ou da vida real</small></div></div>
-          <div class="rase-item e"><span class="rase-letter">E</span><div><strong>Explain</strong><br><small>Explique como o exemplo prova sua resposta</small></div></div>
-        </div>
-        <div class="topic-tip">💡 A resposta curta é 1 parágrafo de 6 a 10 linhas — não escreva mais que isso!</div>
-      </div>
-    </div>
-
-    <!-- 4 -->
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t4')">
-        <span class="topic-icon">🎩</span>
-        <span class="topic-name">Tom Formal — Regras</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t4">
-        <div class="rules-list">
-          <div class="rule bad">❌ <strong>don't / can't / I'm</strong> → use <strong>do not / cannot / I am</strong></div>
-          <div class="rule bad">❌ Gírias: <em>"it's cool", "gonna", "kinda"</em></div>
-          <div class="rule bad">❌ Abreviações: <em>"idk", "lol", "omg"</em></div>
-          <div class="rule bad">❌ Mudar de opinião no meio do texto</div>
-          <div class="rule good">✅ Tom acadêmico e direto</div>
-          <div class="rule good">✅ Escolha um lado e defenda <strong>até o fim</strong></div>
-          <div class="rule good">✅ Exemplos concretos e específicos</div>
-        </div>
-        <div class="topic-tip">💡 A opinião não importa — o corretor não vai te penalizar se discordar de você. Só quer ver o argumento!</div>
-      </div>
-    </div>
-
-    <!-- 5 -->
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t5')">
-        <span class="topic-icon">⏱️</span>
-        <span class="topic-name">Estratégia na Prova</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t5">
-        <div class="strat-steps">
-          <div class="strat-step"><span class="step-num">1</span><div><strong>Planeje primeiro (5 min)</strong><br><small>Antes de escrever, anote seus 2-3 argumentos em rascunho</small></div></div>
-          <div class="strat-step"><span class="step-num">2</span><div><strong>Escreva com foco</strong><br><small>Um argumento por parágrafo, sempre com exemplo</small></div></div>
-          <div class="strat-step"><span class="step-num">3</span><div><strong>Revise ao final</strong><br><small>Verifique maiúsculas, pontuação e contrações (don't → do not)</small></div></div>
-        </div>
-        <div class="topic-tip">💡 Faça o simulado oficial do EQAO pelo menos uma vez — você se acostuma com a interface digital!</div>
-      </div>
-    </div>
-
-    <!-- 6 -->
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t6')">
-        <span class="topic-icon">💡</span>
-        <span class="topic-name">Temas para Praticar</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t6">
-        <p style="font-size:0.83rem;color:#6B7280;margin-bottom:10px">Copie um desses temas no campo "Pergunta da Prova" e escreva sua redação! 👆</p>
-        <div class="prompt-list">
-          <div class="prompt-item" onclick="usePrompt(this)">
-            📱 Should cellphones be banned from Ontario classrooms?
-            <span class="use-btn">Usar ›</span>
-          </div>
-          <div class="prompt-item" onclick="usePrompt(this)">
-            💼 Is it better for students to have a part-time job or focus only on school?
-            <span class="use-btn">Usar ›</span>
-          </div>
-          <div class="prompt-item" onclick="usePrompt(this)">
-            😴 Should high schools start later in the morning to allow students more sleep?
-            <span class="use-btn">Usar ›</span>
-          </div>
-          <div class="prompt-item" onclick="usePrompt(this)">
-            🎓 Should students have a free period in their school schedule?
-            <span class="use-btn">Usar ›</span>
-          </div>
-        </div>
-        <div class="topic-tip">💡 Clique em "Usar ›" para copiar o tema direto para o campo da prova!</div>
-      </div>
-    </div>
-
-  </div><!-- end drawer-list -->
-</div><!-- end drawer -->
-
-<style>
-/* ═══ FAB ═══ */
-.fab {
-  position: fixed;
-  bottom: 28px;
-  right: 20px;
-  z-index: 900;
-  background: linear-gradient(135deg, #7C3AED, #2563EB);
-  color: white;
-  border: none;
-  border-radius: 999px;
-  padding: 14px 20px 14px 16px;
-  font-size: 1.1rem;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  box-shadow: 0 6px 24px rgba(124,58,237,0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.fab:hover { transform: scale(1.06); box-shadow: 0 8px 32px rgba(124,58,237,0.5); }
-.fab-label { font-size: 0.88rem; letter-spacing: 0.3px; }
-
-/* ═══ OVERLAY ═══ */
-.drawer-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.35);
-  z-index: 1000;
-  backdrop-filter: blur(2px);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.drawer-overlay.show { display: block; opacity: 1; }
-
-/* ═══ DRAWER ═══ */
-.drawer {
-  position: fixed;
-  top: 0; right: 0; bottom: 0;
-  width: min(400px, 92vw);
-  background: white;
-  z-index: 1100;
-  transform: translateX(100%);
-  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
-  display: flex;
-  flex-direction: column;
-  box-shadow: -8px 0 40px rgba(0,0,0,0.15);
-  border-radius: 20px 0 0 20px;
-}
-.drawer.open { transform: translateX(0); }
-
-.drawer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 22px 20px 14px;
-  border-bottom: 2px solid #F3F4F6;
-  flex-shrink: 0;
-}
-.drawer-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.35rem;
-  color: #7C3AED;
-}
-.drawer-close {
-  background: #F3F4F6;
-  border: none;
-  border-radius: 10px;
-  width: 34px; height: 34px;
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  color: #6B7280;
-  transition: background 0.15s;
-}
-.drawer-close:hover { background: #E5E7EB; }
-
-.drawer-subtitle {
-  padding: 10px 20px 6px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #9CA3AF;
-  flex-shrink: 0;
 }
 
-.drawer-list {
-  overflow-y: auto;
-  flex: 1;
-  padding: 6px 14px 24px;
-}
-.drawer-list::-webkit-scrollbar { width: 4px; }
-.drawer-list::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 4px; }
-
-/* ═══ TOPIC ITEMS ═══ */
-.drawer-item { margin-bottom: 6px; }
-
-.topic-btn {
-  width: 100%;
-  background: #F9FAFB;
-  border: 2px solid #F3F4F6;
-  border-radius: 14px;
-  padding: 13px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  font-size: 0.92rem;
-  color: #1F2937;
-  text-align: left;
-  transition: background 0.15s, border-color 0.15s;
-}
-.topic-btn:hover { background: #EDE9FE; border-color: #C4B5FD; }
-
-.topic-icon { font-size: 1.1rem; flex-shrink: 0; }
-.topic-name { flex: 1; }
-.topic-arrow {
-  font-size: 1.3rem;
-  color: #9CA3AF;
-  transition: transform 0.25s;
-  line-height: 1;
-}
-
-.topic-content {
-  display: none;
-  padding: 14px 16px 16px;
-  background: #FAFAFA;
-  border: 2px solid #F3F4F6;
-  border-top: none;
-  border-radius: 0 0 14px 14px;
-  font-size: 0.86rem;
-  line-height: 1.6;
-  color: #374151;
-  animation: fadeUp 0.2s ease;
-}
-.topic-content p { margin-bottom: 10px; }
-.topic-content.topen { display: block; }
-
-/* rotate arrow when open */
-.drawer-item:has(.topen) .topic-arrow { transform: rotate(90deg); color: #7C3AED; }
-.drawer-item:has(.topen) .topic-btn { background: #EDE9FE; border-color: #C4B5FD; border-bottom-color: transparent; border-radius: 14px 14px 0 0; }
-
-.topic-tip {
-  margin-top: 12px;
-  padding: 10px 12px;
-  background: #FFFBEB;
-  border-left: 3px solid #F59E0B;
-  border-radius: 0 8px 8px 0;
-  font-size: 0.81rem;
-  font-weight: 700;
-  color: #92400E;
-}
-
-/* CRIT BOXES */
-.crit-box { border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
-.crit-a { background: #EDE9FE; }
-.crit-b { background: #DBEAFE; }
-.crit-title { font-weight: 800; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-.crit-body { font-size: 0.83rem; line-height: 1.5; }
-
-/* RASE */
-.rase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 10px 0; }
-.rase-item { border-radius: 10px; padding: 10px; display: flex; align-items: flex-start; gap: 8px; }
-.rase-item.r { background: #FEE2E2; }
-.rase-item.a { background: #DBEAFE; }
-.rase-item.s { background: #D1FAE5; }
-.rase-item.e { background: #FEF3C7; }
-.rase-letter { font-family: 'Fredoka One', cursive; font-size: 1.4rem; line-height: 1; }
-.rase-item.r .rase-letter { color: #DC2626; }
-.rase-item.a .rase-letter { color: #2563EB; }
-.rase-item.s .rase-letter { color: #059669; }
-.rase-item.e .rase-letter { color: #D97706; }
-.rase-item small { font-size: 0.77rem; color: #6B7280; }
-
-/* RULES */
-.rules-list { display: flex; flex-direction: column; gap: 7px; }
-.rule { padding: 8px 12px; border-radius: 9px; font-size: 0.83rem; }
-.rule.bad { background: #FEE2E2; color: #7F1D1D; }
-.rule.good { background: #D1FAE5; color: #064E3B; }
-
-/* STEPS */
-.strat-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 2px; }
-.strat-step { display: flex; align-items: flex-start; gap: 10px; }
-.step-num {
-  background: linear-gradient(135deg,#7C3AED,#2563EB);
-  color: white;
-  font-family: 'Fredoka One', cursive;
-  font-size: 1rem;
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.strat-step small { font-size: 0.8rem; color: #6B7280; }
-
-/* PROMPTS */
-.prompt-list { display: flex; flex-direction: column; gap: 7px; }
-.prompt-item {
-  padding: 10px 12px;
-  background: white;
-  border: 2px solid #E5E7EB;
-  border-radius: 10px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #374151;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  transition: border-color 0.15s, background 0.15s;
-}
-.prompt-item:hover { border-color: #7C3AED; background: #F5F3FF; }
-.use-btn {
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: #7C3AED;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-</style>
-
-<script>
+/* ══════════════════════════════════════════════
+   PROMPT USE
+══════════════════════════════════════════════ */
 function usePrompt(el) {
-  const text = el.textContent.replace('Usar ›','').trim().replace(/^[^\w]+/,'');
+  const useBtn = el.querySelector('.use-btn');
+  const text = el.textContent.replace(useBtn ? useBtn.textContent : '', '').trim().replace(/^[^\w📱💼😴🎓]+/, '');
   document.getElementById('topic-input').value = text;
   syncPreview();
   closeDrawer();
-  document.getElementById('topic-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('topic-input').scrollIntoView({ behavior:'smooth', block:'center' });
 }
-</script>
 
+/* ══════════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════════ */
+function getSectionColor(taId) {
+  return { 'ta-intro':'#6D28D9','ta-body1':'#1D4ED8','ta-body2':'#047857','ta-body3':'#B45309','ta-conclusion':'#B91C1C' }[taId] || '#333';
+}
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  setLang(currentLang);
+});
+</script>
 </body>
 </html>
