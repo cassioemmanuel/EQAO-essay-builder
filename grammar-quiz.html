@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EQAO Grammar Trainer 🧠</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple:  #7C3AED;
+  --blue:    #2563EB;
+  --green:   #059669;
+  --amber:   #D97706;
+  --red:     #DC2626;
+  --bg:      #F0EEFF;
+  --card:    #FFFFFF;
+  --text:    #1F2937;
+  --muted:   #6B7280;
+  --correct: #D1FAE5;
+  --wrong:   #FEE2E2;
+  --correct-border: #059669;
+  --wrong-border:   #DC2626;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 15% 15%, rgba(124,58,237,0.10) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(37,99,235,0.08) 0%, transparent 45%);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 16px 80px;
+}
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 36px 20px 20px;
+}
+.hero h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: var(--purple);
+  letter-spacing: 1px;
+}
+.hero p {
+  color: var(--muted);
+  font-weight: 700;
+  margin-top: 6px;
+  font-size: 0.97rem;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--purple);
+  text-decoration: none;
+  background: white;
+  border: 2px solid var(--purple);
+  padding: 5px 14px;
+  border-radius: 999px;
+  transition: background 0.15s;
+}
+.back-link:hover { background: #EDE9FE; }
+
+/* ── WRAP ── */
+.wrap { max-width: 700px; margin: 0 auto; }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.stat-chip {
+  flex: 1;
+  min-width: 90px;
+  background: white;
+  border-radius: 14px;
+  padding: 10px 14px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.stat-val {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+.sv-score  { color: var(--purple); }
+.sv-streak { color: var(--amber); }
+.sv-left   { color: var(--blue); }
+
+/* ── PROGRESS ── */
+.prog-wrap { margin-bottom: 22px; }
+.prog-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.prog-track {
+  height: 12px;
+  background: #E5E7EB;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), var(--blue), var(--green));
+  border-radius: 999px;
+  transition: width 0.5s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── QUESTION CARD ── */
+.q-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  animation: slideIn 0.35s ease both;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.q-header {
+  padding: 18px 22px 14px;
+  border-bottom: 2px solid #F3F4F6;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.q-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.q-meta { flex: 1; }
+.q-category {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--purple);
+  margin-bottom: 5px;
+}
+.q-number {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--muted);
+  float: right;
+}
+.q-prompt {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
+}
+.q-type-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-top: 7px;
+  display: inline-block;
+}
+.tb-mc      { background: #EDE9FE; color: var(--purple); }
+.tb-identify { background: #DBEAFE; color: var(--blue); }
+.tb-rewrite { background: #D1FAE5; color: var(--green); }
+
+/* ── Q BODY ── */
+.q-body { padding: 20px 22px 24px; }
+
+/* MULTIPLE CHOICE */
+.options-list { display: flex; flex-direction: column; gap: 10px; }
+.opt-btn {
+  width: 100%;
+  text-align: left;
+  padding: 13px 16px;
+  border: 2px solid #E5E7EB;
+  border-radius: 13px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: #F9FAFB;
+  color: var(--text);
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  line-height: 1.45;
+}
+.opt-btn:hover:not(:disabled) { border-color: var(--purple); background: #F5F3FF; transform: translateX(3px); }
+.opt-btn:disabled { cursor: default; }
+.opt-btn.correct { background: var(--correct); border-color: var(--correct-border); color: #065F46; }
+.opt-btn.wrong   { background: var(--wrong);   border-color: var(--wrong-border);   color: #7F1D1D; }
+.opt-letter {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: #E5E7EB;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-align: center;
+  line-height: 24px;
+  margin-right: 10px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.opt-btn.correct .opt-letter { background: #059669; color: white; }
+.opt-btn.wrong   .opt-letter { background: #DC2626; color: white; }
+
+/* IDENTIFY */
+.sentence-display {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.9;
+  padding: 16px 18px;
+  background: #F9FAFB;
+  border-radius: 13px;
+  border: 2px solid #E5E7EB;
+  margin-bottom: 10px;
+}
+.word-span {
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 7px;
+  transition: background 0.15s, transform 0.1s;
+  display: inline-block;
+}
+.word-span:hover { background: #EDE9FE; transform: scale(1.05); }
+.word-span.selected-wrong { background: var(--wrong); border: 2px solid var(--wrong-border); color: #7F1D1D; }
+.word-span.selected-correct { background: var(--correct); border: 2px solid var(--correct-border); color: #065F46; }
+.word-span.missed { background: #FEF3C7; border: 2px solid #D97706; }
+.word-span.disabled { cursor: default; }
+.word-span.disabled:hover { background: transparent; transform: none; }
+.identify-hint {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+/* REWRITE */
+.original-sentence {
+  background: #F3F4F6;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-style: italic;
+  color: #374151;
+  border-left: 4px solid var(--purple);
+}
+.rewrite-hint {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--amber);
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: #FFFBEB;
+  border-radius: 9px;
+  border-left: 3px solid var(--amber);
+}
+.rewrite-ta {
+  width: 100%;
+  padding: 13px 16px;
+  border: 2px solid #E5E7EB;
+  border-radius: 13px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  min-height: 80px;
+  resize: vertical;
+  transition: border-color 0.2s;
+  color: var(--text);
+}
+.rewrite-ta:focus { outline: none; border-color: var(--green); }
+.check-btn {
+  margin-top: 12px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--green), #047857);
+  color: white;
+  border: none;
+  border-radius: 13px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.check-btn:hover { opacity: 0.88; transform: scale(1.02); }
+
+/* ── FEEDBACK BOX ── */
+.feedback-box {
+  display: none;
+  margin-top: 16px;
+  border-radius: 14px;
+  padding: 16px 18px;
+  animation: fadeUp 0.28s ease;
+  border-left: 5px solid;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.feedback-box.show { display: block; }
+.feedback-box.correct-fb { background: var(--correct); border-color: var(--correct-border); }
+.feedback-box.wrong-fb   { background: var(--wrong);   border-color: var(--wrong-border); }
+.feedback-box.info-fb    { background: #EDE9FE;         border-color: var(--purple); }
+
+.fb-header {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+.fb-correct .fb-header { color: var(--green); }
+.fb-wrong   .fb-header { color: var(--red); }
+.fb-info    .fb-header { color: var(--purple); }
+
+.fb-rule {
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #374151;
+}
+.fb-correction {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 9px;
+  font-size: 0.83rem;
+  font-weight: 800;
+}
+.fb-correction span { color: var(--green); font-family: 'Fredoka One', cursive; }
+
+/* Rewrite self-check */
+.self-check-wrap { margin-top: 14px; }
+.self-check-wrap .model-answer {
+  background: white;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  border: 2px solid var(--green);
+  color: #065F46;
+}
+.model-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--green);
+  margin-bottom: 4px;
+}
+.corrections-list { margin-bottom: 14px; }
+.correction-item {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #374151;
+  padding: 4px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+.correction-item::before { content: "→"; color: var(--purple); flex-shrink: 0; }
+.self-check-q {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.self-btns { display: flex; gap: 10px; }
+.self-btn {
+  flex: 1;
+  padding: 11px;
+  border: 2px solid;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.self-btn:hover { transform: scale(1.02); }
+.self-yes { border-color: var(--green); color: var(--green); background: white; }
+.self-yes:hover { background: var(--correct); }
+.self-no  { border-color: var(--red);   color: var(--red);   background: white; }
+.self-no:hover  { background: var(--wrong); }
+
+/* ── NEXT BUTTON ── */
+.next-btn {
+  display: none;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+}
+.next-btn.show { display: block; animation: fadeUp 0.3s ease; }
+.next-btn:hover { opacity: 0.9; transform: scale(1.01); }
+
+/* ── RESULTS SCREEN ── */
+.results-screen {
+  display: none;
+  background: white;
+  border-radius: 22px;
+  padding: 34px 28px 38px;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.1);
+  text-align: center;
+  animation: slideIn 0.4s ease;
+}
+.results-screen.show { display: block; }
+.result-emoji { font-size: 4rem; margin-bottom: 10px; }
+.result-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: var(--purple);
+  margin-bottom: 6px;
+}
+.result-sub {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.result-score-big {
+  font-family: 'Fredoka One', cursive;
+  font-size: 4rem;
+  color: var(--purple);
+  line-height: 1;
+}
+.result-score-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 28px;
+}
+.weak-areas {
+  text-align: left;
+  margin-bottom: 24px;
+}
+.weak-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.weak-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #FFF7ED;
+  border-radius: 12px;
+  margin-bottom: 7px;
+  border-left: 4px solid var(--amber);
+}
+.weak-item-icon { font-size: 1.1rem; flex-shrink: 0; }
+.weak-item-text { flex: 1; font-size: 0.86rem; font-weight: 700; }
+.weak-bar-wrap { display: flex; align-items: center; gap: 6px; }
+.weak-bar {
+  width: 70px;
+  height: 7px;
+  background: #E5E7EB;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.weak-bar-fill {
+  height: 100%;
+  background: var(--amber);
+  border-radius: 999px;
+}
+.strong-item {
+  background: #F0FDF4;
+  border-left-color: var(--green);
+}
+.strong-item .weak-bar-fill { background: var(--green); }
+
+.restart-btn {
+  padding: 14px 36px;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+  transition: opacity 0.2s, transform 0.15s;
+}
+.restart-btn:hover { opacity: 0.9; transform: scale(1.02); }
+.essay-link-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 12px 30px;
+  background: white;
+  color: var(--purple);
+  border: 2px solid var(--purple);
+  border-radius: 14px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.essay-link-btn:hover { background: #EDE9FE; }
+
+/* STREAK FLASH */
+.streak-flash {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: linear-gradient(135deg, var(--amber), #EF4444);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  padding: 14px 30px;
+  border-radius: 20px;
+  z-index: 999;
+  pointer-events: none;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  transition: transform 0.2s, opacity 0.3s;
+  opacity: 0;
+}
+.streak-flash.pop {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+@media(max-width:500px) {
+  .q-body { padding: 16px 16px 20px; }
+  .q-header { padding: 14px 16px 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🧠 Grammar Trainer</h1>
+  <p>Practice OSSLT grammar — find your mistakes and learn the rule!</p>
+  <a class="back-link" href="index.html">← Essay Builder</a>
+</div>
+
+<div class="wrap">
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-chip">
+      <div class="stat-val sv-score" id="score-val">0</div>
+      <div class="stat-label">Correct</div>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-val sv-streak" id="streak-val">0🔥</div>
+      <div class="stat-label">Streak</div>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-val sv-left" id="left-val">20</div>
+      <div class="stat-label">Remaining</div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="prog-wrap">
+    <div class="prog-meta">
+      <span id="prog-label">Question 1 of 20</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="prog-track">
+      <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- QUESTION CARD (rendered by JS) -->
+  <div id="q-mount"></div>
+
+  <!-- RESULTS -->
+  <div class="results-screen" id="results"></div>
+</div>
+
+<div class="streak-flash" id="streak-flash"></div>
+
+<script>
+// ─────────────────────────────────────────────
+// QUESTION BANK
+// ─────────────────────────────────────────────
+const QUESTIONS = [
+  // ══ MULTIPLE CHOICE ══
+  {
+    id:1, type:'mc', category:'Subject-Verb Agreement', icon:'📐',
+    prompt:'Choose the grammatically correct sentence:',
+    options:[
+      'The students in my class works very hard.',
+      'The students in my class work very hard.',
+      'The students in my class is working very hard.',
+      'The student in my class work very hard.'
+    ],
+    correct:1,
+    explanation:'The subject is "students" (plural) → plural verb "work". The phrase "in my class" is extra info and does NOT change the subject. Always find the core subject first, then match the verb.'
+  },
+  {
+    id:2, type:'mc', category:'Formal Register', icon:'🎩',
+    prompt:'You are writing a formal OSSLT essay. Which version is correct?',
+    options:[
+      "I don't think cellphones should be allowed in class.",
+      "I do not think cellphones should be allowed in class.",
+      "I dont think cellphones should be allowed in class.",
+      "I am not thinking cellphones should be allowed in class."
+    ],
+    correct:1,
+    explanation:'Contractions (don\'t, can\'t, I\'m) are INFORMAL. In the OSSLT, always expand them: don\'t → do not, can\'t → cannot, they\'re → they are. This affects your "Use of Conventions" score directly.'
+  },
+  {
+    id:3, type:'mc', category:"Its vs It's", icon:'✏️',
+    prompt:'Which sentence uses the apostrophe correctly?',
+    options:[
+      "The school changed it's schedule.",
+      "The school changed its' schedule.",
+      "The school changed its schedule.",
+      "The school changed it is schedule."
+    ],
+    correct:2,
+    explanation:'"Its" (no apostrophe) = possessive — belonging to something. "It\'s" (with apostrophe) = "it is". Quick test: replace it with "it is". "The school changed IT IS schedule" makes no sense → use "its". This is one of the most common OSSLT errors!'
+  },
+  {
+    id:4, type:'mc', category:'Homophones', icon:'👂',
+    prompt:'Fill in the blank: "Students should manage ___ time wisely."',
+    options:['there','they\'re','their','thier'],
+    correct:2,
+    explanation:'"Their" = possessive for a group (their time = belonging to them). "There" = a place. "They\'re" = they are. Memory trick: "their" has the word "heir" inside — heirs inherit things (possession!).'
+  },
+  {
+    id:5, type:'mc', category:'Article Usage (a / an)', icon:'🔤',
+    prompt:'Choose the correct article: "She is ___ honest student."',
+    options:['a','an','the','(no article)'],
+    correct:1,
+    explanation:'Use "an" before a vowel SOUND, not just a vowel letter. "Honest" has a silent "h", so it sounds like it starts with "o". Therefore: "an honest student". Same rule applies to "an hour", "an MBA", "a university" (sounds like "yoo").'
+  },
+  {
+    id:6, type:'mc', category:'Tense Consistency', icon:'⏰',
+    prompt:'Which sentence maintains consistent verb tense?',
+    options:[
+      'She studied all night and passes the test.',
+      'She studies all night and passed the test.',
+      'She studied all night and passed the test.',
+      'She will study all night and passed the test.'
+    ],
+    correct:2,
+    explanation:'Both verbs must be in the SAME tense. "Studied" is past tense → the second verb must also be past: "passed". Mixing tenses in the same sentence is a frequent Conventions error in OSSLT writing.'
+  },
+  {
+    id:7, type:'mc', category:'Capitalization', icon:'🔠',
+    prompt:'Which sentence uses capitalization correctly?',
+    options:[
+      'students in ontario must pass the osslt to graduate.',
+      'Students in Ontario must pass the OSSLT to graduate.',
+      'Students In Ontario Must Pass The Osslt To Graduate.',
+      'students in Ontario must pass the osslt to Graduate.'
+    ],
+    correct:1,
+    explanation:'Capitalize: (1) first word of a sentence, (2) proper nouns like "Ontario" (specific place), (3) acronyms like "OSSLT". Do NOT capitalize every word — only specific names of people, places, organizations, and titles.'
+  },
+  {
+    id:8, type:'mc', category:'Sentence Fragments', icon:'🧩',
+    prompt:'Which of these is a COMPLETE sentence (not a fragment)?',
+    options:[
+      'Because students need more sleep.',
+      'Running to class every single morning.',
+      'Students who study consistently perform better on exams.',
+      'Although the test was very difficult.'
+    ],
+    correct:2,
+    explanation:'A complete sentence needs a subject + verb + complete thought. Options A and D start with subordinating conjunctions ("because", "although") — they\'re dependent clauses left hanging. Option B has no subject. Only C has subject ("Students"), verb ("perform"), and a complete thought.'
+  },
+  {
+    id:9, type:'mc', category:'Comma After Transition', icon:'❗',
+    prompt:'Which sentence uses the comma correctly after a transition?',
+    options:[
+      'First of all students should get more sleep.',
+      'First of all, students should get more sleep.',
+      'First, of all, students, should get more sleep.',
+      'First of all students should, get more sleep.'
+    ],
+    correct:1,
+    explanation:'After an introductory transition phrase ("First of all", "Furthermore", "In conclusion", "However"), ALWAYS place a comma. This is one of the most important comma rules for the OSSLT essay — and one of the easiest ways to gain points!'
+  },
+  {
+    id:10, type:'mc', category:'Run-on Sentences', icon:'🏃',
+    prompt:'Which option CORRECTLY fixes this run-on: "Students need sleep they cannot focus without it."',
+    options:[
+      'Students need sleep, they cannot focus without it.',
+      'Students need sleep; they cannot focus without it.',
+      'Students need sleep because they cannot focus without it.',
+      'Both B and C are correct.'
+    ],
+    correct:3,
+    explanation:'A comma alone cannot join two independent clauses — that\'s a "comma splice" (still wrong!). Correct fixes: (B) semicolon between two related independent clauses, OR (C) a subordinating conjunction like "because". Both B and C are valid → answer is D.'
+  },
+
+  // ══ IDENTIFY THE ERROR ══
+  {
+    id:11, type:'identify', category:'Subject-Verb Agreement', icon:'📐',
+    prompt:'Click on the word that contains a grammar error:',
+    sentence:[
+      {t:'The students who study hard always ',e:false},
+      {t:'does',e:true},
+      {t:' well on tests.',e:false}
+    ],
+    correction:'do',
+    explanation:'"Students" is plural → plural verb "do" (not "does"). "Does" is singular (he/she/it does). The phrase "who study hard" is a relative clause and does NOT change the subject "students".'
+  },
+  {
+    id:12, type:'identify', category:"Its vs It's", icon:'✏️',
+    prompt:'Click on the word that contains a grammar error:',
+    sentence:[
+      {t:'Its',e:true},
+      {t:' important to review your essay before submitting.',e:false}
+    ],
+    correction:"It's",
+    explanation:'"It\'s" (with apostrophe) = "it is". The sentence means "It is important to..." — so the apostrophe IS needed here. "Its" (no apostrophe) is only used for possession: "The cat licked its paw."'
+  },
+  {
+    id:13, type:'identify', category:'Subject-Verb Agreement', icon:'📐',
+    prompt:'Click on the word that contains a grammar error:',
+    sentence:[
+      {t:'First of all, students in my school ',e:false},
+      {t:'needs',e:true},
+      {t:' more time to rest and recover.',e:false}
+    ],
+    correction:'need',
+    explanation:'"Students" (plural) → "need" (plural verb). The phrase "in my school" is a prepositional phrase inserted between the subject and verb — it can confuse you, but the subject is still "students".'
+  },
+  {
+    id:14, type:'identify', category:'Formal Register', icon:'🎩',
+    prompt:'Click on the word or phrase that is too informal for an OSSLT essay:',
+    sentence:[
+      {t:'In conclusion, it is clear that students are ',e:false},
+      {t:'gonna',e:true},
+      {t:' benefit from this policy.',e:false}
+    ],
+    correction:'going to',
+    explanation:'"Gonna" is slang and NEVER acceptable in formal writing. The OSSLT explicitly penalizes informal language. Always write "going to" or use a more formal alternative like "will benefit from".'
+  },
+  {
+    id:15, type:'identify', category:'Contractions', icon:'🎩',
+    prompt:'Click on the word that should NOT appear in a formal OSSLT essay:',
+    sentence:[
+      {t:'Many people ',e:false},
+      {t:"don't",e:true},
+      {t:' realize how important sleep is for high school students.',e:false}
+    ],
+    correction:'do not',
+    explanation:'"Don\'t" is a contraction — informal. In the OSSLT, always expand contractions: don\'t → do not, can\'t → cannot, I\'m → I am, it\'s → it is, they\'re → they are, won\'t → will not.'
+  },
+  {
+    id:16, type:'identify', category:'Capitalization', icon:'🔠',
+    prompt:'Click on the word that should be capitalized:',
+    sentence:[
+      {t:'All students in ',e:false},
+      {t:'ontario',e:true},
+      {t:' must take the literacy test in Grade 10.',e:false}
+    ],
+    correction:'Ontario',
+    explanation:'"Ontario" is a proper noun — the name of a specific province. Proper nouns (names of specific people, places, organizations) are ALWAYS capitalized. Generic words like "province" or "school" are NOT capitalized unless part of an official name.'
+  },
+
+  // ══ REWRITE ══
+  {
+    id:17, type:'rewrite', category:'Formal Register', icon:'✍️',
+    prompt:'Rewrite this sentence to make it appropriate for a formal OSSLT essay:',
+    original:'"I think it\'s kinda cool that schools give free periods."',
+    hint:'Remove all slang ("kinda", "cool") and the contraction ("it\'s"). Use formal, academic language.',
+    modelAnswer:'I believe that it is beneficial for schools to provide students with free periods.',
+    corrections:['Replace "kinda cool" with a formal word: "beneficial", "valuable", "advantageous"','Replace "it\'s" → "it is"','Replace "give" → "provide" (more formal)','Optional: "I think" → "I believe"']
+  },
+  {
+    id:18, type:'rewrite', category:'Subject-Verb Agreement', icon:'📐',
+    prompt:'Correct the grammar error in this sentence:',
+    original:'"The list of reasons why students fail are very long."',
+    hint:'Identify the REAL subject of the sentence — ignore the prepositional phrase.',
+    modelAnswer:'The list of reasons why students fail is very long.',
+    corrections:['"List" is the subject (singular), not "reasons"','"List" → singular verb "is" (not "are")','Tip: Cross out "of reasons why students fail" — what\'s left? "The list ___ very long." Now the error is obvious!']
+  },
+  {
+    id:19, type:'rewrite', category:'Transition Words', icon:'🔗',
+    prompt:'Improve these two sentences by connecting them with a proper transition word:',
+    original:'"Cellphones distract students. They can be educational tools."',
+    hint:'The second sentence introduces a CONTRASTING idea. Which transition connector shows contrast?',
+    modelAnswer:'Cellphones distract students. However, they can also be educational tools.',
+    corrections:['Use a contrast connector: "However," or "On the other hand,"','A comma AFTER the connector is required','The word "also" in the second sentence reinforces the contrast nicely']
+  },
+  {
+    id:20, type:'rewrite', category:'Formal Register', icon:'✍️',
+    prompt:'Completely rewrite this sentence in formal OSSLT style:',
+    original:'"tbh students cant focus when theyre super tired lol"',
+    hint:'Remove every informal element: abbreviations, contractions, slang, and internet language.',
+    modelAnswer:'To be honest, students cannot focus when they are extremely tired.',
+    corrections:['"tbh" → "To be honest," (or simply remove it)','cant → cannot (no apostrophe either!)','theyre → they are','super → extremely / very','Remove "lol" entirely','Capitalize the first word and add a period']
+  }
+];
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let current = 0;
+let score = 0;
+let streak = 0;
+let maxStreak = 0;
+let answered = false;
+let categoryStats = {}; // category → {correct, total}
+
+function trackCategory(cat, isCorrect) {
+  if (!categoryStats[cat]) categoryStats[cat] = {correct:0, total:0};
+  categoryStats[cat].total++;
+  if (isCorrect) categoryStats[cat].correct++;
+}
+
+// ─────────────────────────────────────────────
+// RENDER QUESTION
+// ─────────────────────────────────────────────
+function renderQuestion() {
+  if (current >= QUESTIONS.length) { showResults(); return; }
+  answered = false;
+  const q = QUESTIONS[current];
+  updateStats();
+
+  const typeBadge = {mc:'Multiple Choice', identify:'Find the Error', rewrite:'Rewrite'}[q.type];
+  const typeCls   = {mc:'tb-mc', identify:'tb-identify', rewrite:'tb-rewrite'}[q.type];
+
+  let bodyHtml = '';
+
+  if (q.type === 'mc') {
+    bodyHtml = `<div class="options-list">` +
+      q.options.map((o,i) =>
+        `<button class="opt-btn" id="opt${i}" onclick="answerMC(${i})">
+          <span class="opt-letter">${'ABCD'[i]}</span>${escHtml(o)}
+        </button>`
+      ).join('') +
+    `</div>`;
+
+  } else if (q.type === 'identify') {
+    const spans = q.sentence.map((seg, i) =>
+      `<span class="word-span" id="seg${i}" onclick="answerIdentify(${i},${seg.e})">${escHtml(seg.t)}</span>`
+    ).join('');
+    bodyHtml = `
+      <div class="identify-hint">👆 Click on the word or phrase that has a grammar error:</div>
+      <div class="sentence-display">${spans}</div>
+    `;
+
+  } else {
+    bodyHtml = `
+      <div class="original-sentence">${escHtml(q.original)}</div>
+      <div class="rewrite-hint">💡 ${escHtml(q.hint)}</div>
+      <textarea class="rewrite-ta" id="rewrite-ta" placeholder="Type your corrected sentence here..."></textarea>
+      <button class="check-btn" onclick="checkRewrite()">Check My Answer →</button>
+    `;
+  }
+
+  document.getElementById('q-mount').innerHTML = `
+    <div class="q-card">
+      <div class="q-header">
+        <div class="q-icon">${q.icon}</div>
+        <div class="q-meta">
+          <div class="q-category">${q.category} <span class="q-number">Q${current+1}/20</span></div>
+          <div class="q-prompt">${escHtml(q.prompt)}</div>
+          <span class="q-type-badge ${typeCls}">${typeBadge}</span>
+        </div>
+      </div>
+      <div class="q-body">
+        ${bodyHtml}
+        <div class="feedback-box" id="feedback"></div>
+        <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+          ${current < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Results 🎉'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// ─────────────────────────────────────────────
+// ANSWER HANDLERS
+// ─────────────────────────────────────────────
+function answerMC(chosen) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const isCorrect = chosen === q.correct;
+
+  // Style buttons
+  for (let i = 0; i < q.options.length; i++) {
+    const btn = document.getElementById('opt'+i);
+    btn.disabled = true;
+    if (i === q.correct) btn.classList.add('correct');
+    else if (i === chosen && !isCorrect) btn.classList.add('wrong');
+  }
+
+  handleResult(isCorrect, q.explanation, q.category);
+}
+
+function answerIdentify(segIndex, isError) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const isCorrect = isError;
+
+  // Disable all spans
+  document.querySelectorAll('.word-span').forEach(s => s.classList.add('disabled'));
+
+  if (isCorrect) {
+    document.getElementById('seg'+segIndex).classList.add('selected-correct');
+  } else {
+    document.getElementById('seg'+segIndex).classList.add('selected-wrong');
+    // Highlight the actual error
+    q.sentence.forEach((seg, i) => {
+      if (seg.e) document.getElementById('seg'+i).classList.add('missed');
+    });
+  }
+
+  const correctionNote = isCorrect
+    ? `<div class="fb-correction">✅ Correct! The fix: "<span>${escHtml(q.correction)}</span>"</div>`
+    : `<div class="fb-correction">The error was: <span>${escHtml(q.sentence.find(s=>s.e).t)}</span> → should be "<span>${escHtml(q.correction)}</span>"</div>`;
+
+  handleResult(isCorrect, q.explanation + correctionNote, q.category, true);
+}
+
+function checkRewrite() {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const ta = document.getElementById('rewrite-ta');
+  ta.disabled = true;
+  document.querySelector('.check-btn').style.display = 'none';
+
+  // Show model answer + corrections + self-check
+  const corrHtml = q.corrections.map(c =>
+    `<div class="correction-item">${escHtml(c)}</div>`
+  ).join('');
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback-box show info-fb fb-info';
+  fb.innerHTML = `
+    <div class="fb-header">📋 Compare Your Answer</div>
+    <div class="self-check-wrap">
+      <div class="model-label">✅ Model Answer:</div>
+      <div class="model-answer">${escHtml(q.modelAnswer)}</div>
+      <div class="model-label" style="margin-top:10px">🔍 Key Corrections to Look For:</div>
+      <div class="corrections-list">${corrHtml}</div>
+      <div class="self-check-q">Did your answer fix the main issues?</div>
+      <div class="self-btns">
+        <button class="self-btn self-yes" onclick="selfCheck(true)">✅ Yes, I got it!</button>
+        <button class="self-btn self-no"  onclick="selfCheck(false)">❌ Not quite…</button>
+      </div>
+    </div>
+  `;
+}
+
+function selfCheck(gotIt) {
+  document.querySelectorAll('.self-btn').forEach(b => b.disabled = true);
+  if (gotIt) {
+    score++;
+    streak++;
+    if (streak > maxStreak) maxStreak = streak;
+    if (streak >= 3) showStreakFlash();
+  } else {
+    streak = 0;
+  }
+  trackCategory(QUESTIONS[current].category, gotIt);
+  updateStats();
+  showNextBtn();
+}
+
+// ─────────────────────────────────────────────
+// SHARED RESULT HANDLER
+// ─────────────────────────────────────────────
+function handleResult(isCorrect, explanation, category, rawHtml = false) {
+  if (isCorrect) {
+    score++;
+    streak++;
+    if (streak > maxStreak) maxStreak = streak;
+    if (streak >= 3) showStreakFlash();
+  } else {
+    streak = 0;
+  }
+  trackCategory(category, isCorrect);
+  updateStats();
+
+  const fb = document.getElementById('feedback');
+  if (isCorrect) {
+    fb.className = 'feedback-box show correct-fb fb-correct';
+    fb.innerHTML = `<div class="fb-header">✅ Correct! Well done!</div><div class="fb-rule">${rawHtml ? explanation : escHtml(explanation)}</div>`;
+  } else {
+    fb.className = 'feedback-box show wrong-fb fb-wrong';
+    fb.innerHTML = `<div class="fb-header">❌ Not quite — here's the rule:</div><div class="fb-rule">${rawHtml ? explanation : escHtml(explanation)}</div>`;
+  }
+
+  showNextBtn();
+}
+
+function showNextBtn() {
+  const btn = document.getElementById('next-btn');
+  if (btn) btn.classList.add('show');
+}
+
+// ─────────────────────────────────────────────
+// NEXT
+// ─────────────────────────────────────────────
+function nextQuestion() {
+  current++;
+  renderQuestion();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ─────────────────────────────────────────────
+// STATS UPDATE
+// ─────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('score-val').textContent = score;
+  document.getElementById('streak-val').textContent = streak + (streak >= 3 ? '🔥' : '');
+  document.getElementById('left-val').textContent = QUESTIONS.length - current;
+  const pct = Math.round((current / QUESTIONS.length) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `Question ${current+1} of ${QUESTIONS.length}`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+// ─────────────────────────────────────────────
+// STREAK FLASH
+// ─────────────────────────────────────────────
+function showStreakFlash() {
+  const el = document.getElementById('streak-flash');
+  el.textContent = streak >= 5 ? `🔥 ${streak} in a row!!` : `🔥 ${streak} streak!`;
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 1400);
+}
+
+// ─────────────────────────────────────────────
+// RESULTS
+// ─────────────────────────────────────────────
+function showResults() {
+  document.getElementById('q-mount').style.display = 'none';
+  document.querySelector('.stats-bar').style.display = 'none';
+  document.querySelector('.prog-wrap').style.display = 'none';
+
+  const pct = Math.round((score / QUESTIONS.length) * 100);
+  let emoji = pct >= 90 ? '🏆' : pct >= 70 ? '🎉' : pct >= 50 ? '💪' : '📚';
+  let title = pct >= 90 ? 'Outstanding!' : pct >= 70 ? 'Great Work!' : pct >= 50 ? 'Good Effort!' : 'Keep Practicing!';
+  let sub   = pct >= 90 ? 'You are ready for the OSSLT!'
+            : pct >= 70 ? 'Almost there — review the weak areas below.'
+            : pct >= 50 ? 'Good start — focus on the areas below.'
+            : 'Review the grammar rules and try again!';
+
+  // Build category breakdown
+  const cats = Object.entries(categoryStats).sort((a,b) => {
+    const rateA = a[1].correct / a[1].total;
+    const rateB = b[1].correct / b[1].total;
+    return rateA - rateB; // worst first
+  });
+
+  const catHtml = cats.map(([cat, {correct, total}]) => {
+    const rate = correct / total;
+    const isStrong = rate >= 0.7;
+    const barPct = Math.round(rate * 100);
+    const cls = isStrong ? 'weak-item strong-item' : 'weak-item';
+    const icon = isStrong ? '✅' : '⚠️';
+    return `<div class="${cls}">
+      <div class="weak-item-icon">${icon}</div>
+      <div class="weak-item-text">${escHtml(cat)}</div>
+      <div class="weak-bar-wrap">
+        <div class="weak-bar"><div class="weak-bar-fill" style="width:${barPct}%"></div></div>
+        <span style="font-size:0.75rem;font-weight:800;color:var(--muted)">${correct}/${total}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('results').className = 'results-screen show';
+  document.getElementById('results').innerHTML = `
+    <div class="result-emoji">${emoji}</div>
+    <div class="result-title">${title}</div>
+    <div class="result-sub">${sub}</div>
+    <div class="result-score-big">${score}<span style="font-size:2rem;color:var(--muted)">/20</span></div>
+    <div class="result-score-label">${pct}% · Best streak: ${maxStreak}🔥</div>
+    <div class="weak-areas">
+      <div class="weak-title">📊 Your Grammar Breakdown:</div>
+      ${catHtml}
+    </div>
+    <button class="restart-btn" onclick="restartQuiz()">🔄 Try Again</button><br>
+    <a class="essay-link-btn" href="index.html">✏️ Back to Essay Builder</a>
+  `;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ─────────────────────────────────────────────
+// RESTART
+// ─────────────────────────────────────────────
+function restartQuiz() {
+  current = 0; score = 0; streak = 0; maxStreak = 0; answered = false;
+  categoryStats = {};
+  document.getElementById('q-mount').style.display = '';
+  document.querySelector('.stats-bar').style.display = '';
+  document.querySelector('.prog-wrap').style.display = '';
+  document.getElementById('results').className = 'results-screen';
+  renderQuestion();
+  updateStats();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ─────────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────────
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+renderQuestion();
+updateStats();
+</script>
+</body>
+</html>
