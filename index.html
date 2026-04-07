@@ -37,6 +37,30 @@ body {
   padding: 0 16px 80px;
 }
 
+/* LANG BAR */
+.lang-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 14px 0 0;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.lang-btn {
+  background: white;
+  border: 2px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 5px 13px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.15s;
+}
+.lang-btn:hover { border-color: var(--intro); color: var(--intro); }
+.lang-btn.active { background: var(--intro); border-color: var(--intro); color: white; }
+
 /* HERO */
 .hero {
   text-align: center;
@@ -613,17 +637,24 @@ textarea::placeholder { color: #D1D5DB; }
 </head>
 <body>
 
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('pt')">🇧🇷 PT</button>
+  <button class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
+  <button class="lang-btn" onclick="setLang('fr')">🇫🇷 FR</button>
+  <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
+</div>
+
 <div class="hero">
   <h1>✏️ EQAO Essay Builder</h1>
-  <p>Organize seus argumentos e escreva com confiança, Lara! 💪</p>
-  <span class="subtag">OSSLT · Série de Parágrafos · Opinião</span>
+  <p id="hero-sub">Organize seus argumentos e escreva com confiança!</p>
+  <span class="subtag" id="hero-tag">OSSLT · Série de Parágrafos · Opinião</span>
 </div>
 
 <div class="wrap">
 
   <!-- TOPIC -->
   <div class="topic-box">
-    <label>📋 Pergunta / Prompt da Prova</label>
+    <label id="topic-label">📋 Pergunta / Prompt da Prova</label>
     <input type="text" class="topic-input" id="topic-input"
       placeholder="Ex: Should cellphones be banned from Ontario classrooms?"
       oninput="syncPreview()">
@@ -635,8 +666,8 @@ textarea::placeholder { color: #D1D5DB; }
       <div class="plan-header-left">
         <span class="plan-emoji">🧠</span>
         <div>
-          <div class="plan-card-title">Planeje sua Redação Primeiro!</div>
-          <div class="plan-card-sub">Responda perguntas rápidas antes de escrever — suas notas ficam salvas ✨</div>
+          <div class="plan-card-title" id="plan-card-title">Planeje sua Redação Primeiro!</div>
+          <div class="plan-card-sub" id="plan-card-sub">Responda perguntas rápidas antes de escrever — suas notas ficam salvas ✨</div>
         </div>
       </div>
       <div class="plan-header-right">
@@ -649,10 +680,10 @@ textarea::placeholder { color: #D1D5DB; }
 
       <!-- SECTION: Introduction -->
       <div class="plan-section">
-        <div class="plan-section-title" style="color:var(--intro)">📝 Introdução — Sua Opinião</div>
+        <div class="plan-section-title" id="plan-sec-intro" style="color:var(--intro)">📝 Introdução — Sua Opinião</div>
 
         <div class="plan-q">
-          <label>1. Sobre o tema, você:</label>
+          <label id="pq1">1. Sobre o tema, você:</label>
           <div class="opinion-btns">
             <button class="op-btn" id="op-agree"    onclick="setOpinion('agree')">👍 Concordo / I agree</button>
             <button class="op-btn" id="op-disagree" onclick="setOpinion('disagree')">👎 Discordo / I disagree</button>
@@ -660,7 +691,7 @@ textarea::placeholder { color: #D1D5DB; }
         </div>
 
         <div class="plan-q">
-          <label>2. Em uma frase simples, qual é sua posição?</label>
+          <label id="pq2">2. Em uma frase simples, qual é sua posição?</label>
           <input type="text" class="plan-input" id="pi-thesis"
             placeholder="Ex: I believe students should have free periods because it helps their well-being."
             oninput="savePlanAndUpdate()">
@@ -669,16 +700,16 @@ textarea::placeholder { color: #D1D5DB; }
 
       <!-- SECTION: Body 1 -->
       <div class="plan-section">
-        <div class="plan-section-title" style="color:var(--b1)">🥇 Argumento 1 — Body Paragraph 1</div>
+        <div class="plan-section-title" id="plan-sec-b1" style="color:var(--b1)">🥇 Argumento 1 — Body Paragraph 1</div>
 
         <div class="plan-q">
-          <label>3. Qual é seu primeiro e mais forte motivo?</label>
+          <label id="pq3">3. Qual é seu primeiro e mais forte motivo?</label>
           <input type="text" class="plan-input" id="pi-arg1"
             placeholder="Ex: Free periods reduce student stress and improve mental health."
             oninput="savePlanAndUpdate()">
         </div>
         <div class="plan-q">
-          <label>4. Pense em um exemplo concreto para esse motivo:</label>
+          <label id="pq4">4. Pense em um exemplo concreto para esse motivo:</label>
           <input type="text" class="plan-input" id="pi-ex1"
             placeholder="Ex: A 2022 study showed students with breaks scored 20% higher on tests."
             oninput="savePlanAndUpdate()">
@@ -687,16 +718,16 @@ textarea::placeholder { color: #D1D5DB; }
 
       <!-- SECTION: Body 2 -->
       <div class="plan-section">
-        <div class="plan-section-title" style="color:var(--b2)">🥈 Argumento 2 — Body Paragraph 2</div>
+        <div class="plan-section-title" id="plan-sec-b2" style="color:var(--b2)">🥈 Argumento 2 — Body Paragraph 2</div>
 
         <div class="plan-q">
-          <label>5. Qual é seu segundo motivo? (diferente do primeiro!)</label>
+          <label id="pq5">5. Qual é seu segundo motivo? (diferente do primeiro!)</label>
           <input type="text" class="plan-input" id="pi-arg2"
             placeholder="Ex: Free periods allow students to explore interests and develop skills."
             oninput="savePlanAndUpdate()">
         </div>
         <div class="plan-q">
-          <label>6. Exemplo concreto para esse segundo motivo:</label>
+          <label id="pq6">6. Exemplo concreto para esse segundo motivo:</label>
           <input type="text" class="plan-input" id="pi-ex2"
             placeholder="Ex: Students could join clubs, study, or practice instruments during this time."
             oninput="savePlanAndUpdate()">
@@ -705,17 +736,17 @@ textarea::placeholder { color: #D1D5DB; }
 
       <!-- SECTION: Conclusion -->
       <div class="plan-section">
-        <div class="plan-section-title" style="color:var(--conc)">🏁 Conclusão</div>
+        <div class="plan-section-title" id="plan-sec-conc" style="color:var(--conc)">🏁 Conclusão</div>
 
         <div class="plan-q">
-          <label>7. Em uma frase diferente da introdução, como resumiria sua posição?</label>
+          <label id="pq7">7. Em uma frase diferente da introdução, como resumiria sua posição?</label>
           <input type="text" class="plan-input" id="pi-conc"
             placeholder="Ex: For all these reasons, it is clear that free periods benefit students greatly."
             oninput="savePlanAndUpdate()">
         </div>
       </div>
 
-      <button class="view-plan-btn" onclick="openPlanPanel()">
+      <button class="view-plan-btn" id="view-plan-btn" onclick="openPlanPanel()">
         📋 Ver Meu Plano Completo — consulte enquanto escreve →
       </button>
 
@@ -725,7 +756,7 @@ textarea::placeholder { color: #D1D5DB; }
   <!-- PROGRESS -->
   <div class="progress-wrap">
     <div class="progress-meta">
-      <span>Progresso da redação</span>
+      <span id="prog-label">Progresso da redação</span>
       <span id="prog-text">0 / 4 parágrafos</span>
     </div>
     <div class="progress-track">
@@ -739,27 +770,27 @@ textarea::placeholder { color: #D1D5DB; }
     <!-- ① INTRODUCTION -->
     <div class="card card-intro">
       <div class="card-head" style="background:var(--intro-light)" onclick="toggleTip('tip-intro')">
-        <span class="badge badge-intro">Parágrafo 1</span>
-        <span class="card-title ct-intro">Introduction</span>
-        <button class="tip-btn ct-intro" onclick="event.stopPropagation();toggleTip('tip-intro')">💡 Dica</button>
+        <span class="badge badge-intro" id="badge-p1">Parágrafo 1</span>
+        <span class="card-title ct-intro" id="card-title-intro">Introduction</span>
+        <button class="tip-btn ct-intro" id="tipbtn-intro" onclick="event.stopPropagation();toggleTip('tip-intro')">💡 Dica</button>
       </div>
       <div class="card-body">
         <div class="tip-box cl-intro" id="tip-intro" style="border-color:var(--intro);background:var(--intro-light)">
-          <div class="tip-label cl-intro">🎯 O que fazer aqui:</div>
-          Apresente o <strong>tema</strong> da pergunta e declare sua <strong>opinião claramente</strong> — isso se chama <em>Thesis Statement</em>. Mencione brevemente os argumentos que você vai usar. Escolha um lado e <strong>não mude de ideia</strong> até o fim! Comece com uma frase de impacto.
+          <div class="tip-label cl-intro" id="tiplabel-intro">🎯 O que fazer aqui:</div>
+          <span id="tipcontent-intro">Apresente o <strong>tema</strong> da pergunta e declare sua <strong>opinião claramente</strong> — isso se chama <em>Thesis Statement</em>. Mencione brevemente os argumentos que você vai usar. Escolha um lado e <strong>não mude de ideia</strong> até o fim! Comece com uma frase de impacto.</span>
         </div>
 
         <!-- PLAN HINT -->
         <div class="plan-hint" id="hint-intro" onclick="openPlanPanel()">
           <div class="plan-hint-header">
-            🧠 Seu Plano para este parágrafo
-            <span class="plan-hint-open-btn">Ver plano completo →</span>
+            <span id="hint-label-intro">🧠 Seu Plano para este parágrafo</span>
+            <span class="plan-hint-open-btn" id="hint-open-btn">Ver plano completo →</span>
           </div>
           <div class="plan-hint-content" id="hint-intro-content"></div>
         </div>
 
         <div class="conn-section">
-          <div class="conn-label">💬 Frases de abertura sugeridas:</div>
+          <div class="conn-label" id="conn-intro-label">💬 Frases de abertura sugeridas:</div>
           <div class="chips">
             <span class="chip" data-group="g-intro" data-target="ta-intro" data-text="In today's world," onclick="pickChip(this)">In today's world,</span>
             <span class="chip" data-group="g-intro" data-target="ta-intro" data-text="Many people believe that" onclick="pickChip(this)">Many people believe that</span>
@@ -778,34 +809,34 @@ textarea::placeholder { color: #D1D5DB; }
     <!-- ② BODY 1 -->
     <div class="card card-b1">
       <div class="card-head" style="background:var(--b1-light)" onclick="toggleTip('tip-b1')">
-        <span class="badge badge-b1">Parágrafo 2</span>
-        <span class="card-title ct-b1">Body Paragraph 1</span>
-        <button class="tip-btn ct-b1" onclick="event.stopPropagation();toggleTip('tip-b1')">💡 Dica</button>
+        <span class="badge badge-b1" id="badge-p2">Parágrafo 2</span>
+        <span class="card-title ct-b1" id="card-title-b1">Body Paragraph 1</span>
+        <button class="tip-btn ct-b1" id="tipbtn-b1" onclick="event.stopPropagation();toggleTip('tip-b1')">💡 Dica</button>
       </div>
       <div class="card-body">
         <div class="tip-box" id="tip-b1" style="border-color:var(--b1);background:var(--b1-light)">
-          <div class="tip-label cl-b1">🥇 O que fazer aqui:</div>
-          Apresente seu <strong>PRIMEIRO e mais forte argumento</strong>. Abra com um dos conectores azuis abaixo. Depois, dentro do parágrafo, use um conector de <em>exemplo</em> para dar evidência concreta. Seja específico — evite ideias vagas!
+          <div class="tip-label cl-b1" id="tiplabel-b1">🥇 O que fazer aqui:</div>
+          <span id="tipcontent-b1">Apresente seu <strong>PRIMEIRO e mais forte argumento</strong>. Abra com um dos conectores azuis abaixo. Depois, dentro do parágrafo, use um conector de <em>exemplo</em> para dar evidência concreta. Seja específico — evite ideias vagas!</span>
         </div>
 
         <!-- PLAN HINT -->
         <div class="plan-hint" id="hint-b1" onclick="openPlanPanel()">
           <div class="plan-hint-header">
-            🧠 Seu Plano para este parágrafo
+            <span id="hint-label-b1">🧠 Seu Plano para este parágrafo</span>
             <span class="plan-hint-open-btn">Ver plano completo →</span>
           </div>
           <div class="plan-hint-content" id="hint-b1-content"></div>
         </div>
 
         <div class="conn-section">
-          <div class="conn-label">🔵 Conector de abertura — escolha 1:</div>
+          <div class="conn-label" id="conn-b1-open">🔵 Conector de abertura — escolha 1:</div>
           <div class="chips">
             <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="First of all," onclick="pickChip(this)" style="background:var(--b1-light)">First of all,</span>
             <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="To begin with," onclick="pickChip(this)" style="background:var(--b1-light)">To begin with,</span>
             <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="First and foremost," onclick="pickChip(this)" style="background:var(--b1-light)">First and foremost,</span>
             <span class="chip" data-group="g-b1" data-target="ta-body1" data-text="The primary reason is" onclick="pickChip(this)" style="background:var(--b1-light)">The primary reason is</span>
           </div>
-          <div class="conn-label" style="margin-top:10px">📌 Para exemplos (clique onde quiser no texto):</div>
+          <div class="conn-label" style="margin-top:10px" id="conn-b1-ex">📌 Para exemplos (clique onde quiser no texto):</div>
           <div class="chips">
             <span class="chip chip-sm" data-target="ta-body1" data-text="For instance," onclick="insertAt(this)" style="background:var(--b1-light)">For instance,</span>
             <span class="chip chip-sm" data-target="ta-body1" data-text="Specifically," onclick="insertAt(this)" style="background:var(--b1-light)">Specifically,</span>
@@ -825,34 +856,34 @@ textarea::placeholder { color: #D1D5DB; }
     <!-- ③ BODY 2 -->
     <div class="card card-b2">
       <div class="card-head" style="background:var(--b2-light)" onclick="toggleTip('tip-b2')">
-        <span class="badge badge-b2">Parágrafo 3</span>
-        <span class="card-title ct-b2">Body Paragraph 2</span>
-        <button class="tip-btn ct-b2" onclick="event.stopPropagation();toggleTip('tip-b2')">💡 Dica</button>
+        <span class="badge badge-b2" id="badge-p3">Parágrafo 3</span>
+        <span class="card-title ct-b2" id="card-title-b2">Body Paragraph 2</span>
+        <button class="tip-btn ct-b2" id="tipbtn-b2" onclick="event.stopPropagation();toggleTip('tip-b2')">💡 Dica</button>
       </div>
       <div class="card-body">
         <div class="tip-box" id="tip-b2" style="border-color:var(--b2);background:var(--b2-light)">
-          <div class="tip-label cl-b2">🥈 O que fazer aqui:</div>
-          Apresente seu <strong>SEGUNDO argumento</strong> — diferente do primeiro! Você está <em>adicionando</em> informação, não repetindo. Inclua um exemplo específico. Lembre-se: quanto mais concreto o exemplo, maior a nota!
+          <div class="tip-label cl-b2" id="tiplabel-b2">🥈 O que fazer aqui:</div>
+          <span id="tipcontent-b2">Apresente seu <strong>SEGUNDO argumento</strong> — diferente do primeiro! Você está <em>adicionando</em> informação, não repetindo. Inclua um exemplo específico. Lembre-se: quanto mais concreto o exemplo, maior a nota!</span>
         </div>
 
         <!-- PLAN HINT -->
         <div class="plan-hint" id="hint-b2" onclick="openPlanPanel()">
           <div class="plan-hint-header">
-            🧠 Seu Plano para este parágrafo
+            <span id="hint-label-b2">🧠 Seu Plano para este parágrafo</span>
             <span class="plan-hint-open-btn">Ver plano completo →</span>
           </div>
           <div class="plan-hint-content" id="hint-b2-content"></div>
         </div>
 
         <div class="conn-section">
-          <div class="conn-label">🟢 Conector de abertura — escolha 1:</div>
+          <div class="conn-label" id="conn-b2-open">🟢 Conector de abertura — escolha 1:</div>
           <div class="chips">
             <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="Furthermore," onclick="pickChip(this)" style="background:var(--b2-light)">Furthermore,</span>
             <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="In addition," onclick="pickChip(this)" style="background:var(--b2-light)">In addition,</span>
             <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="Moreover," onclick="pickChip(this)" style="background:var(--b2-light)">Moreover,</span>
             <span class="chip" data-group="g-b2" data-target="ta-body2" data-text="Secondly," onclick="pickChip(this)" style="background:var(--b2-light)">Secondly,</span>
           </div>
-          <div class="conn-label" style="margin-top:10px">📌 Para exemplos:</div>
+          <div class="conn-label" style="margin-top:10px" id="conn-b2-ex">📌 Para exemplos:</div>
           <div class="chips">
             <span class="chip chip-sm" data-target="ta-body2" data-text="For instance," onclick="insertAt(this)" style="background:var(--b2-light)">For instance,</span>
             <span class="chip chip-sm" data-target="ta-body2" data-text="Specifically," onclick="insertAt(this)" style="background:var(--b2-light)">Specifically,</span>
@@ -885,26 +916,26 @@ textarea::placeholder { color: #D1D5DB; }
     <div class="cards-stack">
       <div class="card card-b3">
         <div class="card-head" style="background:var(--b3-light)" onclick="toggleTip('tip-b3')">
-          <span class="badge badge-b3">Parágrafo 4</span>
-          <span class="card-title ct-b3">Body Paragraph 3</span>
-          <span class="opt-tag">OPCIONAL ⭐</span>
-          <button class="tip-btn ct-b3" onclick="event.stopPropagation();toggleTip('tip-b3')">💡 Dica</button>
+          <span class="badge badge-b3" id="badge-p4">Parágrafo 4</span>
+          <span class="card-title ct-b3" id="card-title-b3">Body Paragraph 3</span>
+          <span class="opt-tag" id="opt-tag">OPCIONAL ⭐</span>
+          <button class="tip-btn ct-b3" id="tipbtn-b3" onclick="event.stopPropagation();toggleTip('tip-b3')">💡 Dica</button>
         </div>
         <div class="card-body">
           <div class="tip-box" id="tip-b3" style="border-color:var(--b3);background:var(--b3-light)">
-            <div class="tip-label cl-b3">🌟 O que fazer aqui:</div>
-            Este parágrafo é <strong>opcional mas impressiona!</strong> Você pode: apresentar um 3º argumento, reforçar os anteriores, ou reconhecer o <em>"outro lado"</em> (contra-argumento) e ainda assim defender sua posição. Reconhecer o outro lado demonstra maturidade intelectual — exatamente o que o OSSLT quer ver no Nível 4!
+            <div class="tip-label cl-b3" id="tiplabel-b3">🌟 O que fazer aqui:</div>
+            <span id="tipcontent-b3">Este parágrafo é <strong>opcional mas impressiona!</strong> Você pode: apresentar um 3º argumento, reforçar os anteriores, ou reconhecer o <em>"outro lado"</em> (contra-argumento) e ainda assim defender sua posição. Reconhecer o outro lado demonstra maturidade intelectual — exatamente o que o OSSLT quer ver no Nível 4!</span>
           </div>
 
           <div class="conn-section">
-            <div class="conn-label">🟠 Conector de abertura — escolha 1:</div>
+            <div class="conn-label" id="conn-b3-open">🟠 Conector de abertura — escolha 1:</div>
             <div class="chips">
               <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="On the other hand," onclick="pickChip(this)" style="background:var(--b3-light)">On the other hand,</span>
               <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="However," onclick="pickChip(this)" style="background:var(--b3-light)">However,</span>
               <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="Despite this," onclick="pickChip(this)" style="background:var(--b3-light)">Despite this,</span>
               <span class="chip" data-group="g-b3" data-target="ta-body3" data-text="In the same way," onclick="pickChip(this)" style="background:var(--b3-light)">In the same way,</span>
             </div>
-            <div class="conn-label" style="margin-top:10px">📌 Para exemplos:</div>
+            <div class="conn-label" style="margin-top:10px" id="conn-b3-ex">📌 Para exemplos:</div>
             <div class="chips">
               <span class="chip chip-sm" data-target="ta-body3" data-text="For instance," onclick="insertAt(this)" style="background:var(--b3-light)">For instance,</span>
               <span class="chip chip-sm" data-target="ta-body3" data-text="Specifically," onclick="insertAt(this)" style="background:var(--b3-light)">Specifically,</span>
@@ -928,26 +959,26 @@ textarea::placeholder { color: #D1D5DB; }
     <div class="card card-conc">
       <div class="card-head" style="background:var(--conc-light)" onclick="toggleTip('tip-conc')">
         <span class="badge badge-conc" id="conc-badge">Parágrafo 4</span>
-        <span class="card-title ct-conc">Conclusion</span>
-        <button class="tip-btn ct-conc" onclick="event.stopPropagation();toggleTip('tip-conc')">💡 Dica</button>
+        <span class="card-title ct-conc" id="card-title-conc">Conclusion</span>
+        <button class="tip-btn ct-conc" id="tipbtn-conc" onclick="event.stopPropagation();toggleTip('tip-conc')">💡 Dica</button>
       </div>
       <div class="card-body">
         <div class="tip-box" id="tip-conc" style="border-color:var(--conc);background:var(--conc-light)">
-          <div class="tip-label cl-conc">🏁 O que fazer aqui:</div>
-          <strong>NÃO</strong> adicione informações novas! Resuma os pontos principais e reafirme sua opinião de uma forma <em>diferente</em> da introdução. Use tom formal: <em>do not</em> (nunca <em>don't</em>), sem gírias nem abreviações. Termine com uma frase forte e conclusiva.
+          <div class="tip-label cl-conc" id="tiplabel-conc">🏁 O que fazer aqui:</div>
+          <span id="tipcontent-conc"><strong>NÃO</strong> adicione informações novas! Resuma os pontos principais e reafirme sua opinião de uma forma <em>diferente</em> da introdução. Use tom formal: <em>do not</em> (nunca <em>don't</em>), sem gírias nem abreviações. Termine com uma frase forte e conclusiva.</span>
         </div>
 
         <!-- PLAN HINT -->
         <div class="plan-hint" id="hint-conc" onclick="openPlanPanel()">
           <div class="plan-hint-header">
-            🧠 Seu Plano para este parágrafo
+            <span id="hint-label-conc">🧠 Seu Plano para este parágrafo</span>
             <span class="plan-hint-open-btn">Ver plano completo →</span>
           </div>
           <div class="plan-hint-content" id="hint-conc-content"></div>
         </div>
 
         <div class="conn-section">
-          <div class="conn-label">🔴 Conector de abertura — escolha 1:</div>
+          <div class="conn-label" id="conn-conc-open">🔴 Conector de abertura — escolha 1:</div>
           <div class="chips">
             <span class="chip" data-group="g-conc" data-target="ta-conclusion" data-text="In conclusion," onclick="pickChip(this)" style="background:var(--conc-light)">In conclusion,</span>
             <span class="chip" data-group="g-conc" data-target="ta-conclusion" data-text="To sum up," onclick="pickChip(this)" style="background:var(--conc-light)">To sum up,</span>
@@ -969,8 +1000,8 @@ textarea::placeholder { color: #D1D5DB; }
   <!-- PREVIEW -->
   <div class="preview-wrap">
     <div class="preview-topbar">
-      <div class="preview-title">📄 Meu Texto Completo</div>
-      <button class="copy-btn" onclick="copyAll()">📋 Copiar Texto</button>
+      <div class="preview-title" id="preview-title">📄 Meu Texto Completo</div>
+      <button class="copy-btn" id="copy-btn" onclick="copyAll()">📋 Copiar Texto</button>
     </div>
     <div class="preview-card">
       <div class="preview-topic-row" id="prev-topic">📋 Tema: —</div>
@@ -1367,7 +1398,561 @@ function escHtml(str) {
             .replace(/\n/g,'<br>');
 }
 
-/* ─── GUIA DRAWER ─── */
+/* ─── BUILD DRAWER ─── */
+function buildDrawer() {
+  const list = document.getElementById('drawer-list');
+  if (!list) return;
+  const topics = L().topics;
+  list.innerHTML = topics.map((t, i) => `
+    <div class="drawer-item">
+      <button class="topic-btn" onclick="toggleTopic('dt${i}')">
+        <span class="topic-icon">${t.icon}</span>
+        <span class="topic-name">${t.name}</span>
+        <span class="topic-arrow">›</span>
+      </button>
+      <div class="topic-content" id="dt${i}">${t.content}</div>
+    </div>`).join('');
+}
+
+/* ─── LANGUAGE SYSTEM ─── */
+const LANGS = {
+  pt: {
+    heroSub: 'Organize seus argumentos e escreva com confiança!',
+    heroTag: 'OSSLT · Série de Parágrafos · Opinião',
+    topicLabel: '📋 Pergunta / Prompt da Prova',
+    planTitle: 'Planeje sua Redação Primeiro!',
+    planSub: 'Responda perguntas rápidas antes de escrever — suas notas ficam salvas ✨',
+    planSecIntro: '📝 Introdução — Sua Opinião',
+    planSecB1: '🥇 Argumento 1 — Body Paragraph 1',
+    planSecB2: '🥈 Argumento 2 — Body Paragraph 2',
+    planSecConc: '🏁 Conclusão',
+    pq1: '1. Sobre o tema, você:',
+    pq2: '2. Em uma frase simples, qual é sua posição?',
+    pq3: '3. Qual é seu primeiro e mais forte motivo?',
+    pq4: '4. Pense em um exemplo concreto para esse motivo:',
+    pq5: '5. Qual é seu segundo motivo? (diferente do primeiro!)',
+    pq6: '6. Exemplo concreto para esse segundo motivo:',
+    pq7: '7. Em uma frase diferente da introdução, como resumiria sua posição?',
+    opAgree: '👍 Concordo / I agree',
+    opDisagree: '👎 Discordo / I disagree',
+    viewPlanBtn: '📋 Ver Meu Plano Completo — consulte enquanto escreve →',
+    progLabel: 'Progresso da redação',
+    progText: (f,t) => `${f} / ${t} parágrafos`,
+    tipBtn: '💡 Dica',
+    badgeP1:'Parágrafo 1', badgeP2:'Parágrafo 2', badgeP3:'Parágrafo 3', badgeP4:'Parágrafo 4',
+    concBadge: b3 => `Parágrafo ${b3?5:4}`,
+    optTag: 'OPCIONAL ⭐',
+    tiplabelIntro:'🎯 O que fazer aqui:', tipcontentIntro:'Apresente o <strong>tema</strong> da pergunta e declare sua <strong>opinião claramente</strong> — isso se chama <em>Thesis Statement</em>. Mencione brevemente os argumentos que você vai usar. Escolha um lado e <strong>não mude de ideia</strong> até o fim! Comece com uma frase de impacto.',
+    tiplabelB1:'🥇 O que fazer aqui:', tipcontentB1:'Apresente seu <strong>PRIMEIRO e mais forte argumento</strong>. Abra com um dos conectores azuis abaixo. Depois, dentro do parágrafo, use um conector de <em>exemplo</em> para dar evidência concreta. Seja específico — evite ideias vagas!',
+    tiplabelB2:'🥈 O que fazer aqui:', tipcontentB2:'Apresente seu <strong>SEGUNDO argumento</strong> — diferente do primeiro! Você está <em>adicionando</em> informação, não repetindo. Inclua um exemplo específico. Lembre-se: quanto mais concreto o exemplo, maior a nota!',
+    tiplabelB3:'🌟 O que fazer aqui:', tipcontentB3:'Este parágrafo é <strong>opcional mas impressiona!</strong> Você pode: apresentar um 3º argumento, reforçar os anteriores, ou reconhecer o <em>"outro lado"</em> (contra-argumento) e ainda assim defender sua posição. Reconhecer o outro lado demonstra maturidade intelectual — exatamente o que o OSSLT quer ver no Nível 4!',
+    tiplabelConc:'🏁 O que fazer aqui:', tipcontentConc:'<strong>NÃO</strong> adicione informações novas! Resuma os pontos principais e reafirme sua opinião de uma forma <em>diferente</em> da introdução. Use tom formal: <em>do not</em> (nunca <em>don\'t</em>), sem gírias nem abreviações. Termine com uma frase forte e conclusiva.',
+    connIntroLabel: '💬 Frases de abertura sugeridas:',
+    connB1Open:'🔵 Conector de abertura — escolha 1:', connB1Ex:'📌 Para exemplos (clique onde quiser no texto):',
+    connB2Open:'🟢 Conector de abertura — escolha 1:', connB2Ex:'📌 Para exemplos:',
+    connB3Open:'🟠 Conector de abertura — escolha 1:', connB3Ex:'📌 Para exemplos:',
+    connConcOpen:'🔴 Conector de abertura — escolha 1:',
+    hintLabel: '🧠 Seu Plano para este parágrafo',
+    hintOpenBtn: 'Ver plano completo →',
+    taIntro:'Escreva sua introdução aqui. Apresente o tema e declare sua opinião...',
+    taB1:'Escreva seu primeiro argumento aqui...',
+    taB2:'Escreva seu segundo argumento aqui...',
+    taB3:'Terceiro argumento, reforço ou contra-argumento + exemplo...',
+    taConc:'Escreva sua conclusão aqui. Resuma + reafirme sua opinião de forma nova...',
+    words: n => n === 1 ? '1 palavra' : `${n} palavras`,
+    addB3: '✦ Adicionar Body Paragraph 3 (Opcional) — mostra maturidade e impressiona os corretores! 🌟',
+    removeB3: '✕ Remover Body Paragraph 3',
+    previewTitle: '📄 Meu Texto Completo',
+    copyBtn: '📋 Copiar Texto',
+    copied: '✅ Copiado!',
+    copyEmpty: 'Nenhum texto ainda! Escreva seus parágrafos primeiro 😊',
+    copyFail: 'Não foi possível copiar. Tente selecionar o texto manualmente.',
+    topicPrefix: '📋 Tema:',
+    fabPlan: 'Plano', fabGuia: 'Guia',
+    drawerTitle: '📚 Guia de Estudo',
+    drawerSub: 'Clique em qualquer tópico para saber mais 👇',
+    planDrawerSub: 'Suas notas — consulte enquanto escreve cada parágrafo 👇',
+    planDrawerTitle: '📋 Meu Plano',
+    planEmptyTitle: 'Seu plano ainda está vazio!',
+    planEmptyDesc: 'Preencha as perguntas no card\n"Planeje sua Redação" acima.',
+    pdwOpinion: 'Opinião', pdwThesis: 'Tese (thesis statement)',
+    pdwArg1: 'Argumento 1', pdwEx1: 'Exemplo 1',
+    pdwArg2: 'Argumento 2', pdwEx2: 'Exemplo 2',
+    pdwConcIdea: 'Ideia para concluir',
+    pdwNotDefined: 'Não definida ainda',
+    pdwIntroTitle: '📝 Introdução', pdwB1Title: '🥇 Body Paragraph 1',
+    pdwB2Title: '🥈 Body Paragraph 2', pdwConcTitle: '🏁 Conclusão',
+    hintOpinion: 'Opinião:', hintThesis: 'Tese:', hintArg: 'Argumento:', hintEx: 'Exemplo:', hintIdeia: 'Ideia:',
+    pillAgree: '👍 Concordo', pillDisagree: '👎 Discordo',
+    topics: [
+      { icon:'🎯', name:'O que é o OSSLT?', content:`<p>O <strong>OSSLT</strong> (Ontario Secondary School Literacy Test) é obrigatório para todos os alunos do Grade 10 em Ontário.</p><p>O foco <strong>não é criatividade literária</strong> — é avaliar se você consegue <strong>comunicar ideias com clareza e organização</strong>.</p><p>A prova tem duas partes: <em>Short Writing Tasks</em> (respostas curtas) e o <em>Long Writing</em> — a dissertação de opinião que você está praticando aqui! ✏️</p><div class="topic-tip">💡 O teste é feito no computador — pratique digitar rápido para sobrar tempo de revisar!</div>` },
+      { icon:'📊', name:'Como serei avaliado(a)?', content:`<p>Os corretores usam <strong>dois critérios</strong>:</p><div class="crit-box crit-a"><div class="crit-title">1. Topic Development</div><div class="crit-body">Suas ideias fazem sentido? Você usou exemplos específicos? A organização é lógica? <strong>Não repita a mesma frase várias vezes!</strong></div></div><div class="crit-box crit-b"><div class="crit-title">2. Use of Conventions</div><div class="crit-body">Gramática, pontuação e ortografia. Erros leves são tolerados — desde que <strong>não impeçam a compreensão</strong> do texto.</div></div><div class="topic-tip">💡 Usar conectores corretamente já garante Nível 3 ou 4 — as notas mais altas!</div>` },
+      { icon:'📝', name:'Técnica R.A.S.E.', content:`<p>Para as <strong>respostas curtas</strong>, use a fórmula <strong>R.A.S.E.</strong> em um único parágrafo:</p><div class="rase-grid"><div class="rase-item r"><span class="rase-letter">R</span><div><strong>Restate</strong><br><small>Reafirme a pergunta com suas palavras</small></div></div><div class="rase-item a"><span class="rase-letter">A</span><div><strong>Answer</strong><br><small>Dê sua resposta direta e clara</small></div></div><div class="rase-item s"><span class="rase-letter">S</span><div><strong>Support</strong><br><small>Use um exemplo do texto ou da vida real</small></div></div><div class="rase-item e"><span class="rase-letter">E</span><div><strong>Explain</strong><br><small>Explique como o exemplo prova sua resposta</small></div></div></div><div class="topic-tip">💡 A resposta curta é 1 parágrafo de 6 a 10 linhas — não escreva mais que isso!</div>` },
+      { icon:'🎩', name:'Tom Formal — Regras', content:`<div class="rules-list"><div class="rule bad">❌ <strong>don't / can't / I'm</strong> → use <strong>do not / cannot / I am</strong></div><div class="rule bad">❌ Gírias: <em>"it's cool", "gonna", "kinda"</em></div><div class="rule bad">❌ Abreviações: <em>"idk", "lol", "omg"</em></div><div class="rule bad">❌ Mudar de opinião no meio do texto</div><div class="rule good">✅ Tom acadêmico e direto</div><div class="rule good">✅ Escolha um lado e defenda <strong>até o fim</strong></div><div class="rule good">✅ Exemplos concretos e específicos</div></div><div class="topic-tip">💡 A opinião não importa — o corretor não vai te penalizar se discordar. Só quer ver o argumento!</div>` },
+      { icon:'⏱️', name:'Estratégia na Prova', content:`<div class="strat-steps"><div class="strat-step"><span class="step-num">1</span><div><strong>Planeje primeiro (5 min)</strong><br><small>Antes de escrever, anote seus 2-3 argumentos em rascunho</small></div></div><div class="strat-step"><span class="step-num">2</span><div><strong>Escreva com foco</strong><br><small>Um argumento por parágrafo, sempre com exemplo</small></div></div><div class="strat-step"><span class="step-num">3</span><div><strong>Revise ao final</strong><br><small>Verifique maiúsculas, pontuação e contrações (don't → do not)</small></div></div></div><div class="topic-tip">💡 Faça o simulado oficial do EQAO pelo menos uma vez — você se acostuma com a interface digital!</div>` },
+      { icon:'💡', name:'Temas para Praticar', content:`<p style="font-size:0.83rem;color:#6B7280;margin-bottom:10px">Copie um desses temas no campo "Pergunta da Prova" e escreva sua redação! 👆</p><div class="prompt-list"><div class="prompt-item" onclick="usePrompt(this)">📱 Should cellphones be banned from Ontario classrooms?<span class="use-btn">Usar ›</span></div><div class="prompt-item" onclick="usePrompt(this)">💼 Is it better for students to have a part-time job or focus only on school?<span class="use-btn">Usar ›</span></div><div class="prompt-item" onclick="usePrompt(this)">😴 Should high schools start later in the morning to allow students more sleep?<span class="use-btn">Usar ›</span></div><div class="prompt-item" onclick="usePrompt(this)">🎓 Should students have a free period in their school schedule?<span class="use-btn">Usar ›</span></div></div><div class="topic-tip">💡 Clique em "Usar ›" para copiar o tema direto para o campo da prova!</div>` },
+    ],
+  },
+  en: {
+    heroSub: 'Organize your arguments and write with confidence!',
+    heroTag: 'OSSLT · Series of Paragraphs · Opinion',
+    topicLabel: '📋 Essay Question / Prompt',
+    planTitle: 'Plan Your Essay First!',
+    planSub: 'Answer quick questions before writing — your notes are saved ✨',
+    planSecIntro: '📝 Introduction — Your Opinion',
+    planSecB1: '🥇 Argument 1 — Body Paragraph 1',
+    planSecB2: '🥈 Argument 2 — Body Paragraph 2',
+    planSecConc: '🏁 Conclusion',
+    pq1: '1. On this topic, you:',
+    pq2: '2. In one simple sentence, what is your position?',
+    pq3: '3. What is your first and strongest reason?',
+    pq4: '4. Think of a concrete example for this reason:',
+    pq5: '5. What is your second reason? (different from the first!)',
+    pq6: '6. Concrete example for this second reason:',
+    pq7: '7. In a sentence different from the introduction, how would you summarize your position?',
+    opAgree: '👍 I agree',
+    opDisagree: '👎 I disagree',
+    viewPlanBtn: '📋 View My Complete Plan — consult while writing →',
+    progLabel: 'Writing Progress',
+    progText: (f,t) => `${f} / ${t} paragraphs`,
+    tipBtn: '💡 Tip',
+    badgeP1:'Paragraph 1', badgeP2:'Paragraph 2', badgeP3:'Paragraph 3', badgeP4:'Paragraph 4',
+    concBadge: b3 => `Paragraph ${b3?5:4}`,
+    optTag: 'OPTIONAL ⭐',
+    tiplabelIntro:'🎯 What to do here:', tipcontentIntro:'Present the <strong>topic</strong> of the question and state your <strong>opinion clearly</strong> — this is called the <em>Thesis Statement</em>. Briefly mention the arguments you will use. Choose a side and <strong>do not change your mind</strong> until the end! Start with an impactful sentence.',
+    tiplabelB1:'🥇 What to do here:', tipcontentB1:'Present your <strong>FIRST and strongest argument</strong>. Open with one of the blue connectors below. Then, within the paragraph, use an <em>example</em> connector to give concrete evidence. Be specific — avoid vague ideas!',
+    tiplabelB2:'🥈 What to do here:', tipcontentB2:'Present your <strong>SECOND argument</strong> — different from the first! You are <em>adding</em> information, not repeating. Include a specific example. Remember: the more concrete the example, the higher the score!',
+    tiplabelB3:'🌟 What to do here:', tipcontentB3:'This paragraph is <strong>optional but impressive!</strong> You can: present a 3rd argument, reinforce the previous ones, or acknowledge the <em>"other side"</em> (counter-argument) and still defend your position. Acknowledging the other side shows intellectual maturity — exactly what OSSLT wants for Level 4!',
+    tiplabelConc:'🏁 What to do here:', tipcontentConc:'<strong>DO NOT</strong> add new information! Summarize the main points and restate your opinion in a <em>different way</em> from the introduction. Use formal tone: <em>do not</em> (never <em>don\'t</em>), no slang or abbreviations. End with a strong, conclusive sentence.',
+    connIntroLabel: '💬 Suggested opening phrases:',
+    connB1Open:'🔵 Opening connector — choose 1:', connB1Ex:'📌 For examples (click anywhere in text):',
+    connB2Open:'🟢 Opening connector — choose 1:', connB2Ex:'📌 For examples:',
+    connB3Open:'🟠 Opening connector — choose 1:', connB3Ex:'📌 For examples:',
+    connConcOpen:'🔴 Opening connector — choose 1:',
+    hintLabel: '🧠 Your Plan for this paragraph',
+    hintOpenBtn: 'View full plan →',
+    taIntro:'Write your introduction here. Present the topic and state your opinion...',
+    taB1:'Write your first argument here...',
+    taB2:'Write your second argument here...',
+    taB3:'Third argument, reinforcement or counter-argument + example...',
+    taConc:'Write your conclusion here. Summarize + restate your opinion in a new way...',
+    words: n => n === 1 ? '1 word' : `${n} words`,
+    addB3: '✦ Add Body Paragraph 3 (Optional) — shows maturity and impresses evaluators! 🌟',
+    removeB3: '✕ Remove Body Paragraph 3',
+    previewTitle: '📄 My Complete Essay',
+    copyBtn: '📋 Copy Text',
+    copied: '✅ Copied!',
+    copyEmpty: 'No text yet! Write your paragraphs first 😊',
+    copyFail: 'Could not copy. Try selecting the text manually.',
+    topicPrefix: '📋 Topic:',
+    fabPlan: 'Plan', fabGuia: 'Guide',
+    drawerTitle: '📚 Study Guide',
+    drawerSub: 'Click any topic to learn more 👇',
+    planDrawerSub: 'Your notes — consult while writing each paragraph 👇',
+    planDrawerTitle: '📋 My Plan',
+    planEmptyTitle: 'Your plan is still empty!',
+    planEmptyDesc: 'Fill in the questions in the\n"Plan Your Essay" card above.',
+    pdwOpinion: 'Opinion', pdwThesis: 'Thesis statement',
+    pdwArg1: 'Argument 1', pdwEx1: 'Example 1',
+    pdwArg2: 'Argument 2', pdwEx2: 'Example 2',
+    pdwConcIdea: 'Concluding idea',
+    pdwNotDefined: 'Not defined yet',
+    pdwIntroTitle: '📝 Introduction', pdwB1Title: '🥇 Body Paragraph 1',
+    pdwB2Title: '🥈 Body Paragraph 2', pdwConcTitle: '🏁 Conclusion',
+    hintOpinion: 'Opinion:', hintThesis: 'Thesis:', hintArg: 'Argument:', hintEx: 'Example:', hintIdeia: 'Idea:',
+    pillAgree: '👍 Agree', pillDisagree: '👎 Disagree',
+    topics: [
+      { icon:'🎯', name:'What is the OSSLT?', content:`<p>The <strong>OSSLT</strong> (Ontario Secondary School Literacy Test) is mandatory for all Grade 10 students in Ontario.</p><p>The focus is <strong>not literary creativity</strong> — it evaluates whether you can <strong>communicate ideas with clarity and organization</strong>.</p><p>The test has two main parts: <em>Short Writing Tasks</em> and the <em>Long Writing</em> — the opinion essay you are practicing here! ✏️</p><div class="topic-tip">💡 The test is done on a computer — practice typing fast so you have time to review!</div>` },
+      { icon:'📊', name:'How will I be evaluated?', content:`<p>Evaluators use <strong>two criteria</strong>:</p><div class="crit-box crit-a"><div class="crit-title">1. Topic Development</div><div class="crit-body">Do your ideas make sense? Did you use specific examples? Is the organization logical? <strong>Do not repeat the same sentence multiple times!</strong></div></div><div class="crit-box crit-b"><div class="crit-title">2. Use of Conventions</div><div class="crit-body">Grammar, punctuation and spelling. Minor errors are tolerated — as long as they <strong>do not prevent understanding</strong> of the text.</div></div><div class="topic-tip">💡 Using connectors correctly already guarantees Level 3 or 4 — the highest scores!</div>` },
+      { icon:'📝', name:'R.A.S.E. Technique', content:`<p>For <strong>short answers</strong>, use the <strong>R.A.S.E.</strong> formula in a single paragraph:</p><div class="rase-grid"><div class="rase-item r"><span class="rase-letter">R</span><div><strong>Restate</strong><br><small>Restate the question in your own words</small></div></div><div class="rase-item a"><span class="rase-letter">A</span><div><strong>Answer</strong><br><small>Give your direct and clear answer</small></div></div><div class="rase-item s"><span class="rase-letter">S</span><div><strong>Support</strong><br><small>Use an example from the text or real life</small></div></div><div class="rase-item e"><span class="rase-letter">E</span><div><strong>Explain</strong><br><small>Explain how the example proves your answer</small></div></div></div><div class="topic-tip">💡 The short answer is 1 paragraph of 6 to 10 lines — do not write more than that!</div>` },
+      { icon:'🎩', name:'Formal Tone — Rules', content:`<div class="rules-list"><div class="rule bad">❌ <strong>don't / can't / I'm</strong> → use <strong>do not / cannot / I am</strong></div><div class="rule bad">❌ Slang: <em>"it's cool", "gonna", "kinda"</em></div><div class="rule bad">❌ Abbreviations: <em>"idk", "lol", "omg"</em></div><div class="rule bad">❌ Changing your opinion mid-essay</div><div class="rule good">✅ Academic and direct tone</div><div class="rule good">✅ Choose a side and defend it <strong>to the end</strong></div><div class="rule good">✅ Concrete and specific examples</div></div><div class="topic-tip">💡 Your opinion does not matter — the evaluator will not penalize you if they disagree. They only want to see the argument!</div>` },
+      { icon:'⏱️', name:'Exam Strategy', content:`<div class="strat-steps"><div class="strat-step"><span class="step-num">1</span><div><strong>Plan first (5 min)</strong><br><small>Before writing, note your 2–3 arguments in a draft</small></div></div><div class="strat-step"><span class="step-num">2</span><div><strong>Write with focus</strong><br><small>One argument per paragraph, always with an example</small></div></div><div class="strat-step"><span class="step-num">3</span><div><strong>Review at the end</strong><br><small>Check capitals, punctuation and contractions (don't → do not)</small></div></div></div><div class="topic-tip">💡 Take the official EQAO practice test at least once — you will get used to the digital interface!</div>` },
+      { icon:'💡', name:'Topics to Practice', content:`<p style="font-size:0.83rem;color:#6B7280;margin-bottom:10px">Copy one of these topics into the "Essay Question" field and write your essay! 👆</p><div class="prompt-list"><div class="prompt-item" onclick="usePrompt(this)">📱 Should cellphones be banned from Ontario classrooms?<span class="use-btn">Use ›</span></div><div class="prompt-item" onclick="usePrompt(this)">💼 Is it better for students to have a part-time job or focus only on school?<span class="use-btn">Use ›</span></div><div class="prompt-item" onclick="usePrompt(this)">😴 Should high schools start later in the morning to allow students more sleep?<span class="use-btn">Use ›</span></div><div class="prompt-item" onclick="usePrompt(this)">🎓 Should students have a free period in their school schedule?<span class="use-btn">Use ›</span></div></div><div class="topic-tip">💡 Click "Use ›" to copy the topic directly to the exam field!</div>` },
+    ],
+  },
+  fr: {
+    heroSub: 'Organisez vos arguments et écrivez avec confiance!',
+    heroTag: 'OSSLT · Série de paragraphes · Opinion',
+    topicLabel: '📋 Question / Sujet du test',
+    planTitle: 'Planifiez votre rédaction d\'abord!',
+    planSub: 'Répondez à des questions rapides avant d\'écrire — vos notes sont sauvegardées ✨',
+    planSecIntro: '📝 Introduction — Votre opinion',
+    planSecB1: '🥇 Argument 1 — Body Paragraph 1',
+    planSecB2: '🥈 Argument 2 — Body Paragraph 2',
+    planSecConc: '🏁 Conclusion',
+    pq1: '1. Sur ce sujet, vous:',
+    pq2: '2. En une phrase simple, quelle est votre position?',
+    pq3: '3. Quelle est votre première et plus forte raison?',
+    pq4: '4. Pensez à un exemple concret pour cette raison:',
+    pq5: '5. Quelle est votre deuxième raison? (différente de la première!)',
+    pq6: '6. Exemple concret pour cette deuxième raison:',
+    pq7: '7. En une phrase différente de l\'introduction, comment résumeriez-vous votre position?',
+    opAgree: '👍 D\'accord / I agree',
+    opDisagree: '👎 Pas d\'accord / I disagree',
+    viewPlanBtn: '📋 Voir mon plan complet — consultez pendant que vous écrivez →',
+    progLabel: 'Progression de la rédaction',
+    progText: (f,t) => `${f} / ${t} paragraphes`,
+    tipBtn: '💡 Conseil',
+    badgeP1:'Paragraphe 1', badgeP2:'Paragraphe 2', badgeP3:'Paragraphe 3', badgeP4:'Paragraphe 4',
+    concBadge: b3 => `Paragraphe ${b3?5:4}`,
+    optTag: 'OPTIONNEL ⭐',
+    tiplabelIntro:'🎯 Que faire ici:', tipcontentIntro:'Présentez le <strong>sujet</strong> de la question et déclarez clairement votre <strong>opinion</strong> — c\'est ce qu\'on appelle la <em>Thesis Statement</em>. Mentionnez brièvement les arguments que vous utiliserez. Choisissez un côté et <strong>ne changez pas d\'avis</strong> jusqu\'à la fin!',
+    tiplabelB1:'🥇 Que faire ici:', tipcontentB1:'Présentez votre <strong>PREMIER et plus fort argument</strong>. Commencez avec l\'un des connecteurs bleus ci-dessous. Utilisez ensuite un connecteur d\'<em>exemple</em> pour donner une preuve concrète. Soyez précis — évitez les idées vagues!',
+    tiplabelB2:'🥈 Que faire ici:', tipcontentB2:'Présentez votre <strong>DEUXIÈME argument</strong> — différent du premier! Vous <em>ajoutez</em> de l\'information, vous ne répétez pas. Incluez un exemple spécifique. Plus l\'exemple est concret, plus la note est élevée!',
+    tiplabelB3:'🌟 Que faire ici:', tipcontentB3:'Ce paragraphe est <strong>optionnel mais impressionnant!</strong> Vous pouvez: présenter un 3e argument, renforcer les précédents, ou reconnaître l\'<em>"autre côté"</em> (contre-argument) tout en défendant votre position.',
+    tiplabelConc:'🏁 Que faire ici:', tipcontentConc:'<strong>N\'ajoutez PAS</strong> de nouvelles informations! Résumez les points principaux et réaffirmez votre opinion d\'une <em>façon différente</em> de l\'introduction. Utilisez un ton formel: <em>do not</em> (jamais <em>don\'t</em>), sans argot ni abréviations.',
+    connIntroLabel: '💬 Phrases d\'ouverture suggérées:',
+    connB1Open:'🔵 Connecteur d\'ouverture — choisissez-en 1:', connB1Ex:'📌 Pour les exemples (cliquez n\'importe où):',
+    connB2Open:'🟢 Connecteur d\'ouverture — choisissez-en 1:', connB2Ex:'📌 Pour les exemples:',
+    connB3Open:'🟠 Connecteur d\'ouverture — choisissez-en 1:', connB3Ex:'📌 Pour les exemples:',
+    connConcOpen:'🔴 Connecteur d\'ouverture — choisissez-en 1:',
+    hintLabel: '🧠 Votre plan pour ce paragraphe',
+    hintOpenBtn: 'Voir le plan complet →',
+    taIntro:'Rédigez votre introduction ici. Présentez le sujet et déclarez votre opinion...',
+    taB1:'Rédigez votre premier argument ici...',
+    taB2:'Rédigez votre deuxième argument ici...',
+    taB3:'Troisième argument, renforcement ou contre-argument + exemple...',
+    taConc:'Rédigez votre conclusion ici. Résumez + réaffirmez votre opinion de façon nouvelle...',
+    words: n => n === 1 ? '1 mot' : `${n} mots`,
+    addB3: '✦ Ajouter Body Paragraph 3 (Optionnel) — montre votre maturité! 🌟',
+    removeB3: '✕ Supprimer Body Paragraph 3',
+    previewTitle: '📄 Mon texte complet',
+    copyBtn: '📋 Copier le texte',
+    copied: '✅ Copié!',
+    copyEmpty: 'Aucun texte pour l\'instant! Rédigez vos paragraphes d\'abord 😊',
+    copyFail: 'Impossible de copier. Essayez de sélectionner le texte manuellement.',
+    topicPrefix: '📋 Sujet:',
+    fabPlan: 'Plan', fabGuia: 'Guide',
+    drawerTitle: '📚 Guide d\'étude',
+    drawerSub: 'Cliquez sur un sujet pour en savoir plus 👇',
+    planDrawerSub: 'Vos notes — consultez pendant que vous écrivez 👇',
+    planDrawerTitle: '📋 Mon Plan',
+    planEmptyTitle: 'Votre plan est encore vide!',
+    planEmptyDesc: 'Remplissez les questions dans la\ncarte "Planifiez votre rédaction" ci-dessus.',
+    pdwOpinion: 'Opinion', pdwThesis: 'Thesis statement',
+    pdwArg1: 'Argument 1', pdwEx1: 'Exemple 1',
+    pdwArg2: 'Argument 2', pdwEx2: 'Exemple 2',
+    pdwConcIdea: 'Idée de conclusion',
+    pdwNotDefined: 'Pas encore définie',
+    pdwIntroTitle: '📝 Introduction', pdwB1Title: '🥇 Body Paragraph 1',
+    pdwB2Title: '🥈 Body Paragraph 2', pdwConcTitle: '🏁 Conclusion',
+    hintOpinion: 'Opinion:', hintThesis: 'Thèse:', hintArg: 'Argument:', hintEx: 'Exemple:', hintIdeia: 'Idée:',
+    pillAgree: '👍 D\'accord', pillDisagree: '👎 Pas d\'accord',
+    topics: [
+      { icon:'🎯', name:'Qu\'est-ce que l\'OSSLT?', content:`<p>L'<strong>OSSLT</strong> (Ontario Secondary School Literacy Test) est obligatoire pour tous les élèves de 10e année en Ontario.</p><p>L'objectif <strong>n'est pas la créativité littéraire</strong> — il s'agit d'évaluer si vous pouvez <strong>communiquer des idées avec clarté et organisation</strong>.</p><p>Le test comporte deux parties: les <em>Short Writing Tasks</em> (réponses courtes) et le <em>Long Writing</em> — la dissertation d'opinion que vous pratiquez ici! ✏️</p><div class="topic-tip">💡 Le test se fait sur ordinateur — entraînez-vous à taper vite pour avoir le temps de réviser!</div>` },
+      { icon:'📊', name:'Comment serai-je évalué(e)?', content:`<p>Les correcteurs utilisent <strong>deux critères</strong>:</p><div class="crit-box crit-a"><div class="crit-title">1. Topic Development</div><div class="crit-body">Vos idées ont-elles du sens? Avez-vous utilisé des exemples spécifiques? L'organisation est-elle logique? <strong>Ne répétez pas la même phrase plusieurs fois!</strong></div></div><div class="crit-box crit-b"><div class="crit-title">2. Use of Conventions</div><div class="crit-body">Grammaire, ponctuation et orthographe. Les erreurs légères sont tolérées — tant qu'elles <strong>n'empêchent pas la compréhension</strong> du texte.</div></div><div class="topic-tip">💡 Utiliser correctement les connecteurs garantit déjà un Niveau 3 ou 4 — les meilleures notes!</div>` },
+      { icon:'📝', name:'Technique R.A.S.E.', content:`<p>Pour les <strong>réponses courtes</strong>, utilisez la formule <strong>R.A.S.E.</strong> en un seul paragraphe:</p><div class="rase-grid"><div class="rase-item r"><span class="rase-letter">R</span><div><strong>Restate</strong><br><small>Reformulez la question dans vos propres mots</small></div></div><div class="rase-item a"><span class="rase-letter">A</span><div><strong>Answer</strong><br><small>Donnez votre réponse directe et claire</small></div></div><div class="rase-item s"><span class="rase-letter">S</span><div><strong>Support</strong><br><small>Utilisez un exemple du texte ou de la vie réelle</small></div></div><div class="rase-item e"><span class="rase-letter">E</span><div><strong>Explain</strong><br><small>Expliquez comment l'exemple prouve votre réponse</small></div></div></div><div class="topic-tip">💡 La réponse courte est 1 paragraphe de 6 à 10 lignes — n'écrivez pas plus que cela!</div>` },
+      { icon:'🎩', name:'Ton formel — Règles', content:`<div class="rules-list"><div class="rule bad">❌ <strong>don't / can't / I'm</strong> → utilisez <strong>do not / cannot / I am</strong></div><div class="rule bad">❌ Argot: <em>"it's cool", "gonna", "kinda"</em></div><div class="rule bad">❌ Abréviations: <em>"idk", "lol", "omg"</em></div><div class="rule bad">❌ Changer d'opinion en cours de rédaction</div><div class="rule good">✅ Ton académique et direct</div><div class="rule good">✅ Choisissez un côté et défendez-le <strong>jusqu'à la fin</strong></div><div class="rule good">✅ Exemples concrets et spécifiques</div></div><div class="topic-tip">💡 Votre opinion n'a pas d'importance — le correcteur ne vous pénalisera pas s'il n'est pas d'accord. Il veut seulement voir l'argumentation!</div>` },
+      { icon:'⏱️', name:'Stratégie à l\'examen', content:`<div class="strat-steps"><div class="strat-step"><span class="step-num">1</span><div><strong>Planifiez d'abord (5 min)</strong><br><small>Avant d'écrire, notez vos 2–3 arguments en brouillon</small></div></div><div class="strat-step"><span class="step-num">2</span><div><strong>Écrivez avec concentration</strong><br><small>Un argument par paragraphe, toujours avec un exemple</small></div></div><div class="strat-step"><span class="step-num">3</span><div><strong>Révisez à la fin</strong><br><small>Vérifiez les majuscules, la ponctuation et les contractions (don't → do not)</small></div></div></div><div class="topic-tip">💡 Faites le test de pratique officiel de l'EQAO au moins une fois — vous vous habituerez à l'interface numérique!</div>` },
+      { icon:'💡', name:'Sujets à pratiquer', content:`<p style="font-size:0.83rem;color:#6B7280;margin-bottom:10px">Copiez l'un de ces sujets dans le champ "Question du test" et rédigez votre essai! 👆</p><div class="prompt-list"><div class="prompt-item" onclick="usePrompt(this)">📱 Should cellphones be banned from Ontario classrooms?<span class="use-btn">Utiliser ›</span></div><div class="prompt-item" onclick="usePrompt(this)">💼 Is it better for students to have a part-time job or focus only on school?<span class="use-btn">Utiliser ›</span></div><div class="prompt-item" onclick="usePrompt(this)">😴 Should high schools start later in the morning to allow students more sleep?<span class="use-btn">Utiliser ›</span></div><div class="prompt-item" onclick="usePrompt(this)">🎓 Should students have a free period in their school schedule?<span class="use-btn">Utiliser ›</span></div></div><div class="topic-tip">💡 Cliquez sur "Utiliser ›" pour copier le sujet directement dans le champ du test!</div>` },
+    ],
+  },
+  es: {
+    heroSub: '¡Organiza tus argumentos y escribe con confianza!',
+    heroTag: 'OSSLT · Serie de párrafos · Opinión',
+    topicLabel: '📋 Pregunta / Tema del examen',
+    planTitle: '¡Planifica tu redacción primero!',
+    planSub: 'Responde preguntas rápidas antes de escribir — tus notas quedan guardadas ✨',
+    planSecIntro: '📝 Introducción — Tu opinión',
+    planSecB1: '🥇 Argumento 1 — Body Paragraph 1',
+    planSecB2: '🥈 Argumento 2 — Body Paragraph 2',
+    planSecConc: '🏁 Conclusión',
+    pq1: '1. Sobre este tema, tú:',
+    pq2: '2. En una frase simple, ¿cuál es tu posición?',
+    pq3: '3. ¿Cuál es tu primera y más fuerte razón?',
+    pq4: '4. Piensa en un ejemplo concreto para esta razón:',
+    pq5: '5. ¿Cuál es tu segunda razón? (¡diferente a la primera!)',
+    pq6: '6. Ejemplo concreto para esta segunda razón:',
+    pq7: '7. En una frase diferente a la introducción, ¿cómo resumirías tu posición?',
+    opAgree: '👍 De acuerdo / I agree',
+    opDisagree: '👎 En desacuerdo / I disagree',
+    viewPlanBtn: '📋 Ver mi plan completo — consulta mientras escribes →',
+    progLabel: 'Progreso de la redacción',
+    progText: (f,t) => `${f} / ${t} párrafos`,
+    tipBtn: '💡 Consejo',
+    badgeP1:'Párrafo 1', badgeP2:'Párrafo 2', badgeP3:'Párrafo 3', badgeP4:'Párrafo 4',
+    concBadge: b3 => `Párrafo ${b3?5:4}`,
+    optTag: 'OPCIONAL ⭐',
+    tiplabelIntro:'🎯 Qué hacer aquí:', tipcontentIntro:'Presenta el <strong>tema</strong> de la pregunta y declara tu <strong>opinión claramente</strong> — esto se llama la <em>Thesis Statement</em>. Menciona brevemente los argumentos que usarás. Elige un lado y <strong>no cambies de opinión</strong> hasta el final.',
+    tiplabelB1:'🥇 Qué hacer aquí:', tipcontentB1:'Presenta tu <strong>PRIMER y más fuerte argumento</strong>. Comienza con uno de los conectores azules de abajo. Luego, usa un conector de <em>ejemplo</em> para dar evidencia concreta. ¡Sé específico — evita las ideas vagas!',
+    tiplabelB2:'🥈 Qué hacer aquí:', tipcontentB2:'Presenta tu <strong>SEGUNDO argumento</strong> — ¡diferente al primero! Estás <em>añadiendo</em> información, no repitiendo. Incluye un ejemplo específico. ¡Cuanto más concreto el ejemplo, mayor la calificación!',
+    tiplabelB3:'🌟 Qué hacer aquí:', tipcontentB3:'¡Este párrafo es <strong>opcional pero impresionante!</strong> Puedes: presentar un 3er argumento, reforzar los anteriores, o reconocer el <em>"otro lado"</em> (contraargumento) y aun así defender tu posición.',
+    tiplabelConc:'🏁 Qué hacer aquí:', tipcontentConc:'<strong>¡NO</strong> agregues información nueva! Resume los puntos principales y reafirma tu opinión de una <em>forma diferente</em> a la introducción. Usa tono formal: <em>do not</em> (nunca <em>don\'t</em>), sin jerga ni abreviaciones.',
+    connIntroLabel: '💬 Frases de apertura sugeridas:',
+    connB1Open:'🔵 Conector de apertura — elige 1:', connB1Ex:'📌 Para ejemplos (haz clic en cualquier parte):',
+    connB2Open:'🟢 Conector de apertura — elige 1:', connB2Ex:'📌 Para ejemplos:',
+    connB3Open:'🟠 Conector de apertura — elige 1:', connB3Ex:'📌 Para ejemplos:',
+    connConcOpen:'🔴 Conector de apertura — elige 1:',
+    hintLabel: '🧠 Tu plan para este párrafo',
+    hintOpenBtn: 'Ver plan completo →',
+    taIntro:'Escribe tu introducción aquí. Presenta el tema y declara tu opinión...',
+    taB1:'Escribe tu primer argumento aquí...',
+    taB2:'Escribe tu segundo argumento aquí...',
+    taB3:'Tercer argumento, refuerzo o contraargumento + ejemplo...',
+    taConc:'Escribe tu conclusión aquí. Resume + reafirma tu opinión de forma nueva...',
+    words: n => n === 1 ? '1 palabra' : `${n} palabras`,
+    addB3: '✦ Agregar Body Paragraph 3 (Opcional) — ¡muestra madurez e impresiona! 🌟',
+    removeB3: '✕ Eliminar Body Paragraph 3',
+    previewTitle: '📄 Mi texto completo',
+    copyBtn: '📋 Copiar texto',
+    copied: '✅ ¡Copiado!',
+    copyEmpty: '¡Ningún texto aún! Escribe tus párrafos primero 😊',
+    copyFail: 'No se pudo copiar. Intenta seleccionar el texto manualmente.',
+    topicPrefix: '📋 Tema:',
+    fabPlan: 'Plan', fabGuia: 'Guía',
+    drawerTitle: '📚 Guía de estudio',
+    drawerSub: 'Haz clic en cualquier tema para saber más 👇',
+    planDrawerSub: 'Tus notas — consulta mientras escribes cada párrafo 👇',
+    planDrawerTitle: '📋 Mi Plan',
+    planEmptyTitle: '¡Tu plan aún está vacío!',
+    planEmptyDesc: 'Completa las preguntas en la\ntarjeta "Planifica tu redacción" arriba.',
+    pdwOpinion: 'Opinión', pdwThesis: 'Thesis statement',
+    pdwArg1: 'Argumento 1', pdwEx1: 'Ejemplo 1',
+    pdwArg2: 'Argumento 2', pdwEx2: 'Ejemplo 2',
+    pdwConcIdea: 'Idea de conclusión',
+    pdwNotDefined: 'No definida aún',
+    pdwIntroTitle: '📝 Introducción', pdwB1Title: '🥇 Body Paragraph 1',
+    pdwB2Title: '🥈 Body Paragraph 2', pdwConcTitle: '🏁 Conclusión',
+    hintOpinion: 'Opinión:', hintThesis: 'Tesis:', hintArg: 'Argumento:', hintEx: 'Ejemplo:', hintIdeia: 'Idea:',
+    pillAgree: '👍 De acuerdo', pillDisagree: '👎 En desacuerdo',
+    topics: [
+      { icon:'🎯', name:'¿Qué es el OSSLT?', content:`<p>El <strong>OSSLT</strong> (Ontario Secondary School Literacy Test) es obligatorio para todos los estudiantes de Grado 10 en Ontario.</p><p>El enfoque <strong>no es la creatividad literaria</strong> — evalúa si puedes <strong>comunicar ideas con claridad y organización</strong>.</p><p>El examen tiene dos partes: las <em>Short Writing Tasks</em> (respuestas cortas) y el <em>Long Writing</em> — ¡la redacción de opinión que estás practicando aquí! ✏️</p><div class="topic-tip">💡 ¡El examen se hace en computadora — practica escribir rápido para que te sobre tiempo de revisar!</div>` },
+      { icon:'📊', name:'¿Cómo seré evaluado(a)?', content:`<p>Los evaluadores usan <strong>dos criterios</strong>:</p><div class="crit-box crit-a"><div class="crit-title">1. Topic Development</div><div class="crit-body">¿Tus ideas tienen sentido? ¿Usaste ejemplos específicos? ¿La organización es lógica? <strong>¡No repitas la misma frase varias veces!</strong></div></div><div class="crit-box crit-b"><div class="crit-title">2. Use of Conventions</div><div class="crit-body">Gramática, puntuación y ortografía. Los errores leves son tolerados — siempre que <strong>no impidan la comprensión</strong> del texto.</div></div><div class="topic-tip">💡 ¡Usar los conectores correctamente ya garantiza un Nivel 3 o 4 — las calificaciones más altas!</div>` },
+      { icon:'📝', name:'Técnica R.A.S.E.', content:`<p>Para las <strong>respuestas cortas</strong>, usa la fórmula <strong>R.A.S.E.</strong> en un solo párrafo:</p><div class="rase-grid"><div class="rase-item r"><span class="rase-letter">R</span><div><strong>Restate</strong><br><small>Reformula la pregunta en tus propias palabras</small></div></div><div class="rase-item a"><span class="rase-letter">A</span><div><strong>Answer</strong><br><small>Da tu respuesta directa y clara</small></div></div><div class="rase-item s"><span class="rase-letter">S</span><div><strong>Support</strong><br><small>Usa un ejemplo del texto o de la vida real</small></div></div><div class="rase-item e"><span class="rase-letter">E</span><div><strong>Explain</strong><br><small>Explica cómo el ejemplo prueba tu respuesta</small></div></div></div><div class="topic-tip">💡 ¡La respuesta corta es 1 párrafo de 6 a 10 líneas — no escribas más que eso!</div>` },
+      { icon:'🎩', name:'Tono formal — Reglas', content:`<div class="rules-list"><div class="rule bad">❌ <strong>don't / can't / I'm</strong> → usa <strong>do not / cannot / I am</strong></div><div class="rule bad">❌ Jerga: <em>"it's cool", "gonna", "kinda"</em></div><div class="rule bad">❌ Abreviaciones: <em>"idk", "lol", "omg"</em></div><div class="rule bad">❌ Cambiar de opinión a mitad de la redacción</div><div class="rule good">✅ Tono académico y directo</div><div class="rule good">✅ Elige un lado y defiéndelo <strong>hasta el final</strong></div><div class="rule good">✅ Ejemplos concretos y específicos</div></div><div class="topic-tip">💡 ¡Tu opinión no importa — el evaluador no te penalizará si no está de acuerdo. Solo quiere ver el argumento!</div>` },
+      { icon:'⏱️', name:'Estrategia en el examen', content:`<div class="strat-steps"><div class="strat-step"><span class="step-num">1</span><div><strong>Planifica primero (5 min)</strong><br><small>Antes de escribir, anota tus 2–3 argumentos en borrador</small></div></div><div class="strat-step"><span class="step-num">2</span><div><strong>Escribe con enfoque</strong><br><small>Un argumento por párrafo, siempre con un ejemplo</small></div></div><div class="strat-step"><span class="step-num">3</span><div><strong>Revisa al final</strong><br><small>Verifica mayúsculas, puntuación y contracciones (don't → do not)</small></div></div></div><div class="topic-tip">💡 ¡Haz el simulacro oficial del EQAO al menos una vez — te acostumbrarás a la interfaz digital!</div>` },
+      { icon:'💡', name:'Temas para practicar', content:`<p style="font-size:0.83rem;color:#6B7280;margin-bottom:10px">¡Copia uno de estos temas en el campo "Pregunta del examen" y escribe tu redacción! 👆</p><div class="prompt-list"><div class="prompt-item" onclick="usePrompt(this)">📱 Should cellphones be banned from Ontario classrooms?<span class="use-btn">Usar ›</span></div><div class="prompt-item" onclick="usePrompt(this)">💼 Is it better for students to have a part-time job or focus only on school?<span class="use-btn">Usar ›</span></div><div class="prompt-item" onclick="usePrompt(this)">😴 Should high schools start later in the morning to allow students more sleep?<span class="use-btn">Usar ›</span></div><div class="prompt-item" onclick="usePrompt(this)">🎓 Should students have a free period in their school schedule?<span class="use-btn">Usar ›</span></div></div><div class="topic-tip">💡 ¡Haz clic en "Usar ›" para copiar el tema directamente al campo del examen!</div>` },
+    ],
+  }
+};
+
+let currentLang = localStorage.getItem('eqao-lang') || 'pt';
+
+function L() { return LANGS[currentLang]; }
+
+function setLang(code) {
+  currentLang = code;
+  localStorage.setItem('eqao-lang', code);
+  document.documentElement.lang = code === 'pt' ? 'pt-BR' : code;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${code}'`));
+  });
+  applyLang();
+}
+
+function applyLang() {
+  const l = L();
+  const s = (id, val) => { const e = document.getElementById(id); if(e) e.textContent = val; };
+  const h = (id, val) => { const e = document.getElementById(id); if(e) e.innerHTML = val; };
+  const p = (id, val) => { const e = document.getElementById(id); if(e) e.placeholder = val; };
+
+  s('hero-sub', l.heroSub);
+  s('hero-tag', l.heroTag);
+  h('topic-label', l.topicLabel);
+  s('plan-card-title', l.planTitle);
+  s('plan-card-sub', l.planSub);
+  s('plan-sec-intro', l.planSecIntro);
+  s('plan-sec-b1', l.planSecB1);
+  s('plan-sec-b2', l.planSecB2);
+  s('plan-sec-conc', l.planSecConc);
+  s('pq1', l.pq1); s('pq2', l.pq2); s('pq3', l.pq3); s('pq4', l.pq4);
+  s('pq5', l.pq5); s('pq6', l.pq6); s('pq7', l.pq7);
+  s('op-agree', l.opAgree);
+  s('op-disagree', l.opDisagree);
+  s('view-plan-btn', l.viewPlanBtn);
+  s('prog-label', l.progLabel);
+  s('badge-p1', l.badgeP1); s('badge-p2', l.badgeP2);
+  s('badge-p3', l.badgeP3); s('badge-p4', l.badgeP4);
+  s('conc-badge', l.concBadge(b3On));
+  s('opt-tag', l.optTag);
+  ['intro','b1','b2','b3','conc'].forEach(k => {
+    const tb = document.getElementById(`tipbtn-${k}`); if(tb) tb.textContent = l.tipBtn;
+    const hl = document.getElementById(`hint-label-${k}`); if(hl) hl.textContent = l.hintLabel;
+  });
+  document.querySelectorAll('.plan-hint-open-btn').forEach(e => e.textContent = l.hintOpenBtn);
+  h('tiplabel-intro', l.tiplabelIntro); h('tipcontent-intro', l.tipcontentIntro);
+  h('tiplabel-b1',    l.tiplabelB1);   h('tipcontent-b1',    l.tipcontentB1);
+  h('tiplabel-b2',    l.tiplabelB2);   h('tipcontent-b2',    l.tipcontentB2);
+  h('tiplabel-b3',    l.tiplabelB3);   h('tipcontent-b3',    l.tipcontentB3);
+  h('tiplabel-conc',  l.tiplabelConc); h('tipcontent-conc',  l.tipcontentConc);
+  s('conn-intro-label', l.connIntroLabel);
+  s('conn-b1-open', l.connB1Open); s('conn-b1-ex', l.connB1Ex);
+  s('conn-b2-open', l.connB2Open); s('conn-b2-ex', l.connB2Ex);
+  s('conn-b3-open', l.connB3Open); s('conn-b3-ex', l.connB3Ex);
+  s('conn-conc-open', l.connConcOpen);
+  p('ta-intro', l.taIntro); p('ta-body1', l.taB1);
+  p('ta-body2', l.taB2);   p('ta-body3', l.taB3);
+  p('ta-conclusion', l.taConc);
+  // word counters
+  [['ta-intro','wc-intro'],['ta-body1','wc-b1'],['ta-body2','wc-b2'],
+   ['ta-body3','wc-b3'],['ta-conclusion','wc-conc']].forEach(([ta,wc]) => {
+    const el = document.getElementById(ta), w = document.getElementById(wc);
+    if(el && w) {
+      const n = el.value.trim() === '' ? 0 : el.value.trim().split(/\s+/).length;
+      w.textContent = l.words(n);
+    }
+  });
+  // b3 button
+  const b3btn = document.getElementById('b3-btn');
+  if(b3btn) b3btn.innerHTML = b3On
+    ? l.removeB3
+    : l.addB3;
+  if(b3btn) b3btn.style.borderStyle = b3On ? 'solid' : 'dashed';
+  s('preview-title', l.previewTitle);
+  s('copy-btn', l.copyBtn);
+  s('fab-plan-label', l.fabPlan);
+  s('fab-guia-label', l.fabGuia);
+  // plan drawer
+  const pdt = document.querySelector('.plan-drawer .drawer-title');
+  if(pdt) pdt.textContent = l.planDrawerTitle;
+  const pds = document.querySelector('.plan-drawer .drawer-subtitle');
+  if(pds) pds.textContent = l.planDrawerSub;
+  // guia drawer
+  const gdt = document.querySelector('.drawer:not(.plan-drawer) .drawer-title');
+  if(gdt) gdt.textContent = l.drawerTitle;
+  const gds = document.querySelector('.drawer:not(.plan-drawer) .drawer-subtitle');
+  if(gds) gds.textContent = l.drawerSub;
+  // rebuild drawer topics
+  buildDrawer();
+  // re-render plan drawer if open
+  if (document.getElementById('plan-drawer').classList.contains('open')) {
+    renderPlanDrawer();
+  }
+  // re-render hints
+  updateCardHints();
+  syncPreview();
+  syncProgress();
+}
+
+// Override word count to use current language
+const _origCountWords = countWordsById;
+function countWordsById(taId, wcId) {
+  const ta = document.getElementById(taId), wc = document.getElementById(wcId);
+  if (!ta || !wc) return;
+  const n = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
+  wc.textContent = L().words(n);
+}
+
+// Override copyAll to use current language strings
+const _origCopyAll = copyAll;
+function copyAll() {
+  const l = L();
+  const topic = document.getElementById('topic-input').value.trim();
+  const ids = ['ta-intro','ta-body1','ta-body2'];
+  if (b3On) ids.push('ta-body3');
+  ids.push('ta-conclusion');
+  let out = '';
+  if (topic) out += 'Topic: ' + topic + '\n\n';
+  ids.forEach(id => { const v = document.getElementById(id)?.value.trim(); if(v) out += v + '\n\n'; });
+  if (!out.trim()) { alert(l.copyEmpty); return; }
+  navigator.clipboard.writeText(out.trim()).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = l.copied;
+    setTimeout(() => btn.textContent = l.copyBtn, 2200);
+  }).catch(() => alert(l.copyFail));
+}
+
+// Override renderPlanDrawer to use current language
+function renderPlanDrawer() {
+  const l = L();
+  let opHtml = `<span class="pdw-empty">${l.pdwNotDefined}</span>`;
+  if (planData.opinion === 'agree')    opHtml = `<span class="opinion-pill pill-agree">${l.pillAgree}</span>`;
+  if (planData.opinion === 'disagree') opHtml = `<span class="opinion-pill pill-disagree">${l.pillDisagree}</span>`;
+  const topic = document.getElementById('topic-input').value.trim();
+  const sections = [
+    { color:'var(--intro)', bg:'var(--intro-light)', title:l.pdwIntroTitle,
+      rows:[{label:l.pdwOpinion, html:opHtml, isHtml:true},{label:l.pdwThesis, val:planData.thesis}] },
+    { color:'var(--b1)', bg:'var(--b1-light)', title:l.pdwB1Title,
+      rows:[{label:l.pdwArg1, val:planData.arg1},{label:l.pdwEx1, val:planData.ex1}] },
+    { color:'var(--b2)', bg:'var(--b2-light)', title:l.pdwB2Title,
+      rows:[{label:l.pdwArg2, val:planData.arg2},{label:l.pdwEx2, val:planData.ex2}] },
+    { color:'var(--conc)', bg:'var(--conc-light)', title:l.pdwConcTitle,
+      rows:[{label:l.pdwConcIdea, val:planData.conc}] },
+  ];
+  let html = '';
+  if (topic) html += `<div class="pdw-topic">📋 ${escHtml(topic)}</div>`;
+  sections.forEach(sec => {
+    html += `<div class="pdw-section" style="border-color:${sec.color};background:${sec.bg}">`;
+    html += `<div class="pdw-sec-title" style="color:${sec.color}">${sec.title}</div>`;
+    sec.rows.forEach(row => {
+      html += `<div class="pdw-row"><div class="pdw-lbl">${row.label}</div>`;
+      html += `<div class="pdw-val">${row.isHtml ? row.html : (row.val ? escHtml(row.val) : '<span class="pdw-empty">—</span>')}</div></div>`;
+    });
+    html += `</div>`;
+  });
+  if (!topic && !planData.opinion && !planData.thesis && !planData.arg1) {
+    html = `<div class="pdw-empty-state">
+      <div style="font-size:2.5rem;margin-bottom:12px">🧠</div>
+      <div style="font-weight:800;font-size:0.95rem;color:#374151;margin-bottom:6px">${l.planEmptyTitle}</div>
+      <div style="font-size:0.83rem;color:#9CA3AF;line-height:1.5">${l.planEmptyDesc.replace('\n','<br>')}</div>
+    </div>`;
+  }
+  document.getElementById('plan-drawer-content').innerHTML = html;
+}
+
+// Override updateCardHints to use current language labels
+function updateCardHints() {
+  const l = L();
+  const introHasData = planData.opinion || planData.thesis;
+  const hintIntro = document.getElementById('hint-intro');
+  hintIntro.classList.toggle('visible', !!introHasData);
+  if (introHasData) {
+    let opHtml = '';
+    if (planData.opinion === 'agree')    opHtml = `<span style="background:#D1FAE5;color:#065F46;padding:1px 8px;border-radius:99px;font-weight:800;font-size:0.78rem">${l.pillAgree}</span>`;
+    if (planData.opinion === 'disagree') opHtml = `<span style="background:#FEE2E2;color:#7F1D1D;padding:1px 8px;border-radius:99px;font-weight:800;font-size:0.78rem">${l.pillDisagree}</span>`;
+    document.getElementById('hint-intro-content').innerHTML =
+      (planData.opinion ? `<div class="plan-hint-row"><span class="plan-hint-lbl">${l.hintOpinion}</span> ${opHtml}</div>` : '') +
+      (planData.thesis  ? `<div class="plan-hint-row"><span class="plan-hint-lbl">${l.hintThesis}</span> <span class="plan-hint-val">"${planData.thesis}"</span></div>` : '');
+  }
+  const b1HasData = planData.arg1 || planData.ex1;
+  document.getElementById('hint-b1').classList.toggle('visible', !!b1HasData);
+  if (b1HasData) {
+    document.getElementById('hint-b1-content').innerHTML =
+      (planData.arg1 ? `<div class="plan-hint-row"><span class="plan-hint-lbl">${l.hintArg}</span> <span class="plan-hint-val">${planData.arg1}</span></div>` : '') +
+      (planData.ex1  ? `<div class="plan-hint-row"><span class="plan-hint-lbl">${l.hintEx}</span> <span class="plan-hint-val">${planData.ex1}</span></div>` : '');
+  }
+  const b2HasData = planData.arg2 || planData.ex2;
+  document.getElementById('hint-b2').classList.toggle('visible', !!b2HasData);
+  if (b2HasData) {
+    document.getElementById('hint-b2-content').innerHTML =
+      (planData.arg2 ? `<div class="plan-hint-row"><span class="plan-hint-lbl">${l.hintArg}</span> <span class="plan-hint-val">${planData.arg2}</span></div>` : '') +
+      (planData.ex2  ? `<div class="plan-hint-row"><span class="plan-hint-lbl">${l.hintEx}</span> <span class="plan-hint-val">${planData.ex2}</span></div>` : '');
+  }
+  const concHasData = planData.conc;
+  document.getElementById('hint-conc').classList.toggle('visible', !!concHasData);
+  if (concHasData) {
+    document.getElementById('hint-conc-content').innerHTML =
+      `<div class="plan-hint-row"><span class="plan-hint-lbl">${l.hintIdeia}</span> <span class="plan-hint-val">"${planData.conc}"</span></div>`;
+  }
+}
+
+// Override syncProgress to use current language
+function syncProgress() {
+  const ids = ['ta-intro','ta-body1','ta-body2'];
+  if (b3On) ids.push('ta-body3');
+  ids.push('ta-conclusion');
+  const filled = ids.filter(id => { const el = document.getElementById(id); return el && el.value.trim().length > 8; }).length;
+  document.getElementById('prog-bar').style.width = (filled / ids.length * 100) + '%';
+  document.getElementById('prog-text').textContent = L().progText(filled, ids.length);
+}
+
+// Override toggleBody3 to update badge and button text in current language
+function toggleBody3() {
+  b3On = !b3On;
+  document.getElementById('b3-wrap').classList.toggle('hidden', !b3On);
+  document.getElementById('prev-b3').classList.toggle('hidden', !b3On);
+  const btn = document.getElementById('b3-btn');
+  btn.innerHTML = b3On ? L().removeB3 : L().addB3;
+  btn.style.borderStyle = b3On ? 'solid' : 'dashed';
+  document.getElementById('conc-badge').textContent = L().concBadge(b3On);
+  syncProgress();
+}
+
+// Init on load
+document.addEventListener('DOMContentLoaded', () => {
+  setLang(currentLang);
+});
+
 function openDrawer() {
   document.getElementById('drawer').classList.add('open');
   document.getElementById('drawer-overlay').classList.add('show');
@@ -1395,13 +1980,13 @@ function closeAllTopics() {
 <!-- LEFT: Plan FAB -->
 <button class="fab fab-plan" id="fab-plan" onclick="openPlanPanel()" title="Meu Plano">
   📋
-  <span class="fab-label">Plano</span>
+  <span class="fab-label" id="fab-plan-label">Plano</span>
 </button>
 
 <!-- RIGHT: Guia FAB -->
 <button class="fab fab-guia" onclick="openDrawer()" title="Guia de Estudo">
   📚
-  <span class="fab-label">Guia</span>
+  <span class="fab-label" id="fab-guia-label">Guia</span>
 </button>
 
 <!-- ═══ OVERLAYS ═══ -->
@@ -1411,10 +1996,10 @@ function closeAllTopics() {
 <!-- ═══ PLAN DRAWER (LEFT) ═══ -->
 <div class="plan-drawer" id="plan-drawer">
   <div class="drawer-header">
-    <div class="drawer-title" style="color:#0D9488">📋 Meu Plano</div>
+    <div class="drawer-title" style="color:#0D9488" id="plan-drawer-title">📋 Meu Plano</div>
     <button class="drawer-close" onclick="closePlanPanel()">✕</button>
   </div>
-  <div class="drawer-subtitle">Suas notas — consulte enquanto escreve cada parágrafo 👇</div>
+  <div class="drawer-subtitle" id="plan-drawer-sub">Suas notas — consulte enquanto escreve cada parágrafo 👇</div>
   <div class="plan-drawer-content" id="plan-drawer-content">
     <div class="pdw-empty-state">
       <div style="font-size:2.5rem;margin-bottom:12px">🧠</div>
@@ -1434,126 +2019,7 @@ function closeAllTopics() {
 
   <div class="drawer-subtitle">Clique em qualquer tópico para saber mais 👇</div>
 
-  <div class="drawer-list">
-
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t1')">
-        <span class="topic-icon">🎯</span>
-        <span class="topic-name">O que é o OSSLT?</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t1">
-        <p>O <strong>OSSLT</strong> (Ontario Secondary School Literacy Test) é obrigatório para todos os alunos do Grade 10 em Ontário.</p>
-        <p>O foco <strong>não é criatividade literária</strong> — é avaliar se você consegue <strong>comunicar ideias com clareza e organização</strong>.</p>
-        <p>A prova tem duas partes principais: <em>Short Writing Tasks</em> (respostas curtas) e o <em>Long Writing</em> — a dissertação de opinião que você está praticando aqui! ✏️</p>
-        <div class="topic-tip">💡 O teste é feito no computador — pratique digitar rápido para sobrar tempo de revisar!</div>
-      </div>
-    </div>
-
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t2')">
-        <span class="topic-icon">📊</span>
-        <span class="topic-name">Como serei avaliada?</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t2">
-        <p>Os corretores usam <strong>dois critérios</strong>:</p>
-        <div class="crit-box crit-a">
-          <div class="crit-title">1. Topic Development</div>
-          <div class="crit-body">Suas ideias fazem sentido? Você usou exemplos específicos? A organização é lógica? <strong>Não repita a mesma frase várias vezes!</strong></div>
-        </div>
-        <div class="crit-box crit-b">
-          <div class="crit-title">2. Use of Conventions</div>
-          <div class="crit-body">Gramática, pontuação e ortografia. Erros leves são tolerados — desde que <strong>não impeçam a compreensão</strong> do texto.</div>
-        </div>
-        <div class="topic-tip">💡 Usar conectores corretamente já garante Nível 3 ou 4 — as notas mais altas!</div>
-      </div>
-    </div>
-
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t3')">
-        <span class="topic-icon">📝</span>
-        <span class="topic-name">Técnica R.A.S.E.</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t3">
-        <p>Para as <strong>respostas curtas</strong> (Short Writing Tasks), use a fórmula <strong>R.A.S.E.</strong> em um único parágrafo:</p>
-        <div class="rase-grid">
-          <div class="rase-item r"><span class="rase-letter">R</span><div><strong>Restate</strong><br><small>Reafirme a pergunta com suas palavras</small></div></div>
-          <div class="rase-item a"><span class="rase-letter">A</span><div><strong>Answer</strong><br><small>Dê sua resposta direta e clara</small></div></div>
-          <div class="rase-item s"><span class="rase-letter">S</span><div><strong>Support</strong><br><small>Use um exemplo do texto ou da vida real</small></div></div>
-          <div class="rase-item e"><span class="rase-letter">E</span><div><strong>Explain</strong><br><small>Explique como o exemplo prova sua resposta</small></div></div>
-        </div>
-        <div class="topic-tip">💡 A resposta curta é 1 parágrafo de 6 a 10 linhas — não escreva mais que isso!</div>
-      </div>
-    </div>
-
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t4')">
-        <span class="topic-icon">🎩</span>
-        <span class="topic-name">Tom Formal — Regras</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t4">
-        <div class="rules-list">
-          <div class="rule bad">❌ <strong>don't / can't / I'm</strong> → use <strong>do not / cannot / I am</strong></div>
-          <div class="rule bad">❌ Gírias: <em>"it's cool", "gonna", "kinda"</em></div>
-          <div class="rule bad">❌ Abreviações: <em>"idk", "lol", "omg"</em></div>
-          <div class="rule bad">❌ Mudar de opinião no meio do texto</div>
-          <div class="rule good">✅ Tom acadêmico e direto</div>
-          <div class="rule good">✅ Escolha um lado e defenda <strong>até o fim</strong></div>
-          <div class="rule good">✅ Exemplos concretos e específicos</div>
-        </div>
-        <div class="topic-tip">💡 A opinião não importa — o corretor não vai te penalizar se discordar de você. Só quer ver o argumento!</div>
-      </div>
-    </div>
-
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t5')">
-        <span class="topic-icon">⏱️</span>
-        <span class="topic-name">Estratégia na Prova</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t5">
-        <div class="strat-steps">
-          <div class="strat-step"><span class="step-num">1</span><div><strong>Planeje primeiro (5 min)</strong><br><small>Antes de escrever, anote seus 2-3 argumentos em rascunho</small></div></div>
-          <div class="strat-step"><span class="step-num">2</span><div><strong>Escreva com foco</strong><br><small>Um argumento por parágrafo, sempre com exemplo</small></div></div>
-          <div class="strat-step"><span class="step-num">3</span><div><strong>Revise ao final</strong><br><small>Verifique maiúsculas, pontuação e contrações (don't → do not)</small></div></div>
-        </div>
-        <div class="topic-tip">💡 Faça o simulado oficial do EQAO pelo menos uma vez — você se acostuma com a interface digital!</div>
-      </div>
-    </div>
-
-    <div class="drawer-item">
-      <button class="topic-btn" onclick="toggleTopic('t6')">
-        <span class="topic-icon">💡</span>
-        <span class="topic-name">Temas para Praticar</span>
-        <span class="topic-arrow">›</span>
-      </button>
-      <div class="topic-content" id="t6">
-        <p style="font-size:0.83rem;color:#6B7280;margin-bottom:10px">Copie um desses temas no campo "Pergunta da Prova" e escreva sua redação! 👆</p>
-        <div class="prompt-list">
-          <div class="prompt-item" onclick="usePrompt(this)">
-            📱 Should cellphones be banned from Ontario classrooms?
-            <span class="use-btn">Usar ›</span>
-          </div>
-          <div class="prompt-item" onclick="usePrompt(this)">
-            💼 Is it better for students to have a part-time job or focus only on school?
-            <span class="use-btn">Usar ›</span>
-          </div>
-          <div class="prompt-item" onclick="usePrompt(this)">
-            😴 Should high schools start later in the morning to allow students more sleep?
-            <span class="use-btn">Usar ›</span>
-          </div>
-          <div class="prompt-item" onclick="usePrompt(this)">
-            🎓 Should students have a free period in their school schedule?
-            <span class="use-btn">Usar ›</span>
-          </div>
-        </div>
-        <div class="topic-tip">💡 Clique em "Usar ›" para copiar o tema direto para o campo da prova!</div>
-      </div>
-    </div>
-
+  <div class="drawer-list" id="drawer-list">
   </div><!-- end drawer-list -->
 </div><!-- end guia drawer -->
 
